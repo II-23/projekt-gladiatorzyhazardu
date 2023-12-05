@@ -1,1 +1,2 @@
 # Gladiatorzy Hazardu
+- Kucz
