@@ -19,10 +19,30 @@ def rysuj_tlo():
 class Gra:
     liczba_graczy=4
     stan_gry=Menu.stan
+    max_stanow=1
 
     def cofnij_stan():
         if Gra.stan_gry==preGame.stan:
             Gra.stan_gry=Menu.stan
+
+    def klikniecie(x, y):
+        if Gra.stan_gry==Menu.stan:
+            if Menu.klikniecie(x, y)<=Gra.max_stanow:
+                Gra.stan_gry=Menu.klikniecie(x, y)
+
+        elif Gra.stan_gry==preGame.stan:
+            preGame.klikniecie(x, y)
+
+    def puszczenie():
+        if Gra.stan_gry == preGame.stan:
+            preGame.puszczenie()
+
+    
+    def ruch_myszki(x, y):
+        if Gra.stan_gry == preGame.stan:
+            preGame.ruch_myszki(x, y)
+
+
     
 
 while True:
@@ -34,15 +54,34 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
+        #nacisniecie myszki
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if Gra.stan_gry==Menu.stan:
-                Gra.stan_gry=Menu.klikniecie(mouse[0], mouse[1]) 
+            Gra.klikniecie(mouse[0], mouse[1])
+
+        #puszczenie myszki
+        if event.type == pygame.MOUSEBUTTONUP:
+            Gra.puszczenie()
+
+        #klawiatura
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 Gra.cofnij_stan()
 
+        #ruch myszki
+        if event.type == pygame.MOUSEMOTION:
+            Gra.ruch_myszki(mouse[0], mouse[1])
+            
+
+
     if Gra.stan_gry==Menu.stan:
         Menu.rysuj(screen)
+
+    elif Gra.stan_gry==preGame.stan:
+        preGame.rysuj(screen)
+
+
+
     #if Gra.stan_gry==preGame.stan:
 
 

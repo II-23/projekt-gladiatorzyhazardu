@@ -3,8 +3,7 @@ from zmienne import *
 
 class Menu:
     stan=0
-
-
+    
     #menu
     glowny=(50, 50, SCREEN_WIDTH-100, SCREEN_HEIGHT-100)
     #tytuł
