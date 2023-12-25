@@ -1,19 +1,19 @@
 from enum import IntEnum
 
 Suit={
-    "spades"  : 3,
-    "hearts"  : 2,
-    "diamonds": 1,
-    "clubs"   : 0
+    3   :   "spades",
+    2   :   "hearts",
+    1   :   "diamonds",
+    0   :   "clubs",
 }
 
 Figures={
-    "ace"   : 14,
-    "king"  : 13,
-    "queen" : 12,
-    "jack"  : 11,
-    "ten"   : 10,
-    "nine"  : 9
+    14  :   "ace",
+    13  :   "king",
+    12  :   "queen",
+    11  :   "jack",
+    10  :   "ten",
+    9   :   "nine"
 }
  
 
@@ -21,11 +21,14 @@ class Card():
     # figure=""
     # suit=""
     def __init__(self,fig,su):
-        self.figure=fig
-        self.suit=su
+        self.figure=Figures[fig]
+        self.suit=Suit[su]
+
+    def __repr__(self):
+        return f'{self.figure} of {self.suit}'
         
 def Cardval(card):  #fuction to return pair of values of cards 
     try:
-        return(Figures[str(card.figure)],Suit[str(card.suit)])
+        return(Figures[int(card.figure)],Suit[int(card.suit)])
     except:
         print("TY durniu nie tak!!!!!")

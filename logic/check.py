@@ -13,9 +13,9 @@ def check(curr_player, prev_player): # obecny gracz sprawdza poprzedniego
 # --------TEST--------
 """
 deck = Deck() #robimy sztuczną talię z czterema królami i dziesiątkami
-for i in suits:
-	deck.dealt.add(Card('king', i ))
-	deck.dealt.add(Card('ten', i ))
+for i in range(4):
+	deck.dealt.add(Card( 13, i ))
+	deck.dealt.add(Card( 10, i ))
 #print(deck.dealt)
 A = Player()
 B = Player()
