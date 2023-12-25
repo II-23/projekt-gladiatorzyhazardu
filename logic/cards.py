@@ -8,9 +8,10 @@ Suit={
 }
 
 Figures={
-    "ace"   : 13,
-    "king"  : 12,
-    "queen" : 11,
+    "ace"   : 14,
+    "king"  : 13,
+    "queen" : 12,
+    "jack"  : 11,
     "ten"   : 10,
     "nine"  : 9
 }
