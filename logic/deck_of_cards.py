@@ -22,6 +22,7 @@ class Deck:
     def get_card(self):
         cur_card = random.choice(tuple(self.cards))
         self.cards.remove(cur_card)
+        self.dealt.add(cur_card)
         return cur_card
 
 
