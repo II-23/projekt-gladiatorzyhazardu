@@ -26,13 +26,22 @@ class Table:
             for _ in range(number_of_cards):
                 self.players[i].cards_on_hand.add(self.deck.get_card())
 
-    # def newTurn(self):
-    #     for player in self.players:
-    #         if player.active:
-                
+    def newTurn(self):
+        self.deck=Deck()
+        self.RecentBid=""
+        for player in self.players:
+            if player.active:
+                player.cards_on_hand=set({})
+                for _ in range(player.number_of_cards):
+                    player.cards_on_hand.add(self.deck.get_card())
+
     # def newTurn(self)
 
 #Testing\/\/\/\/\/\/\/\/\/\/
-t=Table(5)
+t=Table(2)
+for p in t.players:
+    print(p.cards_on_hand)
+t.newTurn()
+print()
 for p in t.players:
     print(p.cards_on_hand)
