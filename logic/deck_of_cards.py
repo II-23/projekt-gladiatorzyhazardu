@@ -3,13 +3,17 @@ import random
 
 class Deck:
 
-    cards=set()
-    dealt=set()
+    # cards=set()
+    # dealt=set()
     
     def add(self,card):
         self.cards.add(card)
            
     def __init__(self):
+        
+        self.cards=set()
+        self.dealt=set()
+
         for i in range(4):
             for j in range(9,15):
                 self.add(Card(j, i))
