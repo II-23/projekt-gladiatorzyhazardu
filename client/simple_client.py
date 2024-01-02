@@ -1,6 +1,6 @@
 import requests
 
-base_url = '165.232.32.194:5000'
+base_url = 'http://165.232.32.194:2137'
 
 def join_game(player_name):
     response = requests.post(f'{base_url}/join', json={'name': player_name})
