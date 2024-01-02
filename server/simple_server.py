@@ -1,25 +1,20 @@
-import socket
+from flask import Flask, request, jsonify
 
-server_address = ('0.0.0.0', 2137)
+app = Flask(__name__)
 
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+players = []
+tables = []
 
-server_socket.bind(server_address)
+@app.route('/join', methods=['POST'])
+def join_game():
+    data = request.json
+    player_name = data.get('name')
+    players.append(player_name)
+    return jsonify({'message': f'{player_name} joined the game'})
 
-server_socket.listen(1)
-print('Server listening on {}:{}'.format(*server_address))
+@app.route('/get_players', methods=['GET'])
+def get_players():
+    return jsonify({'players': players})
 
-client_socket, client_address = server_socket.accept()
-print('Connection from:', client_address)
-
-while True:
-    data = client_socket.recv(1024)
-
-    if not data:
-        break
-    
-    print('Received:', data.decode('utf-8'))
-
-client_socket.close()
-server_socket.close()
-
+if __name__ == '__main__':
+    app.run(debug=True)

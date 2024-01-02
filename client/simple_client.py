@@ -1,13 +1,16 @@
-import socket
+import requests
 
-server_address = ('165.232.32.194', 2137)
+base_url = '165.232.32.194:5000'
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def join_game(player_name):
+    response = requests.post(f'{base_url}/join', json={'name': player_name})
+    print(response.json())
 
-client_socket.connect(server_address)
+def get_players():
+    response = requests.get(f'{base_url}/get_players')
+    print(response.json())
 
-message = 'Hello there!'
-client_socket.sendall(message.encode('utf-8'))
-
-client_socket.close()
-
+if __name__ == '__main__':
+    player_name = input('Enter your name:')
+    join_game(player_name)
+    get_players()
