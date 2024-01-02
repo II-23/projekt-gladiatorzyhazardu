@@ -14,39 +14,31 @@ import uuid
 
 app = Flask(__name__)
 
-players = {}
-tables = {}
+# players database
+PLAYER_DB = {}
+
+# tables database
+TABLE_DB = {}
 
 @app.route('/create_player', methods=['POST'])
 def create_player():
     data = request.json
 
+    nickname = data['nickname']
     player_id = str(uuid.uuid4())
 
-    players[player_id] = Player(0, player_id)
+    PLAYER_DB[player_id] = Player(player_id, nickname)
 
-    print("NEW PLAYER ID: ", player_id)
-    print("PLAYERS: ", players)
+    print(f'Created new player with ID: {player_id} with nickname: {nickname}')
 
-    return jsonify(
-        {
-            'message:': f'New player is created with id={player_id}',
-            'player_id': player_id
-        }
-    )
+    return jsonify({'message:': f'New player is created with id={player_id} nickname={nickname}','player_id': player_id})
 
 @app.route('/create_table', methods=['POST'])
 def create_table():
-    data = request.json
-
     admin_id = data.get('player_id')
 
-    if admin_id not in players:
-        return jsonify(
-            {
-                'message': f'Player "{admin_id}" does not exist'
-            }
-        )
+    if admin_id not in PLAYER_DB:
+        return jsonify({'message': f'ERROR: Player "{admin_id}" does not exist'})
 
     table_id = str(uuid.uuid4())
 
@@ -56,12 +48,9 @@ def create_table():
         'table': Table()
     }
 
-    return jsonify(
-        {
-            'message': f'Table {table_id} is created',
-            'table_id': table_id
-        }
-    )
+    print(f'Created new table with ID: {table_id} by {admin_id}')
+
+    return jsonify({'message': f'Table {table_id} is created','table_id': table_id})
 
 @app.route('/join_table', methods=['POST'])
 def join_table():
@@ -69,37 +58,79 @@ def join_table():
 
     player_id = data.get('player_id')
     if player_id not in players:
-        return jsonify(
-            {
-                'message': f'Player "{player_id}" does not exist'
-            }
-        )
+        return jsonify({'message': f'ERROR: Player "{player_id}" does not exist'})
 
     table_id = data.get('table_id')
     if table_id not in tables:
-        return jsonify(
-            {
-                'message': f'Table "{table_id}" does not exist'
-            }
-        )
+        return jsonify({'message': f'ERROR: Table "{table_id}" does not exist'})
 
     player = players[player_id]
-
     tables[table_id].addPlayer(player)
 
-    return jsonify(
-        {
-            'message': f'{player_id} joined the table {table_id}'
-        }
-    )
+    print(f'Player {player_id} joined table {table_id}')
 
-@app.route('/get_players', methods=['GET'])
-def get_players():
-    return jsonify({'players': list(players.keys())})
+    return jsonify({'message': f'{player_id} joined the table {table_id}'})
 
-@app.route('/get_tables', methods=['GET'])
-def get_tables():
-    return jsonify({'tables': list(tables.keys())})
+
+@app.route('/start_game', methods=['POST'])
+def start_game():
+    data = request.json
+
+    admin_id = data.get('player_id')
+    if admin_id not in PLAYER_DB:
+        return jsonify({'message': f'ERROR: Player "{admin_id}" does not exist'})
+
+    table_id = data.get('table_id')
+    if table_id not in TABLE_DB:
+        return jsonify({'message': f'ERROR: Table "{table_id}" does not exist'})
+    
+    if TABLE_DB[table_id]['admin_id'] != admin_id:
+        return jsonify({'message': f'ERROR: You({admin_id}) are not the admin of table {table_id}'})
+    
+    TABLE_DB[table]['table'].startGame()
+
+    return jsonify({'message': f'Table {table_id} started successfully'})
+
+@app.route('/get_table', methods=['GET'])
+def get_table():
+    data = request.json
+    
+    table_id = data.get('table_id')
+    if table_id not in TABLE_DB:
+        return jsonify({'message': f'ERROR: Table "{table_id}" does not exist'})
+    
+    table = TABLE_DB[table_id]
+
+    return jsonify()
+
+@app.route('/make_bid', methods=['POST'])
+def make_bid():
+    data = request.json
+
+    player_id = data.get('player_id')
+    if player_id not in PLAYER_DB:
+        return jsonify({'message': f'ERROR: Player "{player_id}" does not exist'})
+
+    table_id = data.get('table_id')
+    if table_id not in TABLE_DB:
+        return jsonify({'message': f'ERROR: Table "{table_id}" does not exist'})
+    
+    bid = data.get('bid')
+
+    TABLE_DB[table_id]['table'].play(player_id, bid)
+
+    print(f'Bid {bid} is player by {player_id} on {table_id}')
+
+    return jsonify({'message': f'Successfuly bided on {table_id} by {player_id}'})
+
+
+@app.route('/get_all_players', methods=['GET'])
+def get_all_players():
+    return jsonify({'players': list(PLAYER_DB.keys())})
+
+@app.route('/get_all_tables', methods=['GET'])
+def get_all_tables():
+    return jsonify({'tables': list(TABLE_DB.keys())})
 
 if __name__ == '__main__':
     print("HOST: ", config.server['host'])

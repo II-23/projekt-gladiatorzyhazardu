@@ -3,9 +3,15 @@ import json
 
 class Player:
     
-    def __init__(self,number_of_cards, player_id):
+    def __init__(self, player_id, nickname):
+        self.nickname = nickname
         self.losses = 0
         self.active = True
         self.cards_on_hand = set({})
         self.number_of_cards = number_of_cards
         self.id = player_id
+        self.table_id = -1
+    
+    def joining_table(self, table_id):
+        self.losses = 0
+        self.table_id = table_id

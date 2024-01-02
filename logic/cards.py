@@ -18,8 +18,6 @@ Figures={
  
 
 class Card():
-    # figure=""
-    # suit=""
     def __init__(self,fig,su):
         self.figure=Figures[fig]
         self.suit=Suit[su]
