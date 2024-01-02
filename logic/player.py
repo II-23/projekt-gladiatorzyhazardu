@@ -1,5 +1,4 @@
-from cards import *
-
+from logic.cards import *
 
 class Player:
     

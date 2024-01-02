@@ -1,6 +1,6 @@
-from player import *
-from cards import *
-from deck_of_cards import *
+from logic.player import *
+from logic.cards import *
+from logic.deck_of_cards import *
 
 deck = Deck()
 def game_start(number_of_players):

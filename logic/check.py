@@ -1,7 +1,7 @@
-from deck_of_cards import *
-from cards import *
-from setcheck import *
-from player import *
+from logic.deck_of_cards import *
+from logic.cards import *
+from logic.setcheck import *
+from logic.player import *
 
 def check(curr_player, prev_player): # obecny gracz sprawdza poprzedniego
 	curr_bid = eval(RecentBid) # zamienia string postaci np "Pair(deck, 'hearts')" na funkcję, wtedy wywołanie tego w ifie zwróci wynik

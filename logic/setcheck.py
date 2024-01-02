@@ -1,4 +1,4 @@
-from cards import *
+from logic.cards import *
 
 figures=["ace","king","queen","ten","nine"]
 suits=["spades","hearts" ,"diamonds","clubs"]

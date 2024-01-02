@@ -1,12 +1,16 @@
+import os
 import sys
-sys.path.append('..') 
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
+sys.path.append(parent_dir)
 
 import requests
 from logic import game_start
 
 base_url = f'http://{config.host}:{config.port}'
 
-def join_game(player_name):
+def join_table(player_id):
     response = requests.post(f'{base_url}/join', json={'name': player_name})
     print(response.json())
 
@@ -14,17 +18,23 @@ def get_players():
     response = requests.get(f'{base_url}/get_players')
     print(response.json())
 
-if __name__ == '__main__':
-    try:
-        with open('../config.json', 'r') as config_file:
-            config = json.load(config_file)
-        
-        host = config.host
-        port = config.port
-    except FileNotFoundError:
-        print(f"Plik config.json nie istnieje")
+    return response['players']
+
+def get_tables():
+    response = requests.get(f'{base_url}/get_tables')
+    print(response.json())
+    
+    data = response.json()
+    return data['tables']
+
+def register():
+    response = requests.post(f'{base_url}/create_player')
+    print(response.json())
+    
+    data = response.json()
+    return data['player_id']
 
 if __name__ == '__main__':
-    player_name = input('Enter your name:')
-    join_game(player_name)
-    get_players()
+    my_id = register()
+
+    print(get_players())

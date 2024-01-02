@@ -2,10 +2,10 @@
 # has functions to:
 # -randomize cards for every active player for newturn
 # -get information about every player
-from deck_of_cards import *
-from cards import *
-from setcheck import *
-from player import *
+from logic.deck_of_cards import *
+from logic.cards import *
+from logic.setcheck import *
+from logic.player import *
 
 class Table:    
     ##Aliaksander's code from game_start.py with some minor tweaks and made into an init\/\/\/\/\/\/\
@@ -25,6 +25,9 @@ class Table:
         return False
 
     def startGame(self):
+
+        number_of_players = len(self.players)
+
         if number_of_players <= 2:
             number_of_cards = 3
         elif number_of_players <= 4:
@@ -33,11 +36,10 @@ class Table:
             number_of_cards = 1
     
         for i in range(number_of_players):
-            self.players.append(Player(number_of_cards))
             for _ in range(number_of_cards):
                 self.players[i].cards_on_hand.add(self.deck.get_card())
 
-        newTurn()
+        self.newTurn()
 
     def newTurn(self):
         self.deck=Deck()
@@ -49,10 +51,21 @@ class Table:
                     player.cards_on_hand.add(self.deck.get_card())
 
 #Testing\/\/\/\/\/\/\/\/\/\/
-t=Table(2)
-for p in t.players:
-    print(p.cards_on_hand)
-t.newTurn()
-print()
-for p in t.players:
-    print(p.cards_on_hand)
+
+
+if __name__ == '__main__':
+    t = Table()
+    player1 = Player(2, "123123")
+    player2 = Player(3, "131233")
+
+    t.addPlayer(player1)
+    t.addPlayer(player2)
+
+    t.startGame()
+
+    for p in t.players:
+        print(p.cards_on_hand)
+    t.newTurn()
+    print()
+    for p in t.players:
+        print(p.cards_on_hand)

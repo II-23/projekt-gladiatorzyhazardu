@@ -1,4 +1,4 @@
-from cards import *
+from logic.cards import *
 import random
 
 class Deck:

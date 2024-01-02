@@ -1,7 +1,11 @@
+import os
 import sys
-sys.path.append('..') # used for importing files from parent folder
 
-from logic import Table
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
+sys.path.append(parent_dir)
+
+from logic.table import Table
 import config
 
 from flask import Flask, request, jsonify
@@ -11,27 +15,30 @@ app = Flask(__name__)
 players = {}
 tables = {}
 
-@app.route('/create_player', method=['POST'])
+@app.route('/create_player', methods=['POST'])
+def create_player():
     data = request.json
 
     player_id = str(uuid.uuid4())
 
     players[player_id] = Player(0, player_id)
 
+    print("NEW PLAYER ID: ", player_id)
+
     return jsonify(
         {
-            'message:' f'New player is created with id={player_id}',
+            'message:': f'New player is created with id={player_id}',
             'player_id': player_id
         }
     )
 
-@app.route('/create_table', method=['POST'])
+@app.route('/create_table', methods=['POST'])
 def create_table():
     data = request.json
 
     admin_id = data.get('player_id')
 
-    if admin_id is not in players:
+    if admin_id not in players:
         return jsonify(
             {
                 'message': f'Player "{admin_id}" does not exist'
@@ -56,15 +63,30 @@ def create_table():
 @app.route('/join_table', methods=['POST'])
 def join_table():
     data = request.json
+
     player_id = data.get('player_id')
+    if player_id not in players:
+        return jsonify(
+            {
+                'message': f'Player "{player_id}" does not exist'
+            }
+        )
+
     table_id = data.get('table_id')
+    if table_id not in tables:
+        return jsonify(
+            {
+                'message': f'Table "{table_id}" does not exist'
+            }
+        )
 
-    tables[table_id].addPlayer(player_id)
+    player = players[player_id]
 
-    players.append(player_name)
+    tables[table_id].addPlayer(player)
+
     return jsonify(
         {
-            'message': f'{player_name} joined the game'
+            'message': f'{player_id} joined the table {table_id}'
         }
     )
 
@@ -72,5 +94,11 @@ def join_table():
 def get_players():
     return jsonify({'players': players})
 
+@app.route('/get_tables', methods=['GET'])
+def get_tables():
+    return jsonify({'tables': tables})
+
 if __name__ == '__main__':
-    app.run(host=config['host'], port=config['port'], debug=True)
+    print("HOST: ", config.server['host'])
+    print("PORT: ", config.server['port'])
+    app.run(host=config.server['host'], port=config.server['port'], debug=True)
