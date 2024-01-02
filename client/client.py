@@ -1,4 +1,5 @@
 import requests
+from ../ import game_start
 
 base_url = 'http://165.232.32.194:2137'
 

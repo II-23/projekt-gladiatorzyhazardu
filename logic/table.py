@@ -9,22 +9,28 @@ from player import *
 
 class Table:    
     ##Aliaksander's code from game_start.py with some minor tweaks and made into an init\/\/\/\/\/\/\
-    def __init__(self,number_of_players):    
-        
+    def __init__(self):
         self.players=[]
         self.RecentBid=""
         self.deck=Deck()
 
+    def addPlayer(self, player_id):
+        self.players.append(0, player_id)
+
+    def startGame(self):
         if number_of_players <= 2:
             number_of_cards = 3
         elif number_of_players <= 4:
             number_of_cards = 2
-        else: number_of_cards = 1
+        else: 
+            number_of_cards = 1
     
         for i in range(number_of_players):
             self.players.append(Player(number_of_cards))
             for _ in range(number_of_cards):
                 self.players[i].cards_on_hand.add(self.deck.get_card())
+
+        newTurn()
 
     def newTurn(self):
         self.deck=Deck()
@@ -34,8 +40,6 @@ class Table:
                 player.cards_on_hand=set({})
                 for _ in range(player.number_of_cards):
                     player.cards_on_hand.add(self.deck.get_card())
-
-    # def newTurn(self)
 
 #Testing\/\/\/\/\/\/\/\/\/\/
 t=Table(2)

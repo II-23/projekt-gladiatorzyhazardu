@@ -3,10 +3,10 @@ from cards import *
 
 class Player:
     
-    def __init__(self,number_of_cards):
+    def __init__(self,number_of_cards, id):
         self.losses = 0
         self.active = True
-        self.cards_on_hand=set({})
-        self.number_of_cards=number_of_cards
-
+        self.cards_on_hand = set({})
+        self.number_of_cards = number_of_cards
+        self.id = id
 
