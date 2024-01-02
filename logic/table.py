@@ -14,8 +14,15 @@ class Table:
         self.RecentBid=""
         self.deck=Deck()
 
-    def addPlayer(self, player_id):
-        self.players.append(0, player_id)
+    def addPlayer(self, new_player):
+        self.players.append(new_player)
+
+    def removePlayer(self, player):
+        for i in range(self.players):
+            if self.players[i].id == player.id:
+                self.players.pop(i)
+                return True
+        return False
 
     def startGame(self):
         if number_of_players <= 2:
