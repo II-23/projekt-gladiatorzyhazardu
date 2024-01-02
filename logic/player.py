@@ -1,4 +1,5 @@
 from logic.cards import *
+import json
 
 class Player:
     
@@ -8,4 +9,3 @@ class Player:
         self.cards_on_hand = set({})
         self.number_of_cards = number_of_cards
         self.id = player_id
-

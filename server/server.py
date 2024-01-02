@@ -6,9 +6,11 @@ parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
 sys.path.append(parent_dir)
 
 from logic.table import Table
+from logic.player import Player
 import config
 
 from flask import Flask, request, jsonify
+import uuid
 
 app = Flask(__name__)
 
@@ -24,6 +26,7 @@ def create_player():
     players[player_id] = Player(0, player_id)
 
     print("NEW PLAYER ID: ", player_id)
+    print("PLAYERS: ", players)
 
     return jsonify(
         {
@@ -50,7 +53,7 @@ def create_table():
     tables[table_id] = {
         'table_id': table_id,
         'admin_id': admin_id,
-        'table': Table(1)
+        'table': Table()
     }
 
     return jsonify(
@@ -92,11 +95,11 @@ def join_table():
 
 @app.route('/get_players', methods=['GET'])
 def get_players():
-    return jsonify({'players': players})
+    return jsonify({'players': list(players.keys())})
 
 @app.route('/get_tables', methods=['GET'])
 def get_tables():
-    return jsonify({'tables': tables})
+    return jsonify({'tables': list(tables.keys())})
 
 if __name__ == '__main__':
     print("HOST: ", config.server['host'])
