@@ -8,7 +8,7 @@ class Player:
         self.losses = 0
         self.active = True
         self.cards_on_hand = set({})
-        self.number_of_cards = number_of_cards
+        self.number_of_cards = 0
         self.id = player_id
         self.table_id = -1
     

@@ -35,14 +35,15 @@ def create_player():
 
 @app.route('/create_table', methods=['POST'])
 def create_table():
-    admin_id = data.get('player_id')
+    data = request.json
 
+    admin_id = data.get('player_id')
     if admin_id not in PLAYER_DB:
         return jsonify({'message': f'ERROR: Player "{admin_id}" does not exist'})
 
     table_id = str(uuid.uuid4())
 
-    tables[table_id] = {
+    TABLE_DB[table_id] = {
         'table_id': table_id,
         'admin_id': admin_id,
         'table': Table()
@@ -57,15 +58,15 @@ def join_table():
     data = request.json
 
     player_id = data.get('player_id')
-    if player_id not in players:
+    if player_id not in PLAYER_DB:
         return jsonify({'message': f'ERROR: Player "{player_id}" does not exist'})
 
     table_id = data.get('table_id')
-    if table_id not in tables:
+    if table_id not in TABLE_DB:
         return jsonify({'message': f'ERROR: Table "{table_id}" does not exist'})
 
-    player = players[player_id]
-    tables[table_id].addPlayer(player)
+    player = PLAYER_DB[player_id]
+    TABLE_DB[table_id]['table'].addPlayer(player)
 
     print(f'Player {player_id} joined table {table_id}')
 
@@ -99,9 +100,10 @@ def get_table():
     if table_id not in TABLE_DB:
         return jsonify({'message': f'ERROR: Table "{table_id}" does not exist'})
     
-    table = TABLE_DB[table_id]
+    table = TABLE_DB[table_id]['table']
+    players_in_table = [(p.nickname, p.id) for p in table.players]
 
-    return jsonify()
+    return jsonify({'players': players_in_table})
 
 @app.route('/make_bid', methods=['POST'])
 def make_bid():
