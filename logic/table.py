@@ -30,13 +30,17 @@ class Table:
         for i in range(len(self.players)):
             self.players[i].cards_on_hand.add(self.deck.get_card())
             self.players[i].active = True
-            
+
         self.started = True
         self.nextTurn()
 
     def nextTurn(self):
-        self.deck=Deck()
-        self.recent_bid=""
+        if len(self.players) == 1:
+            self.started = False
+            return
+
+        self.deck = Deck()
+        self.recent_bid = ""
 
         max_number_of_cards = min(6, 23 / len(self.players))
 
@@ -48,8 +52,6 @@ class Table:
             if self.players[i].active == True:
                 for _ in range(self.players[i].losses + 1):
                     self.players[i].cards_on_hand.add(self.deck.get_card())
-        
-
 
     def getCurrentPlayer(self):
         if len(self.players) == 0:

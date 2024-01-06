@@ -67,7 +67,7 @@ def join_table():
         return jsonify({'message': f'ERROR: Table "{table_id}" does not exist'})
 
     if len(TABLE_DB[table_id]['table'].players) >= 23:
-        return jsonify({'message': f'ERROR: Game has on Table "{table_id}" has too many players (23)'})
+        return jsonify({'message': f'ERROR: Game on Table "{table_id}" has too many players (23)'})
 
     player = PLAYER_DB[player_id]
     TABLE_DB[table_id]['table'].addPlayer(player)
@@ -144,8 +144,11 @@ def get_all_tables():
 def ping():
     data = request.json
 
-    for player_id, player in PLAYER_DB.copy():
+    print(PLAYER_DB)
+
+    for player_id, player in PLAYER_DB.copy().items():
         if time.time() - player.last_ping > 5:
+            print("TIMEOUT: ", player_id)
             if player.table_id != -1:
                 TABLE_DB[player.table_id]['table'].timeoutPlayer(player_id)
             
@@ -155,7 +158,10 @@ def ping():
     if player_id not in PLAYER_DB:
         return jsonify({'message': f'ERROR: Player "{player_id}" does not exist (probably timeout)'})
 
+    print("PING BY: ", player_id)
     PLAYER_DB[player_id].last_ping = time.time()
+
+    return jsonify({'message': 'Ping successfuly'})
 
 if __name__ == '__main__':
     print("HOST: ", config.server['host'])

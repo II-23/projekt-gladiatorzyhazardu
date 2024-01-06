@@ -9,6 +9,7 @@ import requests
 from logic import game_start
 
 import config
+import asyncio
 
 base_url = f"http://{config.server['host']}:{config.server['port']}"
 
@@ -63,11 +64,20 @@ def register(nickname):
     data = response.json()
     return data['player_id']
 
-if __name__ == '__main__':
+# asyncronicaly ping the server in the background to inform that player is alive
+async def ping_server(player_id):
+    while True:
+        response = requests.post(f'{base_url}/ping', json={'player_id': player_id})
+        print('Ping')
+        await asyncio.sleep(3)
+
+async def main():
     nickname = input("Nickname:")
     my_id = register(nickname)
 
     print(f'My id: {my_id}')
+
+    await asyncio.gather(ping_server(my_id))
 
     while True:
         command = input('>').split()
@@ -88,3 +98,6 @@ if __name__ == '__main__':
             print(get_all_tables())
         else:
             print("No command matching")
+
+if __name__ == '__main__':
+    asyncio.run(main())
