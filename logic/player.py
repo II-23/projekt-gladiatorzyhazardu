@@ -1,4 +1,6 @@
 from logic.cards import *
+import time
+
 import json
 
 class Player:
@@ -11,6 +13,7 @@ class Player:
         self.number_of_cards = 0
         self.id = player_id
         self.table_id = -1
+        self.last_ping = time.time()
     
     def joining_table(self, table_id):
         self.losses = 0

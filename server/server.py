@@ -8,6 +8,7 @@ sys.path.append(parent_dir)
 from logic.table import Table
 from logic.player import Player
 import config
+import time
 
 from flask import Flask, request, jsonify
 import uuid
@@ -65,13 +66,15 @@ def join_table():
     if table_id not in TABLE_DB:
         return jsonify({'message': f'ERROR: Table "{table_id}" does not exist'})
 
+    if len(TABLE_DB[table_id]['table'].players) >= 23:
+        return jsonify({'message': f'ERROR: Game has on Table "{table_id}" has too many players (23)'})
+
     player = PLAYER_DB[player_id]
     TABLE_DB[table_id]['table'].addPlayer(player)
 
     print(f'Player {player_id} joined table {table_id}')
 
     return jsonify({'message': f'{player_id} joined the table {table_id}'})
-
 
 @app.route('/start_game', methods=['POST'])
 def start_game():
@@ -88,7 +91,7 @@ def start_game():
     if TABLE_DB[table_id]['admin_id'] != admin_id:
         return jsonify({'message': f'ERROR: You({admin_id}) are not the admin of table {table_id}'})
     
-    TABLE_DB[table]['table'].startGame()
+    TABLE_DB[table_id]['table'].startGame()
 
     return jsonify({'message': f'Table {table_id} started successfully'})
 
@@ -105,8 +108,8 @@ def get_table():
 
     return jsonify({'players': players_in_table})
 
-@app.route('/make_bid', methods=['POST'])
-def make_bid():
+@app.route('/play_bid', methods=['POST'])
+def play_bid():
     data = request.json
 
     player_id = data.get('player_id')
@@ -117,14 +120,15 @@ def make_bid():
     if table_id not in TABLE_DB:
         return jsonify({'message': f'ERROR: Table "{table_id}" does not exist'})
     
-    bid = data.get('bid')
+    if TABLE_DB[table_id]['table'].getCurrentPlayer() != player_id:
+        return jsonify({'message': f'ERROR: It is not turn of Player "{player_id}" on Table "{table_id}"'})
 
+    bid = data.get('bid')
     TABLE_DB[table_id]['table'].play(player_id, bid)
 
     print(f'Bid {bid} is player by {player_id} on {table_id}')
 
     return jsonify({'message': f'Successfuly bided on {table_id} by {player_id}'})
-
 
 @app.route('/get_all_players', methods=['GET'])
 def get_all_players():
@@ -133,6 +137,25 @@ def get_all_players():
 @app.route('/get_all_tables', methods=['GET'])
 def get_all_tables():
     return jsonify({'tables': list(TABLE_DB.keys())})
+
+# simple mechanism that is used to determine 
+# wherether there is connection with the player
+@app.route('/ping', methods=['POST'])
+def ping():
+    data = request.json
+
+    for player_id, player in PLAYER_DB.copy():
+        if time.time() - player.last_ping > 5:
+            if player.table_id != -1:
+                TABLE_DB[player.table_id]['table'].timeoutPlayer(player_id)
+            
+            PLAYER_DB.pop(player_id)
+    
+    player_id = data.get('player_id')
+    if player_id not in PLAYER_DB:
+        return jsonify({'message': f'ERROR: Player "{player_id}" does not exist (probably timeout)'})
+
+    PLAYER_DB[player_id].last_ping = time.time()
 
 if __name__ == '__main__':
     print("HOST: ", config.server['host'])
