@@ -1,8 +1,11 @@
 import pygame
 from zmienne import *
+import sys
+from pygame.locals import *
 
 pygame.init()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+#screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((1920, 1080), FULLSCREEN)
 clock = pygame.time.Clock()
 
 liczba_kart = 3
@@ -16,7 +19,7 @@ animacja_tasowania = 1
 animacja_rozdawania = 0
 
 scaleUP = 1.1
-scale_start = 0.15
+scale_start = 0.22
 width_DOWN = 630 * scale_start
 height_DOWN = 880 * scale_start
 
@@ -36,7 +39,7 @@ imgB_DOWN = pygame.transform.scale_by(imgB_DOWN, scale_start)
 
 karta_przesuwana = pygame.transform.scale_by(imgB_DOWN, scaleUP)
 x = SCREEN_WIDTH/2 - widthUP/2
-moving_time = 600
+moving_time = 400
 ds = widthUP + 20
 x_right = x + ds
 
@@ -63,7 +66,7 @@ for i in range(1, liczba_graczy):
 rozdawana_karta = (0, 0)
 indeks_gracza = 0
 wsp_akt = (SCREEN_WIDTH/2 - width_DOWN/2, SCREEN_HEIGHT/2 - height_DOWN/2)
-v_karty = 0.6
+v_karty = 1.5
 dx = 0
 dy = 0
 ile_rozdanych = -1
