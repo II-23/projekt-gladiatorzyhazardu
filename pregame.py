@@ -13,6 +13,20 @@ class preGame:
     font = pygame.font.SysFont("comicsansms", 120)
     tytul = font.render("Ilu graczy?", True, DARK_RED)
 
+    # Start
+    font = pygame.font.SysFont("comicsansms", 100)
+    start_napis = font.render("Start", True, DARK_RED)
+    start_corner = (
+        SCREEN_WIDTH // 2 - start_napis.get_width() // 2,
+        4 * SCREEN_HEIGHT // 5 - start_napis.get_height() // 2,
+    )
+    start_button = pygame.rect.Rect(
+        start_corner[0] - 25,
+        start_corner[1] - 10,
+        start_napis.get_width() + 50,
+        start_napis.get_height() + 20,
+    )
+
     # belka suwaka
     belka = (SCREEN_WIDTH // 10, 200, 8 * SCREEN_WIDTH // 10, 25)
     # suwak
@@ -27,9 +41,11 @@ class preGame:
         # liczba graczy
         dlugosc_podzialu = (SCREEN_WIDTH - 170) // 9
         srodek_suwaka_bezwzgl = preGame.suwak_x + 35
-        preGame.liczba_graczy = srodek_suwaka_bezwzgl // dlugosc_podzialu
+        #preGame.liczba_graczy = srodek_suwaka_bezwzgl // dlugosc_podzialu
+        PLAYERS = srodek_suwaka_bezwzgl // dlugosc_podzialu
         preGame.font = pygame.font.SysFont("comicsansms", 80)
-        preGame.licznik = preGame.font.render(str(preGame.liczba_graczy), True, BLACK)
+        #preGame.licznik = preGame.font.render(str(preGame.liczba_graczy), True, BLACK)
+        preGame.licznik = preGame.font.render(str(PLAYERS), True, BLACK)
 
     def aktualizuj_suwak(przesuniecie, x):
         preGame.suwak_x += przesuniecie
@@ -49,7 +65,11 @@ class preGame:
         # suwak
         if preGame.suwak.collidepoint(x, y):
             preGame.nacisniety_suwak = True
-
+        # przejscie do rozdania kart
+        elif preGame.start_button.collidepoint(x, y):
+            return 3
+        return AKCJA
+        
     def puszczenie():
         preGame.nacisniety_suwak = False
 
@@ -62,18 +82,14 @@ class preGame:
 
     def rysuj(screen):
         pygame.draw.rect(screen, GREY, preGame.glowny)
-        screen.blit(
-            preGame.tytul,
-            (
-                SCREEN_WIDTH // 2 - preGame.tytul.get_width() // 2,
-                SCREEN_HEIGHT // 5 - preGame.tytul.get_height() // 2,
-            ),
-        )
+        screen.blit(preGame.tytul,(SCREEN_WIDTH // 2 - preGame.tytul.get_width() // 2,SCREEN_HEIGHT // 5 - preGame.tytul.get_height() // 2,))
 
         pygame.draw.rect(screen, DARK_GREY, preGame.belka)
         pygame.draw.rect(screen, DARK_RED, preGame.suwak)
 
-        screen.blit(
-            preGame.licznik,
-            (preGame.suwak_x + 35 - preGame.licznik.get_width() // 2, 240),
-        )
+        screen.blit(preGame.licznik,(preGame.suwak_x + 35 - preGame.licznik.get_width() // 2, 240))
+
+        # start
+        pygame.draw.rect(screen, DARK_GREY, preGame.start_button)
+        pygame.draw.rect(screen, BLACK, preGame.start_button, 5)
+        screen.blit(preGame.start_napis, preGame.start_corner)

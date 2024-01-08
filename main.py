@@ -3,6 +3,8 @@ import sys
 from zmienne import *
 from menu import *
 from pregame import *
+from rozgrywka import *
+from rozdanie import *
 
 pygame.init()
 pygame.display.set_caption("Poker tajski")
@@ -17,9 +19,8 @@ def rysuj_tlo():
 
 
 class Gra:
-    liczba_graczy = 4
+    #liczba_graczy = 2
     stan_gry = Menu.stan
-    max_stanow = 1
 
     def cofnij_stan():
         if Gra.stan_gry == preGame.stan:
@@ -27,12 +28,14 @@ class Gra:
 
     def klikniecie(x, y):
         if Gra.stan_gry == Menu.stan:
-            if Menu.klikniecie(x, y) <= Gra.max_stanow:
+            if Menu.klikniecie(x, y) < AKCJA:
                 Gra.stan_gry = Menu.klikniecie(x, y)
 
         elif Gra.stan_gry == preGame.stan:
-            preGame.klikniecie(x, y)
+            if preGame.klikniecie(x, y) < AKCJA:
+                Gra.stan_gry = preGame.klikniecie(x, y)
 
+            
     def puszczenie():
         if Gra.stan_gry == preGame.stan:
             preGame.puszczenie()
@@ -74,6 +77,12 @@ while True:
 
     elif Gra.stan_gry == preGame.stan:
         preGame.rysuj(screen)
+
+    elif Gra.stan_gry == Rozdanie.stan:
+        Rozdanie.rysuj(screen)
+    
+    elif Gra.stan_gry == Rozgrywka.stan:
+        Rozgrywka.rysuj(screen)
 
     # if Gra.stan_gry==preGame.stan:
 

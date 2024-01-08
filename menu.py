@@ -45,7 +45,7 @@ class Menu:
             and x <= Menu.start_corner[0] + Menu.start_napis.get_width() + 50
             and y >= Menu.start_corner[1] - 10
             and y <= Menu.start_corner[1] + Menu.start_napis.get_height() + 30
-        ):
+            ):
             return 1
         return Menu.stan
 
