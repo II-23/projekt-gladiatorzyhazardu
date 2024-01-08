@@ -1,6 +1,6 @@
 from logic.cards import *
 
-figures=["ace","king","queen","ten","nine"]
+figures=["ace","king","queen", "jack", "ten","nine"]
 suits=["spades","hearts" ,"diamonds","clubs"]
 
 def CountF(set,figur):

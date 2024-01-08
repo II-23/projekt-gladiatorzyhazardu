@@ -6,6 +6,7 @@ from logic.deck_of_cards import *
 from logic.cards import *
 from logic.setcheck import *
 from logic.player import *
+from logic.bids import *
 
 class Table:
     ##Aliaksander's code from game_start.py with some minor tweaks and made into an init\/\/\/\/\/\/\
@@ -57,9 +58,21 @@ class Table:
         if len(self.players) == 0:
             return -1
         return self.players[self.current_index].id
+
+    def AvailableBids(self):
+        cont = False
+        print('check')
+        if self.recent_bid == '':
+            cont = True
+        else:
+            for i in bids:
+                if cont:
+                    print(i)
+                if self.recent_bid == i:
+                    cont = True
     
     def play(self, bid):
-        if bid == "Check":
+        if bid == "check":
             if eval(self.recent_bid) == True:
                 self.players[self.current_index].losses += 1
             else:
