@@ -13,6 +13,7 @@ class Table:
     def __init__(self):
         self.players=[]
         self.recent_bid=""
+        self.bid_history=[]
         self.deck=Deck()
         self.current_index = 0
         self.started = False
@@ -70,6 +71,13 @@ class Table:
                     print(i)
                 if self.recent_bid == i:
                     cont = True
+
+    def ShowBidHistory(self):
+        print('Most recent bid:')
+        print(f'\t{self.recent_bid}')
+        print('Earlier bids:')
+        for i in self.bid_history[::-1]:
+            print(f'\t{i}')
     
     def play(self, bid):
         if bid == "check":
@@ -81,6 +89,7 @@ class Table:
             
             self.nextTurn()
         else:
+            self.bid_history.append(self.recent_bid)
             self.recent_bid = bid
             self.current_index = (self.current_index + 1) % len(self.players)
 
