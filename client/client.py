@@ -6,7 +6,6 @@ parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
 sys.path.append(parent_dir)
 
 import requests
-from logic import game_start
 
 import config
 import asyncio

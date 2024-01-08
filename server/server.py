@@ -97,6 +97,7 @@ def start_game():
 
 @app.route('/get_table', methods=['GET'])
 def get_table():
+    # TODO
     data = request.json
     
     table_id = data.get('table_id')

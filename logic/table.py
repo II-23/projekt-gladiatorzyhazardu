@@ -7,7 +7,7 @@ from logic.cards import *
 from logic.setcheck import *
 from logic.player import *
 
-class Table:    
+class Table:
     ##Aliaksander's code from game_start.py with some minor tweaks and made into an init\/\/\/\/\/\/\
     def __init__(self):
         self.players=[]
