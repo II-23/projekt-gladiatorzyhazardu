@@ -1,15 +1,20 @@
 import pygame
 import sys
+from client import client
 from zmienne import *
 from menu import *
 from pregame import *
 from rozgrywka import *
 from rozdanie import *
+from info_o_grze import *
+from pygame.locals import *
+
+dane = game_info()
 
 pygame.init()
 pygame.display.set_caption("Poker tajski")
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), FULLSCREEN)
 
 
 # Rysowanie tła
@@ -43,13 +48,22 @@ class Gra:
     def ruch_myszki(x, y):
         if Gra.stan_gry == preGame.stan:
             preGame.ruch_myszki(x, y)
+        if Gra.stan_gry == Rozgrywka.stan:
+            Rozgrywka.ruch_myszki(x, y)
+    def wpisywanie(key, dane):
+        if Gra.stan_gry == preGame.stan:
+            preGame.wpisywanie(key, dane)
 
 
 while True:
-    clock.tick(60)
+    dt = clock.tick(60)
     rysuj_tlo()
     mouse = pygame.mouse.get_pos()
 
+    if not dane.nick == "" and dane.my_id == None:
+        dane.my_id = client.register(dane.nick)
+
+    print(dane.my_id)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -67,6 +81,8 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 Gra.cofnij_stan()
+            else:
+                Gra.wpisywanie(event.key, dane)
 
         # ruch myszki
         if event.type == pygame.MOUSEMOTION:
@@ -82,7 +98,7 @@ while True:
         Rozdanie.rysuj(screen)
     
     elif Gra.stan_gry == Rozgrywka.stan:
-        Rozgrywka.rysuj(screen)
+        Rozgrywka.rysuj(screen, dt)
 
     # if Gra.stan_gry==preGame.stan:
 
