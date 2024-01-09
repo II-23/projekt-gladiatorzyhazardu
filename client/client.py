@@ -1,5 +1,7 @@
 import os
 import sys
+import time
+import threading
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
@@ -8,7 +10,6 @@ sys.path.append(parent_dir)
 import requests
 
 import config
-import asyncio
 
 base_url = f"http://{config.server['host']}:{config.server['port']}"
 
@@ -64,19 +65,16 @@ def register(nickname):
     return data['player_id']
 
 # asyncronicaly ping the server in the background to inform that player is alive
-async def ping_server(player_id):
+def ping_server(player_id):
     while True:
         response = requests.post(f'{base_url}/ping', json={'player_id': player_id})
-        print('Ping')
-        await asyncio.sleep(3)
+        # print('Ping')
+        time.sleep(3)
 
-async def main():
-    nickname = input("Nickname:")
-    my_id = register(nickname)
+def main(my_id):
+  
 
-    print(f'My id: {my_id}')
-
-    await asyncio.gather(ping_server(my_id))
+    # await asyncio.gather(ping_server(my_id))
 
     while True:
         command = input('>').split()
@@ -99,4 +97,13 @@ async def main():
             print("No command matching")
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    nickname = input("Nickname:")
+    my_id = register(nickname)
+
+    print(f'My id: {my_id}')
+    pingi=threading.Thread(target=ping_server,args=[my_id])
+    mainy=threading.Thread(target=main,args=[my_id])
+
+    pingi.start()
+    mainy.start()
+    
