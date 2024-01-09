@@ -97,7 +97,7 @@ def start_game():
 
 @app.route('/get_table', methods=['GET'])
 def get_table():
-    # TODO
+    # TODO done chyba?
     data = request.json
     
     table_id = data.get('table_id')
@@ -105,9 +105,18 @@ def get_table():
         return jsonify({'message': f'ERROR: Table "{table_id}" does not exist'})
     
     table = TABLE_DB[table_id]['table']
-    players_in_table = [(p.nickname, p.id) for p in table.players]
 
-    return jsonify({'players': players_in_table})
+    players_in_table = [(p.nickname, p.id,p.active) for p in table.players]
+    cards_of_players=[list(p.cards_on_hand) for p in table.players]
+
+    tmp_players=table.players
+    admin_index=(-1,TABLE_DB[table_id]['admin_id'])
+    for i in range(len(tmp_players)):
+        if tmp_players[i].id==TABLE_DB[table_id]['admin_id']: 
+            admin_index=(i,TABLE_DB[table_id]['admin_id'])
+            break
+    
+    return jsonify(players=players_in_table,cards=cards_of_players,admin=admin_index,start_player=table.first_player)
 
 @app.route('/play_bid', methods=['POST'])
 def play_bid():

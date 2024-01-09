@@ -17,6 +17,7 @@ class Table:
         self.deck=Deck()
         self.current_index = 0
         self.started = False
+        self.first_player=0
 
     def addPlayer(self, new_player):
         self.players.append(new_player)
@@ -40,7 +41,7 @@ class Table:
         if len(self.players) == 1:
             self.started = False
             return
-
+        self.current_index=self.first_player #set current player to player which starts that turn
         self.deck = Deck()
         self.recent_bid = ""
 
@@ -86,7 +87,10 @@ class Table:
             else:
                 previous_player = (self.current_index + len(self.players) - 1) % len(self.players)
                 self.players[previous_player].losses += 1
-            
+               
+                self.current_index=previous_player
+
+            self.first_player=self.current_index  #set player which starts first
             self.nextTurn()
         else:
             self.bid_history.append(self.recent_bid)
