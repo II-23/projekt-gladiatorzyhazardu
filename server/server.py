@@ -19,7 +19,7 @@ app = Flask(__name__)
 PLAYER_DB = {} # dict[str, Player]
 
 # tables database
-TABLE_DB = {} # dict[str, Table]
+TABLE_DB = {} # dict[str, dict[str, Table/str]]
 
 @app.route('/create_player', methods=['POST'])
 def create_player():
@@ -189,6 +189,10 @@ def ping():
             if player.table_id != -1:
                 TABLE_DB[player.table_id]['table'].removePlayer(player_id)
             
+                # table is now empty, remove it
+                if len(TABLE_DB[player.table_id]['table'].players) == 0:
+                    TABLE_DB.pop(player.table_id)
+
             PLAYER_DB.pop(player_id)
     
     player_id = data.get('player_id')
