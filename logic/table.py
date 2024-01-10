@@ -22,9 +22,9 @@ class Table:
     def addPlayer(self, new_player):
         self.players.append(new_player)
 
-    def removePlayer(self, player):
+    def removePlayer(self, player_id):
         for i in range(self.players):
-            if self.players[i].id == player.id:
+            if self.players[i].id == player_id:
                 self.players.pop(i)
                 return True
         return False

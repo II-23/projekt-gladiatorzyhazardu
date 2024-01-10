@@ -16,10 +16,10 @@ import uuid
 app = Flask(__name__)
 
 # players database
-PLAYER_DB = {}
+PLAYER_DB = {} # dict[str, Player]
 
 # tables database
-TABLE_DB = {}
+TABLE_DB = {} # dict[str, Table]
 
 @app.route('/create_player', methods=['POST'])
 def create_player():
@@ -69,12 +69,31 @@ def join_table():
     if len(TABLE_DB[table_id]['table'].players) >= 23:
         return jsonify({'message': f'ERROR: Game on Table "{table_id}" has too many players (23)'})
 
+    PLAYER_DB[player_id].table_id = table_id
+
     player = PLAYER_DB[player_id]
     TABLE_DB[table_id]['table'].addPlayer(player)
 
     print(f'Player {player_id} joined table {table_id}')
 
     return jsonify({'message': f'{player_id} joined the table {table_id}'})
+
+@app.route('/leave_table', methods=['POST'])
+def leave_table():
+    data = request.json
+
+    player_id = data.get('player_id')
+    if player_id not in PLAYER_DB:
+        return jsonify({'message': f'ERROR: Player "{player_id}" does not exist'})
+
+    table_id = PLAYER_DB[player_id].table_id
+    if table_id not in TABLE_DB:
+        return jsonify({'message': f'ERROR: Table "{table_id}" does not exist or you havent join any.'})
+    
+    if TABLE_DB[table_id]['table'].removePlayer(player_id) == False:
+        return jsonify({'message': f'ERROR: Failed to leave the table "{table_id}". removePlayer() failed.'})
+
+    return jsonify({'message': f'{player_id} left the table {table_id}'})
 
 @app.route('/start_game', methods=['POST'])
 def start_game():
@@ -97,7 +116,6 @@ def start_game():
 
 @app.route('/get_table', methods=['GET'])
 def get_table():
-    # TODO done chyba?
     data = request.json
     
     table_id = data.get('table_id')
@@ -107,15 +125,25 @@ def get_table():
     table = TABLE_DB[table_id]['table']
 
     players_in_table = [(p.nickname, p.id,p.active) for p in table.players]
-    cards_of_players=[list(p.cards_on_hand) for p in table.players]
-    # print(cards_of_players)
+    cards_of_players = [list(p.cards_on_hand) for p in table.players]
+
     tmp_players=table.players
     admin_index=(-1,TABLE_DB[table_id]['admin_id'])
     for i in range(len(tmp_players)):
         if tmp_players[i].id==TABLE_DB[table_id]['admin_id']: 
             admin_index=(i,TABLE_DB[table_id]['admin_id'])
             break
-    return jsonify({ 'players': players_in_table,"admin" : admin_index,"cards":cards_of_players,"start_player": table.first_player,"bids": table.bid_history})
+    
+    return jsonify(
+                {
+                    'players': players_in_table,
+                    'admin': admin_index,
+                    'cards': cards_of_players,
+                    'start_player': table.first_player,
+                    'bids': table.bid_history,
+                    'current_player_index': table.current_index
+                }
+            )
 
 @app.route('/play_bid', methods=['POST'])
 def play_bid():
@@ -157,9 +185,9 @@ def ping():
 
     for player_id, player in PLAYER_DB.copy().items():
         if time.time() - player.last_ping > 5:
-            print("TIMEOUT: ", player_id)
+            print("TIMEOUT: ", player_id, "FROM", player.table_id)
             if player.table_id != -1:
-                TABLE_DB[player.table_id]['table'].timeoutPlayer(player_id)
+                TABLE_DB[player.table_id]['table'].removePlayer(player_id)
             
             PLAYER_DB.pop(player_id)
     
