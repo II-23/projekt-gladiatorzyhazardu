@@ -11,3 +11,4 @@ class game_info:
         self.admin_id = False
         self.current_player = None
         self.tables = None
+        self.start_game = False

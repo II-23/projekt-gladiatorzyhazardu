@@ -10,6 +10,7 @@ class preGame:
     tworzenie_stolu = False
     dolaczanie_do_stolu = False
     dolaczyl = False
+    wlaczenie_gry = False
 
     # menu
     glowny = pygame.rect.Rect(50, 50, SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100)
@@ -72,7 +73,7 @@ class preGame:
             if preGame.towrzenie_button.collidepoint(x, y):
                 preGame.tworzenie_stolu = True
         if dane.admin_id and preGame.start_button.collidepoint(x, y):
-            return 3
+            preGame.wlaczenie_gry = True
         if preGame.dolaczanie_do_stolu:
             for i in range(len(preGame.stoly)):
                 if preGame.stoly[i].collidepoint(x, y):
@@ -106,7 +107,7 @@ class preGame:
         
         #if dane.my_id == None:
         
-        if preGame.dolaczanie_do_stolu == False and preGame.tworzenie_stolu == False:
+        if dane.admin_id == False and preGame.dolaczanie_do_stolu == False and preGame.dolaczyl == False:
             screen.blit(preGame.tytul,(SCREEN_WIDTH // 2 - preGame.tytul.get_width() // 2,SCREEN_HEIGHT // 5 - preGame.tytul.get_height() // 2,))
             screen.blit(preGame.napis_nick,(SCREEN_WIDTH // 2 - preGame.napis_nick.get_width() // 2,SCREEN_HEIGHT // 2 - preGame.napis_nick.get_height() // 2,))
             if not dane.my_id == None:

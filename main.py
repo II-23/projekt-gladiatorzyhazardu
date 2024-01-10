@@ -32,6 +32,7 @@ def komunikacja_z_serwerem(dane):
         dane.players = akt['players']
         dane.current_player = akt['current_index']
         dane.player_cards = akt['cards']
+        dane.start_game = akt['game_started']
     #otworzone stoly
     if preGame.dolaczanie_do_stolu == True:
         akt = client.get_all_tables()
@@ -47,10 +48,16 @@ def komunikacja_z_serwerem(dane):
         print(dane.tables)
 
     #dolaczanie do stolu
-    if preGame.dolaczyl == True:
+    if preGame.dolaczyl == True and preGame.dolaczanie_do_stolu == True:
         client.join_table(dane.my_id, dane.table_id)
-        preGame.dolaczyl = False
         preGame.dolaczanie_do_stolu = False
+
+    #startowanie gry
+    if preGame.wlaczenie_gry == True:
+        client.start_game(dane.my_id, dane.table_id)
+        preGame.wlaczenie_gry = False
+    
+
 
 # Rysowanie tła
 def rysuj_tlo():
@@ -91,7 +98,7 @@ class Gra:
 
 
 while True:
-    dt = clock.tick(60)
+    dt = clock.tick(30)
     rysuj_tlo()
     mouse = pygame.mouse.get_pos()
 
@@ -99,6 +106,10 @@ while True:
     if not dane.table_id == None:
         pass
         #print(dane.table_id)
+    if Gra.stan_gry == preGame.stan:
+        if dane.start_game:
+            Gra.stan_gry = Rozdanie.stan
+        
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -130,7 +141,7 @@ while True:
         preGame.rysuj(screen, dane)
 
     elif Gra.stan_gry == Rozdanie.stan:
-        Rozdanie.rysuj(screen)
+        Rozdanie.rysuj(screen, dt)
     
     elif Gra.stan_gry == Rozgrywka.stan:
         Rozgrywka.rysuj(screen, dt)
