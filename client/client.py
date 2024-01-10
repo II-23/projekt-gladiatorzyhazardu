@@ -41,8 +41,8 @@ def register():
 def create_table(player_id):
     response = requests.post(f'{base_url}/create_table', json={'player_id': player_id})
     print(response.json())
-
     data = response.json()
+    join_table(player_id,data['table_id'])
     return data['table_id']
 
 def start_game(player_id, table_id):
@@ -51,7 +51,9 @@ def start_game(player_id, table_id):
 
 def get_table(table_id):
     response = requests.get(f'{base_url}/get_table', json={'table_id': table_id})
+    data=response.json()
     print(response.json())
+    return data
 
 def make_bid(player_id, table_id, bid):
     response = requests.post(f'{base_url}/make_bid', json={'player_id': player_id, 'table_id': table_id, 'bid': bid})

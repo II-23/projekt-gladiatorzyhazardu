@@ -108,15 +108,15 @@ def get_table():
 
     players_in_table = [(p.nickname, p.id,p.active) for p in table.players]
     cards_of_players=[list(p.cards_on_hand) for p in table.players]
-
+    # print(cards_of_players)
     tmp_players=table.players
     admin_index=(-1,TABLE_DB[table_id]['admin_id'])
     for i in range(len(tmp_players)):
         if tmp_players[i].id==TABLE_DB[table_id]['admin_id']: 
             admin_index=(i,TABLE_DB[table_id]['admin_id'])
             break
-    
-    return jsonify(players=players_in_table,cards=cards_of_players,admin=admin_index,start_player=table.first_player)
+
+    return jsonify({ 'players': players_in_table,"admin" : admin_index,"cards":cards_of_players,"start_player": table.first_player})
 
 @app.route('/play_bid', methods=['POST'])
 def play_bid():

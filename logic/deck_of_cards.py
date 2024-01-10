@@ -11,12 +11,12 @@ class Deck:
            
     def __init__(self):
         
-        self.cards=set()
-        self.dealt=set()
+        self.cards=set({})
+        self.dealt=set({})
 
         for i in range(4):
             for j in range(9,15):
-                self.add(Card(j, i))
+                self.add(str(Card(j, i)))
                 
     def print_deck(self):
         for i in self.cards:
