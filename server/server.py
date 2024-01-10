@@ -133,6 +133,7 @@ def get_table():
         if tmp_players[i].id==TABLE_DB[table_id]['admin_id']: 
             admin_index=(i,TABLE_DB[table_id]['admin_id'])
             break
+<<<<<<< HEAD
     
     return jsonify(
                 {
@@ -144,6 +145,10 @@ def get_table():
                     'current_player_index': table.current_index
                 }
             )
+=======
+    return jsonify({ 'players': players_in_table,'admin' : admin_index,'cards':cards_of_players,'current_index': table.current_index,'bids': table.bid_history})
+
+>>>>>>> 0fb8dae (tworzenie stolu)
 
 @app.route('/play_bid', methods=['POST'])
 def play_bid():

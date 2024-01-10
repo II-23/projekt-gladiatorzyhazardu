@@ -16,6 +16,20 @@ pygame.display.set_caption("Poker tajski")
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), FULLSCREEN)
 
+def komunikacja_z_serwerem(dane):
+    if not dane.nick == "" and dane.my_id == None:
+            dane.my_id = client.register(dane.nick)
+    if dane.admin_id == False and preGame.tworzenie_stolu == True:
+        dane.table_id = client.create_table(dane.my_id)
+        dane.admin_id = True
+        client.join_table(dane.my_id, dane.table_id)
+    if not dane.table_id == None:
+        akt = client.get_table(dane.table_id)
+        if dane.current_player == None:
+            print(akt)
+        dane.players = akt['players']
+        dane.current_player = akt['current_index']
+        dane.player_cards = akt['cards']
 
 # Rysowanie tła
 def rysuj_tlo():
@@ -31,14 +45,14 @@ class Gra:
         if Gra.stan_gry == preGame.stan:
             Gra.stan_gry = Menu.stan
 
-    def klikniecie(x, y):
+    def klikniecie(x, y, dane):
         if Gra.stan_gry == Menu.stan:
             if Menu.klikniecie(x, y) < AKCJA:
                 Gra.stan_gry = Menu.klikniecie(x, y)
 
         elif Gra.stan_gry == preGame.stan:
-            if preGame.klikniecie(x, y) < AKCJA:
-                Gra.stan_gry = preGame.klikniecie(x, y)
+            if preGame.klikniecie(x, y, dane) < AKCJA:
+                Gra.stan_gry = preGame.klikniecie(x, y, dane)
 
             
     def puszczenie():
@@ -60,10 +74,10 @@ while True:
     rysuj_tlo()
     mouse = pygame.mouse.get_pos()
 
-    if not dane.nick == "" and dane.my_id == None:
-        dane.my_id = client.register(dane.nick)
-
-    print(dane.my_id)
+    komunikacja_z_serwerem(dane)
+    if not dane.table_id == None:
+        pass
+        #print(dane.table_id)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -71,7 +85,7 @@ while True:
 
         # nacisniecie myszki
         if event.type == pygame.MOUSEBUTTONDOWN:
-            Gra.klikniecie(mouse[0], mouse[1])
+            Gra.klikniecie(mouse[0], mouse[1], dane)
 
         # puszczenie myszki
         if event.type == pygame.MOUSEBUTTONUP:
@@ -92,7 +106,7 @@ while True:
         Menu.rysuj(screen)
 
     elif Gra.stan_gry == preGame.stan:
-        preGame.rysuj(screen)
+        preGame.rysuj(screen, dane)
 
     elif Gra.stan_gry == Rozdanie.stan:
         Rozdanie.rysuj(screen)
