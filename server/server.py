@@ -150,6 +150,7 @@ def get_table():
 
 >>>>>>> 0fb8dae (tworzenie stolu)
 
+
 @app.route('/play_bid', methods=['POST'])
 def play_bid():
     data = request.json
@@ -208,6 +209,19 @@ def ping():
     PLAYER_DB[player_id].last_ping = time.time()
 
     return jsonify({'message': 'Ping successfuly'})
+
+@app.route('/id_to_nick', methods=['POST'])
+def id_to_nick():
+    data = request.json
+
+    player_id = data.get('player_id')
+    if player_id not in PLAYER_DB:
+        return jsonify({'message': f'ERROR: Player "{player_id}" does not exist'})
+
+    player = PLAYER_DB[player_id]
+
+    return jsonify({'nickname': player.nickname})
+
 
 if __name__ == '__main__':
     print("HOST: ", config.server['host'])

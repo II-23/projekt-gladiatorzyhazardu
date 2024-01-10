@@ -9,6 +9,7 @@ class preGame:
     nick = ""
     tworzenie_stolu = False
     dolaczanie_do_stolu = False
+    dolaczyl = False
 
     # menu
     glowny = pygame.rect.Rect(50, 50, SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100)
@@ -38,6 +39,20 @@ class preGame:
     dolaczanie_napis = font.render("Dołącz", True, DARK_RED)
 
     #start_button = pygame.rect.Rect(SCREEN_WIDTH // 2 - 100, 4*SCREEN_HEIGHT // 5 - 50, 200, 100)
+    
+    stoly = []
+
+    def lista_stolow_rys(screen, dane):
+        if dane.tables:
+            liczba_stolow = len(dane.tables)
+            preGame.stoly = []
+            for i in range(liczba_stolow):
+                preGame.stoly.append(pygame.rect.Rect(SCREEN_WIDTH//2 - 200, 100 + 100*i, 400, 80))
+                pygame.draw.rect(screen, DARK_GREY, preGame.stoly[i])
+                pygame.draw.rect(screen, BLACK, preGame.stoly[i], 5)
+                font = pygame.font.SysFont("comicsansms", 50)
+                napis = font.render(dane.tables[i][1], True, DARK_RED)
+                screen.blit(napis, (SCREEN_WIDTH//2 - napis.get_width()//2, 100 + 100*i + 40 - napis.get_height()//2))
 
     #liczba graczy przy stole
     def startowanie_rys(screen, liczba_graczy):
@@ -58,6 +73,12 @@ class preGame:
                 preGame.tworzenie_stolu = True
         if dane.admin_id and preGame.start_button.collidepoint(x, y):
             return 3
+        if preGame.dolaczanie_do_stolu:
+            for i in range(len(preGame.stoly)):
+                if preGame.stoly[i].collidepoint(x, y):
+                    dane.table_id = dane.tables[i][0]
+                    dane.admin_id = False
+                    preGame.dolaczyl = True
         return AKCJA
         
     def puszczenie():
@@ -99,7 +120,8 @@ class preGame:
         
         elif dane.admin_id:
             preGame.startowanie_rys(screen, len(dane.players))
-
+        elif preGame.dolaczanie_do_stolu:
+            preGame.lista_stolow_rys(screen, dane)
         #pygame.draw.rect(screen, DARK_GREY, preGame.belka)
         #pygame.draw.rect(screen, DARK_RED, preGame.suwak)
 

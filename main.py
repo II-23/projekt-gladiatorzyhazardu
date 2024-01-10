@@ -23,13 +23,34 @@ def komunikacja_z_serwerem(dane):
         dane.table_id = client.create_table(dane.my_id)
         dane.admin_id = True
         client.join_table(dane.my_id, dane.table_id)
+        
     if not dane.table_id == None:
         akt = client.get_table(dane.table_id)
         if dane.current_player == None:
-            print(akt)
+            pass
+            #print(akt)
         dane.players = akt['players']
         dane.current_player = akt['current_index']
         dane.player_cards = akt['cards']
+    #otworzone stoly
+    if preGame.dolaczanie_do_stolu == True:
+        akt = client.get_all_tables()
+        dane.tables = []
+        for i in range(len(akt)):
+            admin = client.get_table(akt[i])['admin'][1]
+            players = client.get_all_players()
+            for j in range(len(players)):
+                if players[j] == admin:
+                    admin_nick = client.id_to_nick(admin)
+                    dane.tables.append((akt[i], admin_nick))
+                    break
+        print(dane.tables)
+
+    #dolaczanie do stolu
+    if preGame.dolaczyl == True:
+        client.join_table(dane.my_id, dane.table_id)
+        preGame.dolaczyl = False
+        preGame.dolaczanie_do_stolu = False
 
 # Rysowanie tła
 def rysuj_tlo():

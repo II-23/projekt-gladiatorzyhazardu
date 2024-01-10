@@ -71,6 +71,13 @@ def ping_server(player_id):
         response = requests.post(f'{base_url}/ping', json={'player_id': player_id})
         # print('Ping')
         time.sleep(3)
+    
+def id_to_nick(player_id):
+    response = requests.post(f'{base_url}/id_to_nick', json={'player_id': player_id})
+    #print(response.json())
+
+    data = response.json()
+    return data['nickname']
 
 def main(my_id):
   
