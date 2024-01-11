@@ -36,7 +36,11 @@ class Table:
 
         self.started = True
         self.nextTurn()
-
+    
+    def endGame(self):
+        winner = max(self.players, key=lambda x: x.losses, default=None)
+        return winner
+    
     def nextTurn(self):
         if len(self.players) == 1:
             self.started = False

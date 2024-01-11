@@ -204,6 +204,25 @@ def ping():
 
     return jsonify({'message': 'Ping successfuly'})
 
+@app.route('/end_game', methods=['POST'])
+def end_game():
+    data = request.json
+
+    admin_id = data.get('player_id')
+    if admin_id not in PLAYER_DB:
+        return jsonify({'message': f'ERROR: Player "{admin_id}" does not exist'})
+
+    table_id = data.get('table_id')
+    if table_id not in TABLE_DB:
+        return jsonify({'message': f'ERROR: Table "{table_id}" does not exist'})
+    
+    if TABLE_DB[table_id]['admin_id'] != admin_id:
+        return jsonify({'message': f'ERROR: You({admin_id}) are not the admin of table {table_id}'})
+    
+    TABLE_DB[table_id]['table'].endGame()
+
+    return jsonify({'message': f'Table {table_id} ended successfully'})
+
 if __name__ == '__main__':
     print("HOST: ", config.server['host'])
     print("PORT: ", config.server['port'])
