@@ -40,13 +40,11 @@ class Rozdanie:
     talia = imgB_DOWN
 
 
-    liczba_graczy = 5
+    liczba_graczy = 0
     karty_gracza = []
     karty_do_rozdania = 0
 
-    for i in range(liczba_graczy):
-        karty_gracza.append(4)
-        karty_do_rozdania += 4
+    
 
     wsp_graczy = []
     przedzial_na_gracza = SCREEN_WIDTH // (liczba_graczy-1)
@@ -72,7 +70,22 @@ class Rozdanie:
         
 
     #def ruch_myszki(x, y):
+    def ustaw(dane):
+        Rozdanie.czas_przejscia = 3000
+        Rozdanie.liczba_graczy = len(dane.players)
+        Rozdanie.karty_gracza = []
+        Rozdanie.karty_do_rozdania = 0
+        for i in dane.player_cards:
+            Rozdanie.karty_gracza.append(len(i))
+            Rozdanie.karty_do_rozdania += len(i)
+        Rozdanie.wsp_graczy = []
+        Rozdanie.przedzial_na_gracza = SCREEN_WIDTH // (Rozdanie.liczba_graczy-1)
+        Rozdanie.pierwszy_gracz = Rozdanie.przedzial_na_gracza // 2 - Rozdanie.width_DOWN // 2
+        Rozdanie.glowny_gracz = (SCREEN_WIDTH // 2 - Rozdanie.width_DOWN // 2, SCREEN_HEIGHT - Rozdanie.height_DOWN - 30)
 
+        Rozdanie.wsp_graczy.append(Rozdanie.glowny_gracz)
+        for i in range(1, Rozdanie.liczba_graczy):
+            Rozdanie.wsp_graczy.append((Rozdanie.pierwszy_gracz + (i-1) * Rozdanie.przedzial_na_gracza, 30))
 
     def rysuj(screen, dt):
         screen.blit(Rozdanie.imgB_DOWN, (SCREEN_WIDTH/2 - Rozdanie.width_DOWN/2, SCREEN_HEIGHT/2 - Rozdanie.height_DOWN/2))
@@ -175,3 +188,7 @@ class Rozdanie:
                     Rozdanie.rozdawana_karta = (0, 0)
                     Rozdanie.ile_rozdanych += 1
                 screen.blit(Rozdanie.imgB_DOWN, Rozdanie.wsp_akt)
+
+
+        if Rozdanie.animacja_tasowania == 0 and Rozdanie.animacja_rozdawania == 0:
+            Rozdanie.czas_przejscia -=dt

@@ -17,22 +17,28 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), FULLSCREEN)
 
 def komunikacja_z_serwerem(dane):
+    #rejestracja
     if not dane.nick == "" and dane.my_id == None:
             dane.my_id = client.register(dane.nick)
+    
+    #tworzenie stolu
     if dane.admin_id == False and preGame.tworzenie_stolu == True:
         dane.table_id = client.create_table(dane.my_id)
         dane.admin_id = True
-        client.join_table(dane.my_id, dane.table_id)
-        
+        akt  = client.get_table(dane.table_id)
+        for i in range(len(akt['players'])):
+            if akt['players'][i][1] == dane.my_id:
+                dane.my_index = i
+                break
+
+    #aktualizacja danych
     if not dane.table_id == None:
         akt = client.get_table(dane.table_id)
-        if dane.current_player == None:
-            pass
-            #print(akt)
         dane.players = akt['players']
         dane.current_player = akt['current_index']
         dane.player_cards = akt['cards']
         dane.start_game = akt['game_started']
+
     #otworzone stoly
     if preGame.dolaczanie_do_stolu == True:
         akt = client.get_all_tables()
@@ -51,11 +57,17 @@ def komunikacja_z_serwerem(dane):
     if preGame.dolaczyl == True and preGame.dolaczanie_do_stolu == True:
         client.join_table(dane.my_id, dane.table_id)
         preGame.dolaczanie_do_stolu = False
+        akt = client.get_table(dane.table_id)
+        for i in range(len(akt['players'])):
+            if akt['players'][i][1] == dane.my_id:
+                dane.my_index = i
+                break
 
     #startowanie gry
     if preGame.wlaczenie_gry == True:
         client.start_game(dane.my_id, dane.table_id)
         preGame.wlaczenie_gry = False
+        
     
 
 
@@ -102,6 +114,8 @@ while True:
     rysuj_tlo()
     mouse = pygame.mouse.get_pos()
 
+    #print(client.get_all_tables())
+
     komunikacja_z_serwerem(dane)
     if not dane.table_id == None:
         pass
@@ -109,6 +123,15 @@ while True:
     if Gra.stan_gry == preGame.stan:
         if dane.start_game:
             Gra.stan_gry = Rozdanie.stan
+            Rozdanie.ustaw(dane)
+    if Gra.stan_gry == Rozdanie.stan:
+        if Rozdanie.czas_przejscia <= 0:
+            Gra.stan_gry = Rozgrywka.stan
+            Rozgrywka.ustaw(dane)
+
+
+    print(dane.player_cards)
+
         
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

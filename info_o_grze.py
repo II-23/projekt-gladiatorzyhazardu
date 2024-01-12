@@ -12,3 +12,4 @@ class game_info:
         self.current_player = None
         self.tables = None
         self.start_game = False
+        self.my_index = None

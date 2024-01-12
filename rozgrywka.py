@@ -42,7 +42,8 @@ class Rozgrywka:
         
         
     #def puszczenie():
-        
+    def ustaw(dane):
+        pass
 
     def ruch_myszki(x, y):
         if Rozgrywka.strefa_wysuwania.collidepoint(x, y):
