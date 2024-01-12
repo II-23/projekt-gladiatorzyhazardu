@@ -1,14 +1,14 @@
 import pygame
-import tkinter
+#import tkinter
 
-root = tkinter.Tk()
+#root = tkinter.Tk()
 
 
 pygame.init()
-# SCREEN_WIDTH = 1920
-# SCREEN_HEIGHT = 1080
-SCREEN_WIDTH = root.winfo_screenwidth()
-SCREEN_HEIGHT = root.winfo_screenheight()
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
+#SCREEN_WIDTH = root.winfo_screenwidth()
+#SCREEN_HEIGHT = root.winfo_screenheight()
 
 # kolory
 GREY = (220, 220, 220)
@@ -19,5 +19,5 @@ BLACK = (0, 0, 0)
 
 
 #dane
-PLAYERS = 2
+#PLAYERS = c
 AKCJA = 11
