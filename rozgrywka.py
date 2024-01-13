@@ -39,27 +39,11 @@ class Rozgrywka:
     #def puszczenie():
     def name_to_path(card_name):
         card_name = card_name.split(" ")
-        path = "textures/texturesX/"
-        if card_name[0] == "ace":
-            path += "A"
-        elif card_name[0] == "king":
-            path += "K"
-        elif card_name[0] == "queen":
-            path += "Q"
-        elif card_name[0] == "jack":
-            path += "J"
-        elif card_name[0] == "ten":
-            path += "10"
-        elif card_name[0] == "nine":
-            path += "9"
-        if card_name[2] == "clubs":
-            path += "clubsX.png"
-        elif card_name[2] == "diamonds":
-            path += "diamondsX.png"
-        elif card_name[2] == "hearts":
-            path += "heartsX.png"
-        elif card_name[2] == "spades":
-            path += "spadesX.png"
+        path = "textures/"
+        path += card_name[0]
+        path += '-of-'
+        path += card_name[2]
+        path += '.png'
         return path
 
     def ustaw(dane):
