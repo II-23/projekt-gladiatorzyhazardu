@@ -28,7 +28,7 @@ class Rozdanie:
     dh = heightUP - height_DOWN
 
     #karta lezaca
-    imgB_DOWN = pygame.image.load("textures/texturesX/b0X.png")
+    imgB_DOWN = pygame.image.load("textures/b0.png")
     imgB_DOWN = pygame.transform.scale_by(imgB_DOWN, scale_start)
 
     karta_przesuwana = pygame.transform.scale_by(imgB_DOWN, scaleUP)
