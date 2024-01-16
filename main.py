@@ -73,7 +73,7 @@ def komunikacja_z_serwerem(dane):
 
 # Rysowanie tła
 def rysuj_tlo():
-    bg = pygame.image.load("data/images/kolor.png")
+    bg = pygame.image.load("textures/background-start.png")
     screen.blit(bg, (0, 0))
 
 
