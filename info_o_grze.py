@@ -13,3 +13,4 @@ class game_info:
         self.tables = None
         self.start_game = False
         self.my_index = None
+        self.bid_history = []

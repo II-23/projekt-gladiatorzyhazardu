@@ -38,6 +38,7 @@ def komunikacja_z_serwerem(dane):
         dane.current_player = akt['current_index']
         dane.player_cards = akt['cards']
         dane.start_game = akt['game_started']
+        dane.bid_history = akt['bids']
 
     #otworzone stoly
     if preGame.dolaczanie_do_stolu == True:
@@ -72,10 +73,15 @@ def komunikacja_z_serwerem(dane):
 
 
 # Rysowanie tła
-def rysuj_tlo():
-    bg = pygame.image.load("textures/background-start.png")
-    screen.blit(bg, (0, 0))
+bg_start = pygame.image.load("textures/background-start.png")
+bg_game = pygame.image.load("textures/background-game.png").convert()
+bg_game = pygame.transform.scale(bg_game, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
+def rysuj_tlo(stan):
+    if stan != Rozgrywka.stan:
+        screen.blit(bg_start, (0, 0))
+    else:
+        screen.blit(bg_game, (0, 0))
 
 class Gra:
     #liczba_graczy = 2
@@ -111,9 +117,9 @@ class Gra:
 
 while True:
     dt = clock.tick(30)
-    rysuj_tlo()
+    rysuj_tlo(Gra.stan_gry)
     mouse = pygame.mouse.get_pos()
-
+    print(dt)
     #print(client.get_all_tables())
 
     komunikacja_z_serwerem(dane)
@@ -167,7 +173,7 @@ while True:
         Rozdanie.rysuj(screen, dt)
     
     elif Gra.stan_gry == Rozgrywka.stan:
-        Rozgrywka.rysuj(screen, dt)
+        Rozgrywka.rysuj(screen, dt, dane)
 
     # if Gra.stan_gry==preGame.stan:
 
