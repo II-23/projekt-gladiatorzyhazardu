@@ -24,5 +24,12 @@ Na ten moment nie ma dokładnego połączenia pomiędzy GUI oraz
 kodem logiki, wiec narazie aby uruchomić client po prostu:
 
 ```bash
-python3 client.py
+python3 client/client.py
+```
+
+## Uruchamiane GUI(działa tylko częściowo)
+
+Aby zobaczyć cześćiowo działające GUI należy po prostu:
+```bash
+python3 main.py
 ```
