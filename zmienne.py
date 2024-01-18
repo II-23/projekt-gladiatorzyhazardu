@@ -7,6 +7,10 @@ import pygame
 pygame.init()
 SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1080
+TABLE_WIDTH = 1593 - 342
+TABLE_HEIGHT = 1061 - 18
+TABLE_CORNER = (343, 19)
+TABLE_CENTER = (TABLE_CORNER[0] + TABLE_WIDTH/2, TABLE_CORNER[1] + TABLE_HEIGHT/2)
 #SCREEN_WIDTH = root.winfo_screenwidth()
 #SCREEN_HEIGHT = root.winfo_screenheight()
 

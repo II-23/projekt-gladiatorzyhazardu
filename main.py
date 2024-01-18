@@ -72,10 +72,15 @@ def komunikacja_z_serwerem(dane):
 
 
 # Rysowanie tła
-def rysuj_tlo():
-    bg = pygame.image.load("data/images/kolor.png")
-    screen.blit(bg, (0, 0))
+bg_start = pygame.image.load("textures/background-start.png")
+bg_game = pygame.image.load("textures/background-game.png").convert()
+bg_game = pygame.transform.scale(bg_game, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
+def rysuj_tlo(stan):
+    if stan != Rozgrywka.stan and stan != Rozdanie.stan:
+        screen.blit(bg_start, (0, 0))
+    else:
+        screen.blit(bg_game, (0, 0))
 
 class Gra:
     #liczba_graczy = 2
