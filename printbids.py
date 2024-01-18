@@ -1,5 +1,4 @@
 import pygame
-import time
 from zmienne import *
 # Initialize Pygame
 pygame.init()
