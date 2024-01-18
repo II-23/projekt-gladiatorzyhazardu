@@ -59,7 +59,20 @@ def display_new_bids(screen,strings, opacity, start_pos=(16,40),scale=1.0):
     
     screen.blit(shape_img,shape)
     screen.blit(text, text_rect)
-    display_bids(screen,strings[:len(strings)-1],(start_pos[0],start_pos[1]+RECTANGLE_HEIGHT*scale + 2 * MARGIN*scale),scale)
+
+    shape_img.set_alpha(255)
+    text.set_alpha(255)
+    y_position = start_pos[1]+RECTANGLE_HEIGHT*scale + 2 * MARGIN*scale
+    for string in strings[1:]:
+        text = font.render(string, True, TEXT_COLOR)
+        shape.topleft=(start_pos[0],y_position)
+        text_rect = text.get_rect(center=shape.center)
+
+        screen.blit(shape_img,shape)
+        screen.blit(text, text_rect)
+
+        y_position += RECTANGLE_HEIGHT*scale + 2 * MARGIN*scale 
+    
         #time.sleep(1/30)
         #opacity+=5
 
