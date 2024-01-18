@@ -38,7 +38,7 @@ def komunikacja_z_serwerem(dane):
         dane.current_player = akt['current_index']
         dane.player_cards = akt['cards']
         dane.start_game = akt['game_started']
-        dane.bid_history = akt['bids']
+        #dane.bid_history = akt['bids']
 
     #otworzone stoly
     if preGame.dolaczanie_do_stolu == True:
