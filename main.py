@@ -14,7 +14,7 @@ dane = game_info()
 pygame.init()
 pygame.display.set_caption("Poker tajski")
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
 
 def komunikacja_z_serwerem(dane):
     #rejestracja
@@ -38,6 +38,7 @@ def komunikacja_z_serwerem(dane):
         dane.current_player = akt['current_index']
         dane.player_cards = akt['cards']
         dane.start_game = akt['game_started']
+        dane.bid_history = akt['bids']
 
     #otworzone stoly
     if preGame.dolaczanie_do_stolu == True:
@@ -116,7 +117,7 @@ class Gra:
 
 while True:
     dt = clock.tick(30)
-    rysuj_tlo()
+    rysuj_tlo(Gra.stan_gry)
     mouse = pygame.mouse.get_pos()
 
     #print(client.get_all_tables())
@@ -172,7 +173,7 @@ while True:
         Rozdanie.rysuj(screen, dt)
     
     elif Gra.stan_gry == Rozgrywka.stan:
-        Rozgrywka.rysuj(screen, dt)
+        Rozgrywka.rysuj(screen, dt, dane)
 
     # if Gra.stan_gry==preGame.stan:
 
