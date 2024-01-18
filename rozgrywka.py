@@ -23,6 +23,8 @@ class Rozgrywka:
     scale_start = 0.22
     width_DOWN = 630 * scale_start
     height_DOWN = 880 * scale_start
+    width_DOWN_front = 650 * scale_start
+    height_DOWN_front = 900 * scale_start
     liczba_kart = 0
     karty = []
 
@@ -37,15 +39,26 @@ class Rozgrywka:
     y_kart_wysunietych = SCREEN_HEIGHT - height_DOWN - 5
 
     for i in range(liczba_kart):
-        wsp_kart.append((SCREEN_WIDTH/2 - szerokosc_reki/2 + i*width_DOWN/2, y_kart))
+        #wsp_kart.append((SCREEN_WIDTH/2 - szerokosc_reki/2 + i*width_DOWN/2, y_kart))
+        wsp_kart.append((TABLE_CENTER[0] - szerokosc_reki/2 + i*width_DOWN/2, y_kart))
         wsp_kart_akt.append(wsp_kart[i])
     
     for i in range(liczba_kart):
-        wsp_kart_wysunietych.append((SCREEN_WIDTH/2 - szerokosc_reki_wysunietej/2 + i*width_DOWN + i*5, y_kart_wysunietych))
+        #wsp_kart_wysunietych.append((SCREEN_WIDTH/2 - szerokosc_reki_wysunietej/2 + i*width_DOWN + i*5, y_kart_wysunietych))
+        wsp_kart_wysunietych.append((TABLE_CENTER[0] - szerokosc_reki_wysunietej/2 + i*width_DOWN + i*5, y_kart_wysunietych))
     
     czas_wysuwania = 200
     wysuwanie = 0
-    strefa_wysuwania = pygame.rect.Rect(SCREEN_WIDTH/2 - szerokosc_reki/2, SCREEN_HEIGHT - 3*height_DOWN/5, szerokosc_reki, 3*height_DOWN/5)
+    #strefa_wysuwania = pygame.rect.Rect(SCREEN_WIDTH/2 - szerokosc_reki/2, SCREEN_HEIGHT - 3*height_DOWN/5, szerokosc_reki, 3*height_DOWN/5)
+    strefa_wysuwania = pygame.rect.Rect(TABLE_CENTER[0] - szerokosc_reki/2, SCREEN_HEIGHT - 3*height_DOWN/5, szerokosc_reki, 3*height_DOWN/5)
+
+
+    liczba_przeciwnikow = None
+    liczba_kart_przeciwnikow = []
+    nicki_przeciwnikow = []
+    wsp_kart_przeciwnikow = []
+    back = pygame.image.load("textures/b0.png")
+    back = pygame.transform.scale_by(back, scale_start)
 
     # #Autor : Xaro8
     # # use this function when no new bid was played(every time normal fps display)needs surface,list of bids, starting position and  scale is optional
@@ -100,6 +113,14 @@ class Rozgrywka:
         
         
     #def puszczenie():
+
+    def karty_graczy(dane):
+        liczba_graczy = len(dane.player_cards) - 1
+        liczba_kart = []
+        for i in range(1, liczba_graczy):
+            liczba_kart.append(len(dane.player_cards[i]))
+        
+
     def name_to_path(card_name):
         card_name = card_name.split(" ")
         path = "textures/"
@@ -117,21 +138,36 @@ class Rozgrywka:
             path = Rozgrywka.name_to_path(karty[i])
             Rozgrywka.karty.append(pygame.image.load(path))
             Rozgrywka.karty[i] = pygame.transform.scale_by(Rozgrywka.karty[i], Rozgrywka.scale_start)
-        Rozgrywka.szerokosc_reki = (Rozgrywka.liczba_kart+1) * Rozgrywka.width_DOWN/2
-        Rozgrywka.szerokosc_reki_wysunietej = Rozgrywka.szerokosc_reki + (Rozgrywka.liczba_kart-1) * Rozgrywka.width_DOWN/2 + (Rozgrywka.liczba_kart-1) * 5
+        Rozgrywka.szerokosc_reki = (Rozgrywka.liczba_kart+1) * Rozgrywka.width_DOWN_front/2
+        Rozgrywka.szerokosc_reki_wysunietej = Rozgrywka.szerokosc_reki + (Rozgrywka.liczba_kart-1) * Rozgrywka.width_DOWN_front/2 + (Rozgrywka.liczba_kart-1) * 5
         Rozgrywka.wsp_kart = []
         Rozgrywka.wsp_kart_wysunietych = []
         Rozgrywka.wsp_kart_akt = []
         for i in range(Rozgrywka.liczba_kart):
-            Rozgrywka.wsp_kart.append((SCREEN_WIDTH/2 - Rozgrywka.szerokosc_reki/2 + i*Rozgrywka.width_DOWN/2, Rozgrywka.y_kart))
+            #Rozgrywka.wsp_kart.append((SCREEN_WIDTH/2 - Rozgrywka.szerokosc_reki/2 + i*Rozgrywka.width_DOWN/2, Rozgrywka.y_kart))
+            Rozgrywka.wsp_kart.append((TABLE_CENTER[0] - Rozgrywka.szerokosc_reki/2 + i*Rozgrywka.width_DOWN/2, Rozgrywka.y_kart))
             Rozgrywka.wsp_kart_akt.append(Rozgrywka.wsp_kart[i])
-            Rozgrywka.wsp_kart_wysunietych.append((SCREEN_WIDTH/2 - Rozgrywka.szerokosc_reki_wysunietej/2 + i*Rozgrywka.width_DOWN + i*5, Rozgrywka.y_kart_wysunietych))
-        Rozgrywka.strefa_wysuwania = pygame.rect.Rect(SCREEN_WIDTH/2 - Rozgrywka.szerokosc_reki/2, SCREEN_HEIGHT - 3*Rozgrywka.height_DOWN/5, Rozgrywka.szerokosc_reki, 3*Rozgrywka.height_DOWN/5)
+            #Rozgrywka.wsp_kart_wysunietych.append((SCREEN_WIDTH/2 - Rozgrywka.szerokosc_reki_wysunietej/2 + i*Rozgrywka.width_DOWN + i*5, Rozgrywka.y_kart_wysunietych))
+            Rozgrywka.wsp_kart_wysunietych.append((TABLE_CENTER[0] - Rozgrywka.szerokosc_reki_wysunietej/2 + i*Rozgrywka.width_DOWN + i*5, Rozgrywka.y_kart_wysunietych))
+        #Rozgrywka.strefa_wysuwania = pygame.rect.Rect(SCREEN_WIDTH/2 - Rozgrywka.szerokosc_reki/2, SCREEN_HEIGHT - 3*Rozgrywka.height_DOWN/5, Rozgrywka.szerokosc_reki, 3*Rozgrywka.height_DOWN/5)
+        Rozgrywka.strefa_wysuwania = pygame.rect.Rect(TABLE_CENTER[0] - Rozgrywka.szerokosc_reki/2, SCREEN_HEIGHT - 3*Rozgrywka.height_DOWN/5, Rozgrywka.szerokosc_reki, 3*Rozgrywka.height_DOWN/5)
 
         if Rozgrywka.check_img == None:
             Rozgrywka.check_img = pygame.image.load("textures/button-check.png")
             Rozgrywka.check_img = pygame.transform.scale(Rozgrywka.check_img, (int(0.1*SCREEN_WIDTH), int(0.1*SCREEN_WIDTH)))
             Rozgrywka.button_check = Rozgrywka.check_img.get_rect()
+
+        Rozgrywka.liczba_przeciwnikow = len(dane.player_cards) - 1
+        Rozgrywka.liczba_kart_przeciwnikow = []
+        Rozgrywka.nicki_przeciwnikow = []
+        Rozgrywka.wsp_kart_przeciwnikow = []
+        przedzial_na_gracza = TABLE_WIDTH / Rozgrywka.liczba_przeciwnikow
+        pierwszy_gracz = TABLE_CORNER[0] + przedzial_na_gracza/2 - Rozgrywka.width_DOWN/2
+        for i in range(1, Rozgrywka.liczba_przeciwnikow + 1):
+            Rozgrywka.liczba_kart_przeciwnikow.append(len(dane.player_cards[i]))
+            Rozgrywka.nicki_przeciwnikow.append(dane.players[i][0])
+            Rozgrywka.wsp_kart_przeciwnikow.append((pierwszy_gracz + (i-1)*przedzial_na_gracza, 80))
+            
 
     def ruch_myszki(x, y):
         if Rozgrywka.strefa_wysuwania.collidepoint(x, y):
@@ -141,6 +177,18 @@ class Rozgrywka:
         
 
     def rysuj(screen, dt, dane):
+        for i in range(Rozgrywka.liczba_przeciwnikow):
+            #nick nad karta
+            nick = Rozgrywka.nicki_przeciwnikow[i]
+            font=pygame.font.SysFont("comicsansms",40)
+            text = font.render(nick, True, (0, 0, 0))
+            text_rect = text.get_rect(center=(Rozgrywka.wsp_kart_przeciwnikow[i][0] + Rozgrywka.width_DOWN // 2, Rozgrywka.wsp_kart_przeciwnikow[i][1] - text.get_height() // 2 - 10))
+            screen.blit(text, text_rect)
+            screen.blit(Rozgrywka.back, Rozgrywka.wsp_kart_przeciwnikow[i])
+            text = font.render(str(Rozgrywka.liczba_kart_przeciwnikow[i]), True, (0, 0, 0))
+            text_rect = text.get_rect(center=(Rozgrywka.wsp_kart_przeciwnikow[i][0] + Rozgrywka.width_DOWN // 2, Rozgrywka.wsp_kart_przeciwnikow[i][1] + text.get_height() // 2 + Rozgrywka.height_DOWN + 10))
+            screen.blit(text, text_rect)
+
         procent_wysuniecia = dt / Rozgrywka.czas_wysuwania
         for i in range(Rozgrywka.liczba_kart):
             #droga_calkowita = (Rozgrywka.wsp_kart_wysunietych[i][0]**2 - Rozgrywka.wsp_kart[i][0]**2)**(1/2)

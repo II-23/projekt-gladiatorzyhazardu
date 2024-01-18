@@ -78,7 +78,7 @@ bg_game = pygame.image.load("textures/background-game.png").convert()
 bg_game = pygame.transform.scale(bg_game, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 def rysuj_tlo(stan):
-    if stan != Rozgrywka.stan:
+    if stan != Rozgrywka.stan and stan != Rozdanie.stan:
         screen.blit(bg_start, (0, 0))
     else:
         screen.blit(bg_game, (0, 0))
