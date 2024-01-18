@@ -6,7 +6,6 @@ class Menu:
     stan = 0
 
     # menu
-    glowny = (50, 50, SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100)
     # tytuł
     font = pygame.font.SysFont("comicsansms", 120)
     tytul = font.render("Poker tajski", True, DARK_RED)
@@ -50,7 +49,6 @@ class Menu:
         return Menu.stan
 
     def rysuj(screen):
-        pygame.draw.rect(screen, GREY, Menu.glowny)
         screen.blit(
             Menu.tytul,
             (
