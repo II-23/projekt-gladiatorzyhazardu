@@ -34,7 +34,7 @@ dw = widthUP - width_DOWN
 dh = heightUP - height_DOWN
 
 #karta lezaca
-imgB_DOWN = pygame.image.load("textures/texturesX/b0X.png")
+imgB_DOWN = pygame.image.load("textures/b0.png")
 imgB_DOWN = pygame.transform.scale_by(imgB_DOWN, scale_start)
 
 karta_przesuwana = pygame.transform.scale_by(imgB_DOWN, scaleUP)
@@ -72,7 +72,7 @@ dy = 0
 ile_rozdanych = -1
 while True:
     dt = clock.tick(30)
-    bg = pygame.image.load("data/images/kolor.png")
+    bg = pygame.image.load("textures/background-start.png")
     screen.blit(bg, (0, 0))
     screen.blit(imgB_DOWN, (SCREEN_WIDTH/2 - width_DOWN/2, SCREEN_HEIGHT/2 - height_DOWN/2))
 

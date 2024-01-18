@@ -51,9 +51,8 @@ def start_game(player_id, table_id):
 
 def get_table(table_id):
     response = requests.get(f'{base_url}/get_table', json={'table_id': table_id})
-    data=response.json()
-    print(response.json())
-    return data
+    #print(response.json())
+    return response.json()
 
 def make_bid(player_id, table_id, bid):
     response = requests.post(f'{base_url}/make_bid', json={'player_id': player_id, 'table_id': table_id, 'bid': bid})
@@ -72,6 +71,13 @@ def ping_server(player_id):
         response = requests.post(f'{base_url}/ping', json={'player_id': player_id})
         # print('Ping')
         time.sleep(3)
+    
+def id_to_nick(player_id):
+    response = requests.post(f'{base_url}/id_to_nick', json={'player_id': player_id})
+    #print(response.json())
+
+    data = response.json()
+    return data['nickname']
 
 def main(my_id):
   

@@ -5,13 +5,20 @@ class preGame:
     stan = 1
     nacisniety_suwak = False
     poprzedni_x = 0
-    liczba_graczy = 2
+    max_dl_nicku = 8
+    nick = ""
+    tworzenie_stolu = False
+    dolaczanie_do_stolu = False
+    dolaczyl = False
+    wlaczenie_gry = False
 
     # menu
     glowny = pygame.rect.Rect(50, 50, SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100)
+
     # tytuł
     font = pygame.font.SysFont("comicsansms", 120)
-    tytul = font.render("Ilu graczy?", True, DARK_RED)
+    tytul = font.render("Wprowadź nick", True, DARK_RED)
+    napis_nick = font.render("Nick: " + nick, True, DARK_RED)
 
     # Start
     font = pygame.font.SysFont("comicsansms", 100)
@@ -27,69 +34,101 @@ class preGame:
         start_napis.get_height() + 20,
     )
 
-    # belka suwaka
-    belka = (SCREEN_WIDTH // 10, 200, 8 * SCREEN_WIDTH // 10, 25)
-    # suwak
-    suwak_x = SCREEN_WIDTH // 5
+    towrzenie_button = pygame.rect.Rect(1*SCREEN_WIDTH//5, 3*SCREEN_HEIGHT//5, SCREEN_WIDTH//5, SCREEN_HEIGHT//4)
+    dolaczanie_button = pygame.rect.Rect(3*SCREEN_WIDTH//5 , 3*SCREEN_HEIGHT//5, SCREEN_WIDTH//5, SCREEN_HEIGHT//4)
+    tworzenie_napis = font.render("Stwórz", True, DARK_RED)
+    dolaczanie_napis = font.render("Dołącz", True, DARK_RED)
 
-    suwak = pygame.rect.Rect(suwak_x, 190, 70, 45)
+    #start_button = pygame.rect.Rect(SCREEN_WIDTH // 2 - 100, 4*SCREEN_HEIGHT // 5 - 50, 200, 100)
+    
+    stoly = []
 
-    font_licznik = pygame.font.SysFont("comicsansms", 80)
-    licznik = font_licznik.render(str(liczba_graczy), True, BLACK)
+    def lista_stolow_rys(screen, dane):
+        if dane.tables:
+            liczba_stolow = len(dane.tables)
+            preGame.stoly = []
+            for i in range(liczba_stolow):
+                preGame.stoly.append(pygame.rect.Rect(SCREEN_WIDTH//2 - 200, 100 + 100*i, 400, 80))
+                pygame.draw.rect(screen, DARK_GREY, preGame.stoly[i])
+                pygame.draw.rect(screen, BLACK, preGame.stoly[i], 5)
+                font = pygame.font.SysFont("comicsansms", 50)
+                napis = font.render(dane.tables[i][1], True, DARK_RED)
+                screen.blit(napis, (SCREEN_WIDTH//2 - napis.get_width()//2, 100 + 100*i + 40 - napis.get_height()//2))
 
-    def aktualizuj_licznik():
-        # liczba graczy
-        dlugosc_podzialu = (SCREEN_WIDTH - 170) // 9
-        srodek_suwaka_bezwzgl = preGame.suwak_x + 35
-        #preGame.liczba_graczy = srodek_suwaka_bezwzgl // dlugosc_podzialu
-        PLAYERS = srodek_suwaka_bezwzgl // dlugosc_podzialu
-        preGame.font = pygame.font.SysFont("comicsansms", 80)
-        #preGame.licznik = preGame.font.render(str(preGame.liczba_graczy), True, BLACK)
-        preGame.licznik = preGame.font.render(str(PLAYERS), True, BLACK)
+    #liczba graczy przy stole
+    def startowanie_rys(screen, liczba_graczy):
+        font = pygame.font.SysFont("comicsansms", 100)
+        liczba_graczy_napis = font.render("Liczba graczy: " + str(liczba_graczy), True, DARK_RED)
+        screen.blit(liczba_graczy_napis, (SCREEN_WIDTH // 2 - liczba_graczy_napis.get_width() // 2, 3*SCREEN_HEIGHT // 5 - liczba_graczy_napis.get_height() // 2))
+        
+        pygame.draw.rect(screen, DARK_GREY, preGame.start_button)
+        screen.blit(preGame.start_napis, preGame.start_corner)
 
-    def aktualizuj_suwak(przesuniecie, x):
-        preGame.suwak_x += przesuniecie
-        if x < 50:
-            preGame.suwak_x = 50
-        elif x > SCREEN_WIDTH - 50:
-            preGame.suwak_x = SCREEN_WIDTH - 50 - 70
-        if preGame.suwak_x < 50:
-            preGame.suwak_x = 50
-        elif preGame.suwak_x > SCREEN_WIDTH - 50 - 70:
-            preGame.suwak_x = SCREEN_WIDTH - 50 - 70
-        preGame.suwak = pygame.rect.Rect(preGame.suwak_x, 190, 70, 45)
 
-        preGame.aktualizuj_licznik()
-
-    def klikniecie(x, y):
-        # suwak
-        if preGame.suwak.collidepoint(x, y):
-            preGame.nacisniety_suwak = True
+    def klikniecie(x, y, dane):
         # przejscie do rozdania kart
-        elif preGame.start_button.collidepoint(x, y):
-            return 3
+        if preGame.dolaczanie_do_stolu == False and preGame.tworzenie_stolu == False:
+            if preGame.dolaczanie_button.collidepoint(x, y):
+                preGame.dolaczanie_do_stolu = True
+            if preGame.towrzenie_button.collidepoint(x, y):
+                preGame.tworzenie_stolu = True
+        if dane.admin_id and preGame.start_button.collidepoint(x, y):
+            preGame.wlaczenie_gry = True
+        if preGame.dolaczanie_do_stolu:
+            for i in range(len(preGame.stoly)):
+                if preGame.stoly[i].collidepoint(x, y):
+                    dane.table_id = dane.tables[i][0]
+                    dane.admin_id = False
+                    preGame.dolaczyl = True
         return AKCJA
         
     def puszczenie():
-        preGame.nacisniety_suwak = False
-
+        pass
     def ruch_myszki(x, y):
-        if preGame.nacisniety_suwak:
-            przesuniecie = x - preGame.poprzedni_x
-            preGame.aktualizuj_suwak(przesuniecie, x)
+        pass
 
-        preGame.poprzedni_x = x
+    def wpisywanie(key, dane):
+        if dane.nick == "":
+            if (key >= ord('a') and key <= ord('z')) or (key >= ord('0') and key <= ord('9')):
+                if len(preGame.nick) < preGame.max_dl_nicku:
+                    preGame.nick += chr(key)
+                    print(preGame.nick)
+            elif key == ord('\b') and len(preGame.nick) > 0:
+                preGame.nick = preGame.nick[:-1]
+                print(preGame.nick)
+            elif key == ord('\r'):
+                dane.nick = preGame.nick
+                print(preGame.nick)
+            preGame.napis_nick = preGame.font.render("Nick: " + preGame.nick, True, DARK_RED)
 
-    def rysuj(screen):
+
+    def rysuj(screen, dane):
         pygame.draw.rect(screen, GREY, preGame.glowny)
-        screen.blit(preGame.tytul,(SCREEN_WIDTH // 2 - preGame.tytul.get_width() // 2,SCREEN_HEIGHT // 5 - preGame.tytul.get_height() // 2,))
+        
+        #if dane.my_id == None:
+        
+        if dane.admin_id == False and preGame.dolaczanie_do_stolu == False and preGame.dolaczyl == False:
+            screen.blit(preGame.tytul,(SCREEN_WIDTH // 2 - preGame.tytul.get_width() // 2,SCREEN_HEIGHT // 5 - preGame.tytul.get_height() // 2,))
+            screen.blit(preGame.napis_nick,(SCREEN_WIDTH // 2 - preGame.napis_nick.get_width() // 2,SCREEN_HEIGHT // 2 - preGame.napis_nick.get_height() // 2,))
+            if not dane.my_id == None:
+                pygame.draw.rect(screen, DARK_GREY, preGame.dolaczanie_button)
+                pygame.draw.rect(screen, BLACK, preGame.dolaczanie_button, 5)
+                screen.blit(preGame.dolaczanie_napis, (3*SCREEN_WIDTH//5 + preGame.dolaczanie_button.width//2 - preGame.dolaczanie_napis.get_width()//2, 3*SCREEN_HEIGHT//5 + preGame.dolaczanie_button.height//2 - preGame.dolaczanie_napis.get_height()//2))
+                
+                pygame.draw.rect(screen, DARK_GREY, preGame.towrzenie_button)
+                pygame.draw.rect(screen, BLACK, preGame.towrzenie_button, 5)
+                screen.blit(preGame.tworzenie_napis, (1*SCREEN_WIDTH//5 + preGame.towrzenie_button.width//2 - preGame.tworzenie_napis.get_width()//2, 3*SCREEN_HEIGHT//5 + preGame.towrzenie_button.height//2 - preGame.tworzenie_napis.get_height()//2))
+        
+        elif dane.admin_id:
+            preGame.startowanie_rys(screen, len(dane.players))
+        elif preGame.dolaczanie_do_stolu:
+            preGame.lista_stolow_rys(screen, dane)
+        #pygame.draw.rect(screen, DARK_GREY, preGame.belka)
+        #pygame.draw.rect(screen, DARK_RED, preGame.suwak)
 
-        pygame.draw.rect(screen, DARK_GREY, preGame.belka)
-        pygame.draw.rect(screen, DARK_RED, preGame.suwak)
-
-        screen.blit(preGame.licznik,(preGame.suwak_x + 35 - preGame.licznik.get_width() // 2, 240))
+        #screen.blit(preGame.licznik,(preGame.suwak_x + 35 - preGame.licznik.get_width() // 2, 240))
 
         # start
-        pygame.draw.rect(screen, DARK_GREY, preGame.start_button)
-        pygame.draw.rect(screen, BLACK, preGame.start_button, 5)
-        screen.blit(preGame.start_napis, preGame.start_corner)
+        #pygame.draw.rect(screen, DARK_GREY, preGame.start_button)
+        #pygame.draw.rect(screen, BLACK, preGame.start_button, 5)
+        #screen.blit(preGame.start_napis, preGame.start_corner)

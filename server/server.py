@@ -141,7 +141,8 @@ def get_table():
                     'cards': cards_of_players,
                     'start_player': table.first_player,
                     'bids': table.bid_history,
-                    'current_player_index': table.current_index
+                    'current_index': table.current_index,
+                    'game_started': table.started,
                 }
             )
 
@@ -222,6 +223,19 @@ def end_game():
     TABLE_DB[table_id]['table'].endGame()
 
     return jsonify({'message': f'Table {table_id} ended successfully'})
+
+@app.route('/id_to_nick', methods=['POST'])
+def id_to_nick():
+    data = request.json
+
+    player_id = data.get('player_id')
+    if player_id not in PLAYER_DB:
+        return jsonify({'message': f'ERROR: Player "{player_id}" does not exist'})
+
+    player = PLAYER_DB[player_id]
+
+    return jsonify({'nickname': player.nickname})
+
 
 if __name__ == '__main__':
     print("HOST: ", config.server['host'])
