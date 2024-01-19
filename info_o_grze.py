@@ -1,6 +1,6 @@
 
 
-class game_info:
+class GameInfo:
     def __init__(self):
         self.nick = ""
         self.players = []

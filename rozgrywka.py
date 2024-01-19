@@ -1,6 +1,8 @@
 from zmienne import *
 from printbids import *
 
+from info_o_grze import GameInfo
+
 class Rozgrywka:
     stan = 3
 
@@ -12,7 +14,6 @@ class Rozgrywka:
     button_check = None
 
     cards_paths = []
-
 
     scale_start = 0.22
     width_DOWN = 630 * scale_start
@@ -75,7 +76,7 @@ class Rozgrywka:
         path += '.png'
         return path
 
-    def ustaw(dane):
+    def ustaw(dane: GameInfo):
         Rozgrywka.liczba_kart = len(dane.player_cards[dane.my_index])
         karty = dane.player_cards[dane.my_index]
         Rozgrywka.karty = []
@@ -102,17 +103,22 @@ class Rozgrywka:
             Rozgrywka.check_img = pygame.transform.scale(Rozgrywka.check_img, (int(0.1*SCREEN_WIDTH), int(0.1*SCREEN_WIDTH)))
             Rozgrywka.button_check = Rozgrywka.check_img.get_rect()
 
-        Rozgrywka.liczba_przeciwnikow = len(dane.player_cards) - 1
+        Rozgrywka.liczba_przeciwnikow = len(dane.players) - 1
         Rozgrywka.liczba_kart_przeciwnikow = []
         Rozgrywka.nicki_przeciwnikow = []
         Rozgrywka.wsp_kart_przeciwnikow = []
         przedzial_na_gracza = TABLE_WIDTH / Rozgrywka.liczba_przeciwnikow
         pierwszy_gracz = TABLE_CORNER[0] + przedzial_na_gracza/2 - Rozgrywka.width_DOWN/2
-        for i in range(1, Rozgrywka.liczba_przeciwnikow + 1):
+
+        for i in range(len(dane.players)):
+            if dane.players[i][1] == dane.my_id:
+                continue
+
+            indeks_przeciwnika = len(Rozgrywka.liczba_kart_przeciwnikow)
             Rozgrywka.liczba_kart_przeciwnikow.append(len(dane.player_cards[i]))
             Rozgrywka.nicki_przeciwnikow.append(dane.players[i][0])
-            Rozgrywka.wsp_kart_przeciwnikow.append((pierwszy_gracz + (i-1)*przedzial_na_gracza, 80))
-            
+            Rozgrywka.wsp_kart_przeciwnikow.append((pierwszy_gracz + indeks_przeciwnika * przedzial_na_gracza, 80))
+        
 
     def ruch_myszki(x, y):
         if Rozgrywka.strefa_wysuwania.collidepoint(x, y):
@@ -121,11 +127,11 @@ class Rozgrywka:
             Rozgrywka.wysuwanie = 0
         
 
-    def rysuj(screen, dt, dane):
+    def rysuj(screen, dt: float, dane: GameInfo):
         for i in range(Rozgrywka.liczba_przeciwnikow):
             #nick nad karta
             nick = Rozgrywka.nicki_przeciwnikow[i]
-            font=pygame.font.SysFont("comicsansms",40)
+            font = pygame.font.SysFont("comicsansms",40)
             text = font.render(nick, True, (0, 0, 0))
             text_rect = text.get_rect(center=(Rozgrywka.wsp_kart_przeciwnikow[i][0] + Rozgrywka.width_DOWN // 2, Rozgrywka.wsp_kart_przeciwnikow[i][1] - text.get_height() // 2 - 10))
             screen.blit(text, text_rect)

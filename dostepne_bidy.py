@@ -17,7 +17,7 @@ from pygame.locals import *
 from logic.bids import *
 from logic.cards import *
 
-dane = game_info()
+dane = GameInfo()
 
 pygame.init()
 screen = pygame.display.set_mode((1920, 1080), FULLSCREEN)
@@ -36,7 +36,7 @@ kolor_przycisku2 = (161, 221, 186)
 kolor_przycisku3 = (217, 242, 228)
 ramka_color = (0, 0, 0)
 
-class przycisk:
+class Przycisk:
     def __init__(self, x, y, width, height, text, sub_buttons=None):
         self.rect = pygame.Rect(x, y, width, height)
         self.text = text
@@ -85,24 +85,24 @@ def opcje(i, y, key):
     uklady = []
     if key != 'full house':
         for j, (key2, bid2) in enumerate (bid.items()):
-            sbt = przycisk (BUTTON_X, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH, BUTTON_HEIGHT, key2)
+            sbt = Przycisk(BUTTON_X, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH, BUTTON_HEIGHT, key2)
             uklady.append(sbt)
     else:
         for j in range(6):
-            sbt = przycisk (BUTTON_X, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH/2, BUTTON_HEIGHT, 'full '+Figures[j+9])
+            sbt = Przycisk(BUTTON_X, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH/2, BUTTON_HEIGHT, 'full '+Figures[j+9])
             uklady.append(sbt)
         for j in range(6):
-            sbt = przycisk (BUTTON_X + BUTTON_WIDTH/2, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH/2, BUTTON_HEIGHT, ' on '+Figures[j+9])
+            sbt = Przycisk(BUTTON_X + BUTTON_WIDTH/2, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH/2, BUTTON_HEIGHT, ' on '+Figures[j+9])
             uklady.append(sbt)
     return uklady
 
 
 buttons = []
 for i, (key, bid) in enumerate (bids.items()):
-    bt = przycisk(BUTTON_X, BUTTON_START_Y + i * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT, key, opcje(i, BUTTON_START_Y + i * BUTTON_HEIGHT, key))
+    bt = Przycisk(BUTTON_X, BUTTON_START_Y + i * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT, key, opcje(i, BUTTON_START_Y + i * BUTTON_HEIGHT, key))
     buttons.append(bt)
 
-make_bid_button = przycisk(BUTTON_X, BUTTON_START_Y+14*BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT*2, 'MAKE BID')
+make_bid_button = Przycisk(BUTTON_X, BUTTON_START_Y+14*BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT*2, 'MAKE BID')
 
 
 

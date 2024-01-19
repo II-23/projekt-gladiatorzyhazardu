@@ -9,7 +9,7 @@ from rozdanie import *
 from info_o_grze import *
 from pygame.locals import *
 
-dane = game_info()
+dane = GameInfo()
 
 pygame.init()
 pygame.display.set_caption("Poker tajski")
@@ -74,9 +74,10 @@ def komunikacja_z_serwerem(dane):
 
 # Rysowanie tła
 bg_start = pygame.image.load("textures/background-start.png")
-bg_game = pygame.image.load("textures/background-game.png").convert()
-bg_game = pygame.transform.scale(bg_game, (SCREEN_WIDTH, SCREEN_HEIGHT))
-bg_start=pygame.transform.scale(bg_start, (SCREEN_WIDTH, SCREEN_HEIGHT))
+bg_game =  pygame.image.load("textures/background-game.png").convert()
+bg_game =  pygame.transform.scale(bg_game, (SCREEN_WIDTH, SCREEN_HEIGHT))
+bg_start = pygame.transform.scale(bg_start, (SCREEN_WIDTH, SCREEN_HEIGHT))
+
 def rysuj_tlo(stan):
     if stan != Rozgrywka.stan and stan != Rozdanie.stan:
         screen.blit(bg_start, (0, 0))

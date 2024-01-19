@@ -1,9 +1,5 @@
 import pygame
-import tkinter
 import screeninfo
-
-root = tkinter.Tk()
-
 
 pygame.init()
 # SCREEN_WIDTH = 1920

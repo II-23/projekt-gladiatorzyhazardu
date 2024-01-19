@@ -13,7 +13,7 @@ TEXT_COLOR = (0, 0, 0)
 
 
 
-font=pygame.font.SysFont("comicsansms",26) #font to be set
+font = pygame.font.SysFont("comicsansms",26) #font to be set
 
 # use this function when no new bid was played(every time normal fps display)needs surface,list of bids, starting position and  scale is optional
 # def display_bids(screen,strings,start_pos=(16,40),scale=1.0):
@@ -38,42 +38,39 @@ font=pygame.font.SysFont("comicsansms",26) #font to be set
 #     #pygame.display.flip()
 
 #use when new bid was played needs surface,list of bids, starting position and  scale is optional
-def display_new_bids(screen,strings, opacity, start_pos=(16,40),scale=1.0):
-    if len(strings)==0: return
-    # strings=strings[::-1]
-    strings=strings[len(strings)-min(len(strings),8):]
+def display_new_bids(screen,strings, opacity, start_pos=(16,40), scale=1.0):
+    if len(strings) == 0: 
+        return
 
-    shape_img=pygame.image.load("textures/shape.png")
-    shape_img=pygame.transform.scale(shape_img,(RECTANGLE_WIDTH*scale,RECTANGLE_HEIGHT*scale))
-    shape= shape_img.get_rect()
-    #opacity=1
-    #while opacity<=256:
-    
+    strings = strings[len(strings)-min(len(strings),8):]
+
+    shape_img = pygame.image.load("textures/shape.png")
+    shape_img = pygame.transform.scale(shape_img, (RECTANGLE_WIDTH * scale, RECTANGLE_HEIGHT * scale))
+    shape = shape_img.get_rect()
+
     shape_img.set_alpha(opacity)
     text = font.render(strings[len(strings)-1], True, TEXT_COLOR)
     text.set_alpha(opacity)
 
-    shape.topleft=(start_pos[0],start_pos[1])
+    shape.topleft = (start_pos[0], start_pos[1])
     text_rect = text.get_rect(center=shape.center)
     
-    screen.blit(shape_img,shape)
+    screen.blit(shape_img, shape)
     screen.blit(text, text_rect)
 
     shape_img.set_alpha(255)
     text.set_alpha(255)
-    y_position = start_pos[1]+RECTANGLE_HEIGHT*scale + 2 * MARGIN*scale
+    y_position = start_pos[1] + RECTANGLE_HEIGHT * scale + 2 * MARGIN * scale
+
     for string in strings[1:]:
         text = font.render(string, True, TEXT_COLOR)
-        shape.topleft=(start_pos[0],y_position)
+        shape.topleft = (start_pos[0], y_position)
         text_rect = text.get_rect(center=shape.center)
 
         screen.blit(shape_img,shape)
         screen.blit(text, text_rect)
 
-        y_position += RECTANGLE_HEIGHT*scale + 2 * MARGIN*scale 
-    
-        #time.sleep(1/30)
-        #opacity+=5
+        y_position += RECTANGLE_HEIGHT * scale + 2 * MARGIN * scale
 
 # \/\/\/\/\/\/testowanie\/\/\/\/\/\/\/\
 # Example list of strings 
