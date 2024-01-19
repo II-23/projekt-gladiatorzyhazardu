@@ -4,7 +4,7 @@ import sys
 from pygame.locals import *
 
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080), FULLSCREEN)
+screen = pygame.display.set_mode((1920, 1080), pygame.SCALED|pygame.FULLSCREEN)
 clock = pygame.time.Clock()
 pygame.display.set_caption('lista bidow')
 

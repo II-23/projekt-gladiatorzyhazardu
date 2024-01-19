@@ -14,7 +14,7 @@ dane = game_info()
 pygame.init()
 pygame.display.set_caption("Poker tajski")
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SCALED|pygame.FULLSCREEN)
 
 def komunikacja_z_serwerem(dane):
     #rejestracja
@@ -76,7 +76,7 @@ def komunikacja_z_serwerem(dane):
 bg_start = pygame.image.load("textures/background-start.png")
 bg_game = pygame.image.load("textures/background-game.png").convert()
 bg_game = pygame.transform.scale(bg_game, (SCREEN_WIDTH, SCREEN_HEIGHT))
-
+bg_start=pygame.transform.scale(bg_start, (SCREEN_WIDTH, SCREEN_HEIGHT))
 def rysuj_tlo(stan):
     if stan != Rozgrywka.stan and stan != Rozdanie.stan:
         screen.blit(bg_start, (0, 0))

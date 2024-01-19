@@ -2,7 +2,7 @@ import pygame
 from zmienne import *
 
 pygame.init()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),pygame.SCALED|pygame.FULLSCREEN)
 clock = pygame.time.Clock()
 
 liczba_kart = 3
