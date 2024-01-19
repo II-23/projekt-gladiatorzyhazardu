@@ -14,7 +14,7 @@ from logic.cards import *
 dane = game_info()
 
 pygame.init()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), FULLSCREEN)
+screen = pygame.display.set_mode((1920, 1080), FULLSCREEN)
 clock = pygame.time.Clock()
 pygame.display.set_caption('lista bidow')
 
