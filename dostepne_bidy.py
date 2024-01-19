@@ -1,12 +1,27 @@
 import pygame
-from zmienne import *
 import sys
+from client import client
+from zmienne import *
+from menu import *
+from pregame import *
+from rozgrywka import *
+from rozdanie import *
+from info_o_grze import *
 from pygame.locals import *
+from logic.bids import *
+from logic.cards import *
+
+dane = game_info()
 
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080), FULLSCREEN)
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), FULLSCREEN)
 clock = pygame.time.Clock()
 pygame.display.set_caption('lista bidow')
+
+BUTTON_X = 1600
+BUTTON_START_Y = 100
+BUTTON_WIDTH = 250
+BUTTON_HEIGHT = 50
 
 
 background_color = (48, 90, 74, 255)
@@ -30,7 +45,10 @@ class przycisk:
     def draw(self):
         pygame.draw.rect(screen, self.color, self.rect, border_radius=10)     #zaokraglone rogi
         pygame.draw.rect(screen, ramka_color, self.rect, 1, border_radius=6)                  #ramka
-        font = pygame.font.Font(None, 30)
+        if self.sub_buttons:
+            font = pygame.font.Font(None, 28)
+        else:
+            font = pygame.font.Font(None, 22)
         text = font.render(self.text, True, (0, 0, 0))
         text_rect = text.get_rect(center=self.rect.center)
         screen.blit(text, text_rect)
@@ -54,56 +72,34 @@ class przycisk:
 
 
 
-def opcje(i, y):
-    uklady = [[],[],[],[]]
-    uklady[0] = [przycisk(1600, y+50, 200, 50, "nine"),
-                 przycisk(1600, y+100, 200, 50, "ten"),
-                 przycisk(1600, y+150, 200, 50, "jack"),
-                 przycisk(1600, y+200, 200, 50, "queen"),
-                 przycisk(1600, y+250, 200, 50, "king"),
-                 przycisk(1600, y+300, 200, 50, "ace")
-                 ]
-    uklady[1] = [przycisk(1600, y+50, 200, 50, "low"),
-                 przycisk(1600, y+100, 200, 50, "high")
-                 ]
-    uklady[2] = [przycisk(1600, y+50, 200, 50, "clubs"),
-                 przycisk(1600, y+100, 200, 50, "diamonds"),
-                 przycisk(1600, y+150, 200, 50, "hearts"),
-                 przycisk(1600, y+200, 200, 50, "spades")
-                 ]
-    uklady[3] = [przycisk(1600, y+50, 100, 50, "nine"),        #full
-                 przycisk(1600, y+100, 100, 50, "ten"),
-                 przycisk(1600, y+150, 100, 50, "jack"),
-                 przycisk(1600, y+200, 100, 50, "queen"),
-                 przycisk(1600, y+250, 100, 50, "king"),
-                 przycisk(1600, y+300, 100, 50, "ace"),
-
-                 przycisk(1700, y+50, 100, 50, "nine"),
-                 przycisk(1700, y+100, 100, 50, "ten"),
-                 przycisk(1700, y+150, 100, 50, "jack"),
-                 przycisk(1700, y+200, 100, 50, "queen"),
-                 przycisk(1700, y+250, 100, 50, "king"),
-                 przycisk(1700, y+300, 100, 50, "ace")
-                 ]
-
-    return uklady[i]
+def opcje(i, y, key):
+    bid = bids[key]
+    uklady = []
+    if key != 'full house':
+        for j, (key2, bid2) in enumerate (bid.items()):
+            sbt = przycisk (BUTTON_X, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH, BUTTON_HEIGHT, key2)
+            uklady.append(sbt)
+    else:
+        for j in range(6):
+            sbt = przycisk (BUTTON_X, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH/2, BUTTON_HEIGHT, 'full house '+Figures[j+9])
+            uklady.append(sbt)
+        for j in range(6):
+            sbt = przycisk (BUTTON_X + BUTTON_WIDTH/2, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH/2, BUTTON_HEIGHT, ' on '+Figures[j+9])
+            uklady.append(sbt)
+    return uklady
 
 
-buttons = [                      # trzeba zmienic im wspolrzedne by zaczynaly sie rysowac od gory dopiero te dostepne
-    przycisk(1600, 100, 200, 50, "high", opcje(0, 100)),      #figura
-    przycisk(1600, 150, 200, 50, "pair", opcje(0, 150)),
-    przycisk(1600, 200, 200, 50, "straight", opcje(1, 200)),   #strit duzy maly
-    przycisk(1600, 250, 200, 50, "three", opcje(0, 250)),
-    przycisk(1600, 300, 200, 50, "full", opcje(3, 300)),
-    przycisk(1600, 350, 200, 50, "flush", opcje(2, 350)),    #kolor
-    przycisk(1600, 400, 200, 50, "four", opcje(0, 400)),
-    przycisk(1600, 450, 200, 50, "poker", opcje(2, 450)),    #kolor
-    przycisk(1600, 500, 200, 50, "king poker", opcje(2, 500))
-]
+buttons = []
+for i, (key, bid) in enumerate (bids.items()):
+    bt = przycisk(BUTTON_X, BUTTON_START_Y + i * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT, key, opcje(i, BUTTON_START_Y + i * BUTTON_HEIGHT, key))
+    buttons.append(bt)
+
+
+
 
 
 def narysuj_przyciski (buttons, last_bid):           # zeby byly dostepne bidy
-    pole = pygame.Rect((1598, 98, 204, 804))
+    pole = pygame.Rect((BUTTON_X-2, BUTTON_START_Y, BUTTON_WIDTH+4, BUTTON_HEIGHT*16+4))
     pygame.draw.rect(screen, kolor_przycisku1, pole, border_radius=10)     #zaokraglone rogi
     pygame.draw.rect(screen, ramka_color, pole, 2, border_radius=10)                  #ramka
     for button in buttons:
@@ -118,8 +114,23 @@ def narysuj_przyciski (buttons, last_bid):           # zeby byly dostepne bidy
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 last_bid = 0            # trzeba dostac tego bida
 last_clicked_index = None
+
 
 while True:
 
