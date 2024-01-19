@@ -2,6 +2,7 @@ from zmienne import *
 from printbids import *
 
 from info_o_grze import GameInfo
+import dostepne_bidy
 
 class Rozgrywka:
     stan = 3
@@ -120,11 +121,13 @@ class Rozgrywka:
             Rozgrywka.wsp_kart_przeciwnikow.append((pierwszy_gracz + indeks_przeciwnika * przedzial_na_gracza, 80))
         
 
-    def ruch_myszki(x, y):
+    def ruch_myszki(x, y, event=None):
         if Rozgrywka.strefa_wysuwania.collidepoint(x, y):
             Rozgrywka.wysuwanie = 1
         elif not Rozgrywka.strefa_wysuwania.collidepoint(x, y):
             Rozgrywka.wysuwanie = 0
+        
+        dostepne_bidy.handle_button_event(event)
         
 
     def rysuj(screen, dt: float, dane: GameInfo):
@@ -182,6 +185,8 @@ class Rozgrywka:
                 Rozgrywka.opacity = 255
         
         display_new_bids(screen, Rozgrywka.bids, Rozgrywka.opacity)
+
+        dostepne_bidy.draw_buttons(screen, None)
             
         if dane.my_index == dane.current_player:
             screen.blit(Rozgrywka.check_img, (20, SCREEN_HEIGHT - 20 - Rozgrywka.check_img.get_height()))

@@ -106,11 +106,11 @@ class Gra:
         if Gra.stan_gry == preGame.stan:
             preGame.puszczenie()
 
-    def ruch_myszki(x, y):
+    def ruch_myszki(x, y, event=None):
         if Gra.stan_gry == preGame.stan:
             preGame.ruch_myszki(x, y)
         if Gra.stan_gry == Rozgrywka.stan:
-            Rozgrywka.ruch_myszki(x, y)
+            Rozgrywka.ruch_myszki(x, y, event)
     def wpisywanie(key, dane):
         if Gra.stan_gry == preGame.stan:
             preGame.wpisywanie(key, dane)
@@ -162,7 +162,7 @@ while True:
 
         # ruch myszki
         if event.type == pygame.MOUSEMOTION:
-            Gra.ruch_myszki(mouse[0], mouse[1])
+            Gra.ruch_myszki(mouse[0], mouse[1], event)
 
     if Gra.stan_gry == Menu.stan:
         Menu.rysuj(screen)

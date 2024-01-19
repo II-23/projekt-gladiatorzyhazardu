@@ -38,7 +38,7 @@ font = pygame.font.SysFont("comicsansms",26) #font to be set
 #     #pygame.display.flip()
 
 #use when new bid was played needs surface,list of bids, starting position and  scale is optional
-def display_new_bids(screen,strings, opacity, start_pos=(16,40), scale=1.0):
+def display_new_bids(screen, strings, opacity, start_pos=(16,40), scale=1.0):
     if len(strings) == 0: 
         return
 
