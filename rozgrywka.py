@@ -55,9 +55,6 @@ class Rozgrywka:
     wsp_kart_przeciwnikow = []
     back = pygame.image.load("textures/b0.png")
     back = pygame.transform.scale_by(back, scale_start)
-
-    #def klikniecie(x, y):
-        
         
     #def puszczenie():
 
@@ -119,7 +116,9 @@ class Rozgrywka:
             Rozgrywka.liczba_kart_przeciwnikow.append(len(dane.player_cards[i]))
             Rozgrywka.nicki_przeciwnikow.append(dane.players[i][0])
             Rozgrywka.wsp_kart_przeciwnikow.append((pierwszy_gracz + indeks_przeciwnika * przedzial_na_gracza, 80))
-        
+
+    def klikniecie(x, y, event=None):
+        dostepne_bidy.handle_button_event(event)
 
     def ruch_myszki(x, y, event=None):
         if Rozgrywka.strefa_wysuwania.collidepoint(x, y):
@@ -127,6 +126,7 @@ class Rozgrywka:
         elif not Rozgrywka.strefa_wysuwania.collidepoint(x, y):
             Rozgrywka.wysuwanie = 0
         
+        print("ruch: ", x, y, event)
         dostepne_bidy.handle_button_event(event)
         
 

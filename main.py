@@ -92,7 +92,7 @@ class Gra:
         if Gra.stan_gry == preGame.stan:
             Gra.stan_gry = Menu.stan
 
-    def klikniecie(x, y, dane):
+    def klikniecie(x, y, dane, event):
         if Gra.stan_gry == Menu.stan:
             if Menu.klikniecie(x, y) < AKCJA:
                 Gra.stan_gry = Menu.klikniecie(x, y)
@@ -101,6 +101,8 @@ class Gra:
             if preGame.klikniecie(x, y, dane) < AKCJA:
                 Gra.stan_gry = preGame.klikniecie(x, y, dane)
 
+        elif Gra.stan_gry == Rozgrywka.stan:
+            Rozgrywka.klikniecie(x, y, event)
             
     def puszczenie():
         if Gra.stan_gry == preGame.stan:
@@ -137,7 +139,7 @@ while True:
             Rozgrywka.ustaw(dane)
 
 
-    print(dane.player_cards)
+    # print(dane.player_cards)
 
         
     for event in pygame.event.get():
@@ -147,7 +149,7 @@ while True:
 
         # nacisniecie myszki
         if event.type == pygame.MOUSEBUTTONDOWN:
-            Gra.klikniecie(mouse[0], mouse[1], dane)
+            Gra.klikniecie(mouse[0], mouse[1], dane, event)
 
         # puszczenie myszki
         if event.type == pygame.MOUSEBUTTONUP:

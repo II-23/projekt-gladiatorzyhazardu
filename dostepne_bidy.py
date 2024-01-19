@@ -34,6 +34,11 @@ def opcje(i, y, key):
             uklady.append(sbt)
     return uklady
 
+last_clicked_index = -1
+clicked = None
+clicked_bid = None
+clicked_bid2 = None
+
 make_bid_button = Przycisk(BUTTON_X, BUTTON_START_Y+14*BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT*2, 'MAKE BID')
 buttons = []
 for i, (key, bid) in enumerate (bids.items()):
@@ -56,6 +61,11 @@ def draw_buttons(screen, last_bid):           # zeby byly dostepne bidy
 
 def handle_button_event(event):
 
+    global last_clicked_index
+    global clicked
+    global clicked_bid
+    global clicked_bid2
+
     for i, button in enumerate(buttons):
 
         #poczatek button.handle_event(event)
@@ -70,6 +80,7 @@ def handle_button_event(event):
                 button.toggle_expanded()
                 clicked = button.text
 
+                print("last:", last_clicked_index)
                 if last_clicked_index == i:         #przywracam dla tego samego przycisku
                     for j in range(i + 1, len(buttons)):
                         buttons[j].visible = True
