@@ -1,4 +1,4 @@
-bids = {
+disp_bids = {
 	'high card': {
 		'high nine'				:	"High(self.deck.dealt, 'nine')",
 		'high ten'				:	"High(self.deck.dealt, 'ten')",
@@ -86,3 +86,5 @@ bids = {
 		'king poker spades'		:	"PokerKing(self.deck.dealt, 'spades')"        
 	}
 }
+
+call_bids = { i:disp_bids[j][i] for j in disp_bids for i in disp_bids[j] }

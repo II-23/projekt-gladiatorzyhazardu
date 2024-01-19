@@ -67,11 +67,23 @@ class Table:
 
     def AvailableBids(self):
         cont = False
-        print('check')
+        print("'check' is always available")
+        print('Your current options are:')
         if self.recent_bid == '':
             cont = True
+        for i in disp_bids:
+            if self.recent_bid in disp_bids[i]:
+                cont = True
+            if cont and self.recent_bid != list(disp_bids[i].keys())[-1]:
+                print(i)
+        opt = input('\nInput which available bids to show:\n')
+        print(f'\nFrom bids of type {opt} you can choose:')
+        if self.recent_bid not in disp_bids[opt]:
+            for i in disp_bids[opt]:
+                print(i)
         else:
-            for i in bids:
+            cont = False
+            for i in disp_bids[opt]:
                 if cont:
                     print(i)
                 if self.recent_bid == i:
@@ -86,7 +98,8 @@ class Table:
     
     def play(self, bid):
         if bid == "check":
-            if eval(self.recent_bid) == True:
+            call = call_bids[self.recent_bid]
+            if eval(call) == True:
                 self.players[self.current_index].losses += 1
             else:
                 previous_player = (self.current_index + len(self.players) - 1) % len(self.players)
@@ -120,3 +133,11 @@ if __name__ == '__main__':
     print()
     for p in t.players:
         print(p.cards_on_hand)
+    #testing bid-related methods
+    t.AvailableBids()
+    t.play('full ten on queen')
+    t.ShowBidHistory()
+    t.AvailableBids()
+    t.play('flush spades')
+    t.ShowBidHistory()
+    t.AvailableBids()
