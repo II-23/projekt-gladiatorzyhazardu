@@ -4,9 +4,6 @@
 #do dokonczenia komunikacja z serwerem
 # w zaleznosci od tego w jakiej formie client przyjmuje/zwraca bidy
 
-#2
-#na razie nie dziala do konca dla fulla
-
 import pygame
 import sys
 from client import client
@@ -57,7 +54,7 @@ class przycisk:
         if self.sub_buttons:
             font = pygame.font.Font(None, 28)
         else:
-            font = pygame.font.Font(None, 22)
+            font = pygame.font.Font(None, 24)
         text = font.render(self.text, True, (0, 0, 0))
         text_rect = text.get_rect(center=self.rect.center)
         screen.blit(text, text_rect)
@@ -92,7 +89,7 @@ def opcje(i, y, key):
             uklady.append(sbt)
     else:
         for j in range(6):
-            sbt = przycisk (BUTTON_X, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH/2, BUTTON_HEIGHT, 'full house '+Figures[j+9])
+            sbt = przycisk (BUTTON_X, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH/2, BUTTON_HEIGHT, 'full '+Figures[j+9])
             uklady.append(sbt)
         for j in range(6):
             sbt = przycisk (BUTTON_X + BUTTON_WIDTH/2, y + BUTTON_HEIGHT * (j+1), BUTTON_WIDTH/2, BUTTON_HEIGHT, ' on '+Figures[j+9])
@@ -151,6 +148,7 @@ last_bid = 0            # trzeba dostac tego bida
 last_clicked_index = None
 clicked = None
 clicked_bid = None
+clicked_bid2 = None
 
 
 while True:
@@ -193,8 +191,14 @@ while True:
             if button.expanded:
                 for sub_button in button.sub_buttons:
                     tmp = sub_button.handle_event(event)
-                    if tmp:
-                        clicked_bid = tmp
+                    if clicked and tmp:
+                        if clicked != 'full house':
+                            clicked_bid = tmp
+                        else:
+                            if 'full' in tmp:
+                                clicked_bid = tmp
+                            elif 'on' in tmp:
+                                clicked_bid2 = tmp
 
         
         #make bid
@@ -205,10 +209,19 @@ while True:
                 make_bid_button.color = kolor_przycisku1
         if event.type == pygame.MOUSEBUTTONDOWN:
             if make_bid_button.rect.collidepoint(event.pos):
+                if clicked == 'full house' and (not clicked_bid or not clicked_bid2) :
+                    continue
+                elif clicked == 'full house' and clicked_bid + clicked_bid2 not in bids['full house']:
+                    continue
+                elif clicked == 'full house': 
+                    clicked_bid += clicked_bid2
                 #komunikacja z serwerem
                 #MakeBid(dane, clicked, clicked_bid)
                 #na razie dla fulla nie działa
-                #print (clicked, clicked_bid)
+                print (clicked, clicked_bid, clicked_bid2, "dziala")
+                
+
+
 
     screen.fill(background_color)
 
