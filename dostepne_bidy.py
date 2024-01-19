@@ -1,3 +1,12 @@
+#1
+#na razie wyswietlaja sie wszystkie bidy a nie tylko dozwolone
+#tak samo mozna deklarowac wszystkie bidy
+#do dokonczenia komunikacja z serwerem
+# w zaleznosci od tego w jakiej formie client przyjmuje/zwraca bidy
+
+#2
+#na razie nie dziala do konca dla fulla
+
 import pygame
 import sys
 from client import client
@@ -116,6 +125,17 @@ def narysuj_przyciski (buttons, last_bid):           # zeby byly dostepne bidy
 
 
 
+#komunikacja z serwerem 
+
+#def MakeBid (dane, clicked, clicked_bid):
+#    client.make_bid(dane.my_id, dane.table_id, bids[clicked[clicked_bid]])
+
+#def GetAvailableBids (dane):
+#    if dane.table_id:
+#        akt = client.get_table(dane.table_id)
+#        dane.bid_history = akt['bids']
+#    print (dane.bid_history)
+    #dokonczyc to
 
 
 
@@ -123,18 +143,13 @@ def narysuj_przyciski (buttons, last_bid):           # zeby byly dostepne bidy
 
 
 
-
-
-
-
-
-
-
+#GetAvailableBids(dane)
 
 
 
 last_bid = 0            # trzeba dostac tego bida
 last_clicked_index = None
+clicked = None
 clicked_bid = None
 
 
@@ -157,6 +172,7 @@ while True:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if button.rect.collidepoint(event.pos) and button.visible and button.unlocked:
                     button.toggle_expanded()
+                    clicked = button.text
 
                     if last_clicked_index == i:         #przywracam dla tego samego przycisku
                         for j in range(i + 1, len(buttons)):
@@ -189,11 +205,10 @@ while True:
                 make_bid_button.color = kolor_przycisku1
         if event.type == pygame.MOUSEBUTTONDOWN:
             if make_bid_button.rect.collidepoint(event.pos):
-                print (clicked_bid)
-                #make bid tutaj^ ma być
-                #komunikacja_z_serwerem(clicked_bid)
+                #komunikacja z serwerem
+                #MakeBid(dane, clicked, clicked_bid)
                 #na razie dla fulla nie działa
-                
+                #print (clicked, clicked_bid)
 
     screen.fill(background_color)
 
