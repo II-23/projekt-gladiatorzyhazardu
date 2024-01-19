@@ -9,6 +9,8 @@ background_color = (48, 90, 74, 255)
 kolor_przycisku1 = (255, 255, 255)
 kolor_przycisku2 = (161, 221, 186)
 kolor_przycisku3 = (217, 242, 228)
+kolor_przycisku4 = (255, 0, 255) # <- do zmiany (kolor kliknietego przycisku)
+
 ramka_color = (0, 0, 0)
 
 class Przycisk:
@@ -25,8 +27,12 @@ class Przycisk:
         self.visible = True
         self.unlocked = True
 
-    def draw(self, screen: pygame.Surface):
-        pygame.draw.rect(screen, self.color, self.rect, border_radius=10)     #zaokraglone rogi
+    def draw(self, screen: pygame.Surface, is_clicked=False):
+
+        if is_clicked:
+            pygame.draw.rect(screen, kolor_przycisku4, self.rect, border_radius=10)
+        else:
+            pygame.draw.rect(screen, self.color, self.rect, border_radius=10)
         pygame.draw.rect(screen, ramka_color, self.rect, 1, border_radius=6)                  #ramka
         if self.sub_buttons:
             font = pygame.font.Font(None, 28)
@@ -50,6 +56,7 @@ class Przycisk:
                 self.toggle_expanded()
                 print (self.text)
                 return self.text
+        return None
 
     def toggle_expanded(self):
         self.expanded = not self.expanded

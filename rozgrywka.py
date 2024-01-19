@@ -55,7 +55,9 @@ class Rozgrywka:
     wsp_kart_przeciwnikow = []
     back = pygame.image.load("textures/b0.png")
     back = pygame.transform.scale_by(back, scale_start)
-        
+
+    played_bid = None
+
     #def puszczenie():
 
     def karty_graczy(dane):
@@ -118,7 +120,13 @@ class Rozgrywka:
             Rozgrywka.wsp_kart_przeciwnikow.append((pierwszy_gracz + indeks_przeciwnika * przedzial_na_gracza, 80))
 
     def klikniecie(x, y, event=None):
-        dostepne_bidy.handle_button_event(event)
+
+        potential_bid = dostepne_bidy.handle_button_event(event)
+
+        if potential_bid != None:
+            Rozgrywka.played_bid = potential_bid
+            print("played bid: ", Rozgrywka.played_bid)
+
 
     def ruch_myszki(x, y, event=None):
         if Rozgrywka.strefa_wysuwania.collidepoint(x, y):
@@ -126,9 +134,14 @@ class Rozgrywka:
         elif not Rozgrywka.strefa_wysuwania.collidepoint(x, y):
             Rozgrywka.wysuwanie = 0
         
-        print("ruch: ", x, y, event)
-        dostepne_bidy.handle_button_event(event)
-        
+        # print("ruch: ", x, y, event)
+            
+        potential_bid = dostepne_bidy.handle_button_event(event)
+
+        if potential_bid != None:
+            Rozgrywka.played_bid = potential_bid
+            print("played bid: ", Rozgrywka.played_bid)
+
 
     def rysuj(screen, dt: float, dane: GameInfo):
         for i in range(Rozgrywka.liczba_przeciwnikow):

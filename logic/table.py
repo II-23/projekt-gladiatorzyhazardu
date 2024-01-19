@@ -94,7 +94,10 @@ class Table:
         for i in self.bid_history[::-1]:
             print(f'\t{i}')
     
-    def play(self, bid):
+    def play(self, player_id, bid):
+        if self.players[self.current_index].id != player_id:
+            return False
+
         if bid == "check":
             call = call_bids[self.recent_bid]
             if eval(call) == True:

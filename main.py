@@ -141,6 +141,12 @@ while True:
 
     # print(dane.player_cards)
 
+    print(Rozgrywka.played_bid)
+    if Rozgrywka.played_bid != None:
+        print("PLAYED: ", Rozgrywka.played_bid)
+        client.make_bid(dane.my_id, dane.table_id, Rozgrywka.played_bid)
+
+        Rozgrywka.played_bid = None
         
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
