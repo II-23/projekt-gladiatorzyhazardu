@@ -63,8 +63,10 @@ class przycisk:
                 else:
                     self.color = kolor_przycisku3
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(event.pos):# and self.visible:
+            if self.rect.collidepoint(event.pos) and self.visible:
                 self.toggle_expanded()
+                #print (self.text)
+                return self.text
 
     def toggle_expanded(self):
         self.expanded = not self.expanded
@@ -94,7 +96,7 @@ for i, (key, bid) in enumerate (bids.items()):
     bt = przycisk(BUTTON_X, BUTTON_START_Y + i * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT, key, opcje(i, BUTTON_START_Y + i * BUTTON_HEIGHT, key))
     buttons.append(bt)
 
-
+make_bid_button = przycisk(BUTTON_X, BUTTON_START_Y+14*BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT*2, 'MAKE BID')
 
 
 
@@ -109,6 +111,9 @@ def narysuj_przyciski (buttons, last_bid):           # zeby byly dostepne bidy
         if button.expanded:
             for sub_button in button.sub_buttons:
                 sub_button.draw()
+    make_bid_button.draw()
+    
+
 
 
 
@@ -130,6 +135,7 @@ def narysuj_przyciski (buttons, last_bid):           # zeby byly dostepne bidy
 
 last_bid = 0            # trzeba dostac tego bida
 last_clicked_index = None
+clicked_bid = None
 
 
 while True:
@@ -170,7 +176,24 @@ while True:
             ##koniec button.handle_event(event)
             if button.expanded:
                 for sub_button in button.sub_buttons:
-                    sub_button.handle_event(event)
+                    tmp = sub_button.handle_event(event)
+                    if tmp:
+                        clicked_bid = tmp
+
+        
+        #make bid
+        if event.type == pygame.MOUSEMOTION:
+            if make_bid_button.rect.collidepoint(event.pos):
+                make_bid_button.color = kolor_przycisku2
+            else:
+                make_bid_button.color = kolor_przycisku1
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if make_bid_button.rect.collidepoint(event.pos):
+                print (clicked_bid)
+                #make bid tutaj^ ma być
+                #komunikacja_z_serwerem(clicked_bid)
+                #na razie dla fulla nie działa
+                
 
     screen.fill(background_color)
 
