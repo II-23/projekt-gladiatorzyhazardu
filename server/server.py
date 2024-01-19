@@ -146,8 +146,8 @@ def get_table():
                 }
             )
 
-@app.route('/play_bid', methods=['POST'])
-def play_bid():
+@app.route('/make_bid', methods=['POST'])
+def make_bid():
     data = request.json
 
     player_id = data.get('player_id')
@@ -164,9 +164,9 @@ def play_bid():
     bid = data.get('bid')
     TABLE_DB[table_id]['table'].play(player_id, bid)
 
-    print(f'Bid {bid} is player by {player_id} on {table_id}')
+    print(f'Bid {bid} is played by {player_id} on {table_id}')
 
-    return jsonify({'message': f'Successfuly bided on {table_id} by {player_id}'})
+    return jsonify({'message': f'Successfuly bid on {table_id} by {player_id}'})
 
 @app.route('/get_all_players', methods=['GET'])
 def get_all_players():
