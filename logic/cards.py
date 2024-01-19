@@ -1,13 +1,13 @@
 from enum import IntEnum
 
-Suit={
+Suit = {
     3   :   "spades",
     2   :   "hearts",
     1   :   "diamonds",
     0   :   "clubs",
 }
 
-Figures={
+Figures = {
     14  :   "ace",
     13  :   "king",
     12  :   "queen",
@@ -18,9 +18,9 @@ Figures={
  
 
 class Card():
-    def __init__(self,fig,su):
-        self.figure=Figures[fig]
-        self.suit=Suit[su]
+    def __init__(self, fig, su):
+        self.figure = Figures[fig]
+        self.suit = Suit[su]
 
     def __repr__(self):
         return f'{self.figure} of {self.suit}'

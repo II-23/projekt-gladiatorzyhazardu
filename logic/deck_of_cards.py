@@ -2,9 +2,6 @@ from logic.cards import *
 import random
 
 class Deck:
-
-    # cards=set()
-    # dealt=set()
     
     def add(self,card):
         self.cards.add(card)

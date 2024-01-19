@@ -1,7 +1,3 @@
-# helps to describe current state of game,
-# has functions to:
-# -randomize cards for every active player for nextTurn
-# -get information about every player
 from logic.deck_of_cards import *
 from logic.cards import *
 from logic.setcheck import *
@@ -9,20 +5,20 @@ from logic.player import *
 from logic.bids import *
 
 class Table:
-    ##Aliaksander's code from game_start.py with some minor tweaks and made into an init\/\/\/\/\/\/\
+
     def __init__(self):
-        self.players=[]
-        self.recent_bid=""
-        self.bid_history=[]
-        self.deck=Deck()
+        self.players = []
+        self.recent_bid = ""
+        self.bid_history = []
+        self.deck = Deck()
         self.current_index = 0
         self.started = False
-        self.first_player=0
+        self.first_player = 0
 
-    def addPlayer(self, new_player):
+    def addPlayer(self, new_player: Player):
         self.players.append(new_player)
 
-    def removePlayer(self, player_id):
+    def removePlayer(self, player_id: int):
         for i in range(self.players):
             if self.players[i].id == player_id:
                 self.players.pop(i)
@@ -43,9 +39,11 @@ class Table:
     
     def nextTurn(self):
         if len(self.players) == 1:
+            self.endGame()
             self.started = False
             return
-        self.current_index=self.first_player #set current player to player which starts that turn
+        
+        self.current_index = self.first_player
         self.deck = Deck()
         self.recent_bid = ""
 
@@ -105,17 +103,14 @@ class Table:
                 previous_player = (self.current_index + len(self.players) - 1) % len(self.players)
                 self.players[previous_player].losses += 1
                
-                self.current_index=previous_player
+                self.current_index = previous_player
 
-            self.first_player=self.current_index  #set player which starts first
+            self.first_player = self.current_index
             self.nextTurn()
         else:
             self.bid_history.append(self.recent_bid)
             self.recent_bid = bid
             self.current_index = (self.current_index + 1) % len(self.players)
-
-#Testing\/\/\/\/\/\/\/\/\/\/
-
 
 if __name__ == '__main__':
     t = Table()
