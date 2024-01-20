@@ -26,8 +26,10 @@ class Table:
         return False
 
     def startGame(self):
+        deck = Deck()
+
         for i in range(len(self.players)):
-            self.players[i].cards_on_hand.add(self.deck.get_card())
+            self.players[i].cards_on_hand = set({self.deck.get_card()})
             self.players[i].active = True
 
         self.started = True
@@ -40,7 +42,7 @@ class Table:
     def nextTurn(self):
         if len(self.players) == 1:
             self.endGame()
-            self.started = False
+            self.startGame()
             return
         
         self.current_index = self.first_player
@@ -99,7 +101,13 @@ class Table:
             return False
 
         if bid == "check":
+            if self.recent_bid == "":
+                return False
             call = call_bids[self.recent_bid]
+
+            print("call: ", call)
+            print("deck: ", self.deck.dealt)
+
             if eval(call) == True:
                 self.players[self.current_index].losses += 1
             else:
@@ -108,12 +116,15 @@ class Table:
                
                 self.current_index = previous_player
 
+            print("next turn")
             self.first_player = self.current_index
             self.nextTurn()
         else:
-            self.bid_history.append(self.recent_bid)
+            self.bid_history.append(bid)
             self.recent_bid = bid
             self.current_index = (self.current_index + 1) % len(self.players)
+
+        return True
 
 if __name__ == '__main__':
     t = Table()

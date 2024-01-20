@@ -48,7 +48,6 @@ class Rozgrywka:
     #strefa_wysuwania = pygame.rect.Rect(SCREEN_WIDTH/2 - szerokosc_reki/2, SCREEN_HEIGHT - 3*height_DOWN/5, szerokosc_reki, 3*height_DOWN/5)
     strefa_wysuwania = pygame.rect.Rect(TABLE_CENTER[0] - szerokosc_reki/2, SCREEN_HEIGHT - 3*height_DOWN/5, szerokosc_reki, 3*height_DOWN/5)
 
-
     liczba_przeciwnikow = None
     liczba_kart_przeciwnikow = []
     nicki_przeciwnikow = []
@@ -68,7 +67,7 @@ class Rozgrywka:
         
 
     def name_to_path(card_name):
-        card_name = card_name.split(" ")
+        card_name = str(card_name).split(" ")
         path = "textures/"
         path += card_name[0]
         path += '-of-'
@@ -102,6 +101,7 @@ class Rozgrywka:
             Rozgrywka.check_img = pygame.image.load("textures/button-check.png")
             Rozgrywka.check_img = pygame.transform.scale(Rozgrywka.check_img, (int(0.1*SCREEN_WIDTH), int(0.1*SCREEN_WIDTH)))
             Rozgrywka.button_check = Rozgrywka.check_img.get_rect()
+            # Rozgrywka.button_check.move(20, SCREEN_HEIGHT - 20 - Rozgrywka.check_img.get_height())
 
         Rozgrywka.liczba_przeciwnikow = len(dane.players) - 1
         Rozgrywka.liczba_kart_przeciwnikow = []
@@ -125,7 +125,12 @@ class Rozgrywka:
 
         if potential_bid != None:
             Rozgrywka.played_bid = potential_bid
-            print("played bid: ", Rozgrywka.played_bid)
+        
+        print("$", Rozgrywka.button_check, x, y, Rozgrywka.button_check.collidepoint(x, y))
+
+        if Rozgrywka.button_check.collidepoint(x, y):
+            print("CHECK")
+            Rozgrywka.played_bid = "check"
 
 
     def ruch_myszki(x, y, event=None):
@@ -202,5 +207,5 @@ class Rozgrywka:
         dostepne_bidy.draw_buttons(screen, None)
             
         if dane.my_index == dane.current_player:
-            screen.blit(Rozgrywka.check_img, (20, SCREEN_HEIGHT - 20 - Rozgrywka.check_img.get_height()))
+            screen.blit(Rozgrywka.check_img, Rozgrywka.button_check)
         

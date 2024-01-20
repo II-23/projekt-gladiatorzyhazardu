@@ -125,7 +125,7 @@ def get_table():
     table = TABLE_DB[table_id]['table']
 
     players_in_table = [(p.nickname, p.id,p.active) for p in table.players]
-    cards_of_players = [list(p.cards_on_hand) for p in table.players]
+    cards_of_players = [list(str(c) for c in p.cards_on_hand) for p in table.players]
 
     tmp_players=table.players
     admin_index=(-1,TABLE_DB[table_id]['admin_id'])
@@ -133,7 +133,10 @@ def get_table():
         if tmp_players[i].id==TABLE_DB[table_id]['admin_id']: 
             admin_index=(i,TABLE_DB[table_id]['admin_id'])
             break
-    
+
+    # print("cards:", cards_of_players)
+    # print("players:", players_in_table)
+
     return jsonify(
                 {
                     'players': players_in_table,
@@ -162,7 +165,8 @@ def make_bid():
         return jsonify({'message': f'ERROR: It is not turn of Player "{player_id}" on Table "{table_id}"'})
 
     bid = data.get('bid')
-    TABLE_DB[table_id]['table'].play(player_id, bid)
+    if TABLE_DB[table_id]['table'].play(player_id, bid) == False:
+        return jsonify({'message': f'ERROR: Failed to make a bid'})
 
     print(f'Bid {bid} is played by {player_id} on {table_id}')
 

@@ -33,12 +33,15 @@ def komunikacja_z_serwerem(dane):
 
     #aktualizacja danych
     if not dane.table_id == None:
+        print("Getting table: ", dane.table_id)
         akt = client.get_table(dane.table_id)
         dane.players = akt['players']
         dane.current_player = akt['current_index']
         dane.player_cards = akt['cards']
         dane.start_game = akt['game_started']
         dane.bid_history = akt['bids']
+
+        print(dane.player_cards)
 
     #otworzone stoly
     if preGame.dolaczanie_do_stolu == True:
@@ -129,21 +132,25 @@ while True:
     if not dane.table_id == None:
         pass
         #print(dane.table_id)
+    
     if Gra.stan_gry == preGame.stan:
         if dane.start_game:
             Gra.stan_gry = Rozdanie.stan
             Rozdanie.ustaw(dane)
+
     if Gra.stan_gry == Rozdanie.stan:
         if Rozdanie.czas_przejscia <= 0:
             Gra.stan_gry = Rozgrywka.stan
             Rozgrywka.ustaw(dane)
 
+    if Gra.stan_gry == Rozgrywka.stan:
+        Rozgrywka.ustaw(dane)
 
     # print(dane.player_cards)
 
-    print(Rozgrywka.played_bid)
+    # print(Rozgrywka.played_bid)
     if Rozgrywka.played_bid != None:
-        print("PLAYED: ", Rozgrywka.played_bid)
+        print("PLAYED: ", f"'{Rozgrywka.played_bid}'")
         client.make_bid(dane.my_id, dane.table_id, Rozgrywka.played_bid)
 
         Rozgrywka.played_bid = None

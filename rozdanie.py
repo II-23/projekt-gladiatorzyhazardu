@@ -75,7 +75,7 @@ class Rozdanie:
 
     #def ruch_myszki(x, y):
     def ustaw(dane):
-        Rozdanie.czas_przejscia = 3000
+        Rozdanie.czas_przejscia = 2000
         Rozdanie.liczba_graczy = len(dane.players)
         Rozdanie.karty_gracza = []
         Rozdanie.karty_do_rozdania = 0

@@ -18,12 +18,12 @@ def CountS(set, sui):
     return ret
 
 def High(set, figur):
-    if CountF(set,figur) > 0: 
+    if CountF(set, figur) > 0: 
         return True
     return False
 
 def Pair(set, figur):
-    if CountF(set,figur) > 1:
+    if CountF(set, figur) > 1:
         return True
     return False
 

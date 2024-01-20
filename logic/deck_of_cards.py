@@ -13,7 +13,7 @@ class Deck:
 
         for i in range(4):
             for j in range(9,15):
-                self.add(str(Card(j, i)))
+                self.add(Card(j, i))
                 
     def print_deck(self):
         for i in self.cards:

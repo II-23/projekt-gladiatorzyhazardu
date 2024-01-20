@@ -24,7 +24,7 @@ class Card():
 
     def __repr__(self):
         return f'{self.figure} of {self.suit}'
-        
+
 def Cardval(card):  #fuction to return pair of values of cards 
     try:
         return(Figures[int(card.figure)],Suit[int(card.suit)])
