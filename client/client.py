@@ -67,10 +67,10 @@ def register(nickname):
 
 # asyncronicaly ping the server in the background to inform that player is alive
 def ping_server(player_id):
-    while True:
-        response = requests.post(f'{base_url}/ping', json={'player_id': player_id})
+    # while True:
+    response = requests.post(f'{base_url}/ping', json={'player_id': player_id})
         # print('Ping')
-        time.sleep(3)
+    # time.sleep(3)
     
 def id_to_nick(player_id):
     response = requests.post(f'{base_url}/id_to_nick', json={'player_id': player_id})
