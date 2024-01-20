@@ -20,7 +20,7 @@ font_looser=pygame.font.SysFont("comicsansms",round(120*SCALE))
 def komunikacja_z_serwerem(dane):
     #rejestracja
     if not dane.nick == "" and dane.my_id == None:
-            dane.my_id = client.register(dane.nick)
+        dane.my_id = client.register(dane.nick)
     
     #tworzenie stolu
     if dane.admin_id == False and preGame.tworzenie_stolu == True:
@@ -150,8 +150,11 @@ while True:
             Rozgrywka.ustaw(dane)
 
     # print(dane.player_cards)
-
-    if dane.looser is not None:
+    if dane.my_index and dane.my_index < len(dane.players) and not dane.players[dane.my_index][2]:
+        text=font_looser.render("YOU DIED",True,(255,0,125))
+        text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
+        screen.blit(text,text_re)
+    elif dane.looser is not None:
         if(dane.looser==dane.my_index): 
             text=font_looser.render("Przegrałeś Synu!!!",True,(255,0,255))
             text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
@@ -161,7 +164,7 @@ while True:
             text=font_looser.render(str("Przegrał "+dane.players[dane.looser][0]+"!!!"),True,(255,0,255))
             text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
             screen.blit(text,text_re)
-    
+
     # if dane.looser is not None: print("przzegrales synu")
     # print(Rozgrywka.played_bid)
     if Rozgrywka.played_bid != None:
