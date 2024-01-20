@@ -14,13 +14,13 @@ class Table:
         self.current_index = 0
         self.started = False
         self.first_player = 0
-        self.looser=None
+        self.looser = None
 
     def addPlayer(self, new_player: Player):
         self.players.append(new_player)
 
     def removePlayer(self, player_id: int):
-        for i in range(self.players):
+        for i in range(len(self.players)):
             if self.players[i].id == player_id:
                 self.players.pop(i)
                 return True
@@ -76,37 +76,6 @@ class Table:
         if len(self.players) == 0:
             return -1
         return self.players[self.current_index].id
-
-    def AvailableBids(self):
-        cont = False
-        print("'check' is always available")
-        print('Your current options are:')
-        if self.recent_bid == '':
-            cont = True
-        for i in disp_bids:
-            if self.recent_bid in disp_bids[i]:
-                cont = True
-            if cont and self.recent_bid != list(disp_bids[i].keys())[-1]:
-                print(i)
-        opt = input('\nInput which available bids to show:\n')
-        print(f'\nFrom bids of type {opt} you can choose:')
-        if self.recent_bid not in disp_bids[opt]:
-            for i in disp_bids[opt]:
-                print(i)
-        else:
-            cont = False
-            for i in disp_bids[opt]:
-                if cont:
-                    print(i)
-                if self.recent_bid == i:
-                    cont = True
-
-    def ShowBidHistory(self):
-        print('Most recent bid:')
-        print(f'\t{self.recent_bid}')
-        print('Earlier bids:')
-        for i in self.bid_history[::-1]:
-            print(f'\t{i}')
     
     def play(self, player_id, bid):
         
@@ -137,16 +106,8 @@ class Table:
             self.nextTurn()
         else:
             
-            if len(self.bid_history) > 0:
-                is_bid_good = False
-                for other_bid in call_bids.keys():
-                    if other_bid == bid:
-                        break
-                    if other_bid == self.bid_history[-1]:
-                        is_bid_good = True
-                
-                if is_bid_good == False:
-                    return False
+            if len(self.bid_history) > 0 and compare_bids(bid, self.bid_history[-1]) == False:
+                return False
 
             self.bid_history.append(bid)
             self.recent_bid = bid
@@ -172,13 +133,13 @@ if __name__ == '__main__':
         print(p.cards_on_hand)
     t.nextTurn()
     print()
-    for p in t.players:
-        print(p.cards_on_hand)
-    #testing bid-related methods
-    t.AvailableBids()
-    t.play('full ten on queen')
-    t.ShowBidHistory()
-    t.AvailableBids()
-    t.play('flush spades')
-    t.ShowBidHistory()
-    t.AvailableBids()
+    # for p in t.players:
+    #     print(p.cards_on_hand)
+    # #testing bid-related methods
+    # t.AvailableBids()
+    # t.play('full ten on queen')
+    # t.ShowBidHistory()
+    # t.AvailableBids()
+    # t.play('flush spades')
+    # t.ShowBidHistory()
+    # t.AvailableBids()

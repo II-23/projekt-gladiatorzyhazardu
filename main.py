@@ -18,10 +18,13 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SCALED|py
 font_looser=pygame.font.SysFont("comicsansms",round(120*SCALE))
 
 def komunikacja_z_serwerem(dane):
+
     #rejestracja
     if not dane.nick == "" and dane.my_id == None:
         dane.my_id = client.register(dane.nick)
     
+    client.ping_server(dane.my_id)
+
     #tworzenie stolu
     if dane.admin_id == False and preGame.tworzenie_stolu == True:
         dane.table_id = client.create_table(dane.my_id)

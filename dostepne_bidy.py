@@ -46,28 +46,50 @@ for i, (key, bid) in enumerate (bids.items()):
     buttons.append(bt)
 
 
-def draw_buttons(screen, last_bid):           # zeby byly dostepne bidy
+def draw_buttons(screen, last_bid):
     pole = pygame.Rect((BUTTON_X-2, BUTTON_START_Y, BUTTON_WIDTH+4, BUTTON_HEIGHT*16+4))
-    pygame.draw.rect(screen, kolor_przycisku1, pole, border_radius=10)     #zaokraglone rogi
-    pygame.draw.rect(screen, ramka_color, pole, 2, border_radius=10)                  #ramka
+    pygame.draw.rect(screen, kolor_przycisku1, pole, border_radius=10)
+    pygame.draw.rect(screen, ramka_color, pole, 2, border_radius=10)
+
     for button in buttons:
         if button.visible:
             button.draw(screen)
     
     is_legal = False
+
     if last_bid == None:
         is_legal = True
-
-    for button in buttons:    #musza byc osobne fory by nie rysowaly sie pod spodem!
+    
+    for button in buttons:
         for sub_button in button.sub_buttons:
-            if button.expanded:
-                if sub_button.text == clicked_bid2 or sub_button.text == clicked_bid:
-                    sub_button.draw(screen, True, is_legal)
-                else:
-                    sub_button.draw(screen, False, is_legal)
-            if sub_button.text == last_bid:
+            if last_bid != None and \
+                sub_button.text in last_bid and \
+                'full ' in sub_button.text and \
+                'on ace' not in last_bid:
                 is_legal = True
 
+            if button.expanded:
+                if sub_button.text == clicked_bid:
+                    sub_button.draw(screen, True, is_legal)
+                elif 'on' in sub_button.text:
+                    if clicked_bid == None or last_bid == None:
+                        sub_button.draw(screen, sub_button.text == clicked_bid2, is_legal)
+                    else:
+                        is_full_legal = compare_bids(clicked_bid + sub_button.text, last_bid)
+
+                        # print("CLICKED: ", f"'{clicked_bid + sub_button.text}' vs {last_bid}", is_full_legal)
+
+                        if sub_button.text == clicked_bid2:
+                            sub_button.draw(screen, True, is_full_legal)
+                        else:
+                            sub_button.draw(screen, False, is_full_legal)
+                else:
+                    sub_button.draw(screen, False, is_legal)
+
+            if last_bid != None and \
+                sub_button.text in last_bid:
+                is_legal = True
+    
     make_bid_button.draw(screen)
 
 def handle_button_event(event):
