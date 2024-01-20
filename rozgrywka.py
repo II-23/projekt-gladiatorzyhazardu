@@ -126,10 +126,10 @@ class Rozgrywka:
         if potential_bid != None:
             Rozgrywka.played_bid = potential_bid
         
-        print("$", Rozgrywka.button_check, x, y, Rozgrywka.button_check.collidepoint(x, y))
+        # print("$", Rozgrywka.button_check, x, y, Rozgrywka.button_check.collidepoint(x, y))
 
         if Rozgrywka.button_check.collidepoint(x, y):
-            print("CHECK")
+            # print("CHECK")
             Rozgrywka.played_bid = "check"
 
 
@@ -145,7 +145,7 @@ class Rozgrywka:
 
         if potential_bid != None:
             Rozgrywka.played_bid = potential_bid
-            print("played bid: ", Rozgrywka.played_bid)
+            # print("played bid: ", Rozgrywka.played_bid)
 
 
     def rysuj(screen, dt: float, dane: GameInfo):
@@ -204,7 +204,13 @@ class Rozgrywka:
         
         display_new_bids(screen, Rozgrywka.bids, Rozgrywka.opacity,(16*SCALE,40*SCALE),SCALE)
 
-        dostepne_bidy.draw_buttons(screen, None)
+        recent_bid = None
+        if len(dane.bid_history) > 0:
+            recent_bid = dane.bid_history[-1]
+
+        print("recent_bid: ", recent_bid)
+
+        dostepne_bidy.draw_buttons(screen, recent_bid)
             
         if dane.my_index == dane.current_player:
             screen.blit(Rozgrywka.check_img, Rozgrywka.button_check)

@@ -53,13 +53,21 @@ def draw_buttons(screen, last_bid):           # zeby byly dostepne bidy
     for button in buttons:
         if button.visible:
             button.draw(screen)
+    
+    is_legal = False
+    if last_bid == None:
+        is_legal = True
+
     for button in buttons:    #musza byc osobne fory by nie rysowaly sie pod spodem!
-        if button.expanded:
-            for sub_button in button.sub_buttons:
+        for sub_button in button.sub_buttons:
+            if button.expanded:
                 if sub_button.text == clicked_bid2 or sub_button.text == clicked_bid:
-                    sub_button.draw(screen, True)
+                    sub_button.draw(screen, True, is_legal)
                 else:
-                    sub_button.draw(screen, False)
+                    sub_button.draw(screen, False, is_legal)
+            if sub_button.text == last_bid:
+                is_legal = True
+
     make_bid_button.draw(screen)
 
 def handle_button_event(event):
@@ -133,6 +141,6 @@ def handle_button_event(event):
                 #MakeBid(dane, clicked, clicked_bid)
                 #na razie dla fulla nie działa
                 
-                print("CLICKED: " , clicked_bid)
+                # print("CLICKED: " , clicked_bid)
                 return clicked_bid
     return None

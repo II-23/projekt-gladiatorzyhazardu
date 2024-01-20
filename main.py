@@ -33,7 +33,7 @@ def komunikacja_z_serwerem(dane):
 
     #aktualizacja danych
     if not dane.table_id == None:
-        print("Getting table: ", dane.table_id)
+        # print("Getting table: ", dane.table_id)
         akt = client.get_table(dane.table_id)
         dane.players = akt['players']
         dane.current_player = akt['current_index']
@@ -41,7 +41,7 @@ def komunikacja_z_serwerem(dane):
         dane.start_game = akt['game_started']
         dane.bid_history = akt['bids']
 
-        print(dane.player_cards)
+        # print(dane.player_cards)
 
     #otworzone stoly
     if preGame.dolaczanie_do_stolu == True:

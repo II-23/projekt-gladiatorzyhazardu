@@ -103,6 +103,7 @@ class Table:
         if bid == "check":
             if self.recent_bid == "":
                 return False
+            
             call = call_bids[self.recent_bid]
 
             print("call: ", call)
@@ -120,6 +121,18 @@ class Table:
             self.first_player = self.current_index
             self.nextTurn()
         else:
+            
+            if len(self.bid_history) > 0:
+                is_bid_good = False
+                for other_bid in call_bids.keys():
+                    if other_bid == bid:
+                        break
+                    if other_bid == self.bid_history[-1]:
+                        is_bid_good = True
+                
+                if is_bid_good == False:
+                    return False
+
             self.bid_history.append(bid)
             self.recent_bid = bid
             self.current_index = (self.current_index + 1) % len(self.players)

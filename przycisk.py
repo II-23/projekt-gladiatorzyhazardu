@@ -27,9 +27,13 @@ class Przycisk:
         self.visible = True
         self.unlocked = True
 
-    def draw(self, screen: pygame.Surface, is_clicked=False):
+    def draw(self, screen: pygame.Surface, is_clicked=False, is_legal=True):
 
-        if is_clicked:
+        if is_legal == False:
+            rect_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
+            pygame.draw.rect(rect_surface, self.color + (128,), rect_surface.get_rect(), border_radius=10)
+            screen.blit(rect_surface, (self.rect.x, self.rect.y))
+        elif is_clicked:
             pygame.draw.rect(screen, kolor_przycisku4, self.rect, border_radius=10)
         else:
             pygame.draw.rect(screen, self.color, self.rect, border_radius=10)
@@ -38,7 +42,12 @@ class Przycisk:
             font = pygame.font.Font(None, round(28*SCALE))
         else:
             font = pygame.font.Font(None, round(24*SCALE))
+        
         text = font.render(self.text, True, (0, 0, 0))
+        
+        if is_legal == False:
+            text.set_alpha(128)
+
         text_rect = text.get_rect(center=self.rect.center)
         screen.blit(text, text_rect)
 
