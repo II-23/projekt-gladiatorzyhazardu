@@ -21,15 +21,16 @@ font = pygame.font.SysFont("comicsansms",round(30*SCALE)) #font to be set
 def display_new_bids(screen, strings, opacity, start_pos=(16,40), scale=1.0):
     if len(strings) == 0: 
         return
-
-    strings = strings[len(strings)-min(len(strings),8):]
+    print(strings)
+    strings=strings[::-1]
+    strings = strings[:min(len(strings),8)]
 
     shape_img = pygame.image.load("textures/shape.png")
     shape_img = pygame.transform.scale(shape_img, (RECTANGLE_WIDTH * scale, RECTANGLE_HEIGHT * scale))
     shape = shape_img.get_rect()
 
     shape_img.set_alpha(opacity)
-    text = font.render(strings[len(strings)-1], True, TEXT_COLOR)
+    text = font.render(strings[0], True, TEXT_COLOR)
     text.set_alpha(opacity)
 
     shape.topleft = (start_pos[0], start_pos[1])
