@@ -15,6 +15,7 @@ pygame.init()
 pygame.display.set_caption("Poker tajski")
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SCALED|pygame.FULLSCREEN)
+font_looser=pygame.font.SysFont("comicsansms",round(120*SCALE))
 
 def komunikacja_z_serwerem(dane):
     #rejestracja
@@ -40,6 +41,7 @@ def komunikacja_z_serwerem(dane):
         dane.player_cards = akt['cards']
         dane.start_game = akt['game_started']
         dane.bid_history = akt['bids']
+        dane.looser=akt['looser']
 
         # print(dane.player_cards)
 
@@ -106,7 +108,6 @@ class Gra:
 
         elif Gra.stan_gry == Rozgrywka.stan:
             Rozgrywka.klikniecie(x, y, event)
-            
     def puszczenie():
         if Gra.stan_gry == preGame.stan:
             preGame.puszczenie()
@@ -150,11 +151,22 @@ while True:
 
     # print(dane.player_cards)
 
+    if dane.looser is not None:
+        if(dane.looser==dane.my_index): 
+            text=font_looser.render("Przegrałeś Synu!!!",True,(255,0,255))
+            text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
+            screen.blit(text,text_re)
+            # print("przegrales synu")
+        else:
+            text=font_looser.render(str("Przegrał "+dane.players[dane.looser][0]+"!!!"),True,(255,0,255))
+            text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
+            screen.blit(text,text_re)
+    
+    # if dane.looser is not None: print("przzegrales synu")
     # print(Rozgrywka.played_bid)
     if Rozgrywka.played_bid != None:
         print("PLAYED: ", f"'{Rozgrywka.played_bid}'")
         client.make_bid(dane.my_id, dane.table_id, Rozgrywka.played_bid)
-
         Rozgrywka.played_bid = None
         
     for event in pygame.event.get():

@@ -14,6 +14,7 @@ class Table:
         self.current_index = 0
         self.started = False
         self.first_player = 0
+        self.looser=None
 
     def addPlayer(self, new_player: Player):
         self.players.append(new_player)
@@ -29,6 +30,7 @@ class Table:
         deck = Deck()
 
         for i in range(len(self.players)):
+            self.players[i].losses=0
             self.players[i].cards_on_hand = set({self.deck.get_card()})
             self.players[i].active = True
 
@@ -50,7 +52,7 @@ class Table:
         self.recent_bid = ""
         self.bid_history=[]
         max_number_of_cards = min(6, 23 / len(self.players))
-        # active_players=0
+        active_players=0
 
         for i in range(len(self.players)):
             if self.players[i].losses + 1 > max_number_of_cards:
@@ -58,14 +60,14 @@ class Table:
 
             self.players[i].cards_on_hand = set({})
             if self.players[i].active == True:
-                # active_players+=1
+                active_players+=1
                 for _ in range(self.players[i].losses + 1):
                     self.players[i].cards_on_hand.add(self.deck.get_card())
         
-        # if(active_players<=1): 
-        #     self.endGame()
-        #     self.startGame()
-        #     return
+        if(active_players==1): 
+            self.endGame()
+            self.startGame()
+            return
 
     def getCurrentPlayer(self):
         if len(self.players) == 0:
@@ -118,11 +120,13 @@ class Table:
 
             if eval(call) == True:
                 self.players[self.current_index].losses += 1
+                self.looser=self.current_index
             else:
                 previous_player = (self.current_index + len(self.players) - 1) % len(self.players)
                 self.players[previous_player].losses += 1
                
                 self.current_index = previous_player
+                self.looser=self.current_index
 
             print("next turn")
             self.first_player = self.current_index
@@ -143,6 +147,7 @@ class Table:
             self.bid_history.append(bid)
             self.recent_bid = bid
             self.current_index = (self.current_index + 1) % len(self.players)
+            self.looser=None
 
         return True
 

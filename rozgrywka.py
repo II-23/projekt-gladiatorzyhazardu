@@ -208,7 +208,7 @@ class Rozgrywka:
         if len(dane.bid_history) > 0:
             recent_bid = dane.bid_history[-1]
 
-        print("recent_bid: ", recent_bid)
+        # print("recent_bid: ", recent_bid)
 
         dostepne_bidy.draw_buttons(screen, recent_bid)
             

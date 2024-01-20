@@ -146,6 +146,7 @@ def get_table():
                     'bids': table.bid_history,
                     'current_index': table.current_index,
                     'game_started': table.started,
+                    'looser' :table.looser
                 }
             )
 
