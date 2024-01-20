@@ -48,17 +48,24 @@ class Table:
         self.current_index = self.first_player
         self.deck = Deck()
         self.recent_bid = ""
-
+        self.bid_history=[]
         max_number_of_cards = min(6, 23 / len(self.players))
+        # active_players=0
 
         for i in range(len(self.players)):
             if self.players[i].losses + 1 > max_number_of_cards:
                 self.players[i].active = False
-            
+
             self.players[i].cards_on_hand = set({})
             if self.players[i].active == True:
+                # active_players+=1
                 for _ in range(self.players[i].losses + 1):
                     self.players[i].cards_on_hand.add(self.deck.get_card())
+        
+        # if(active_players<=1): 
+        #     self.endGame()
+        #     self.startGame()
+        #     return
 
     def getCurrentPlayer(self):
         if len(self.players) == 0:
