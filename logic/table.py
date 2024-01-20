@@ -68,6 +68,9 @@ class Table:
             self.endGame()
             self.startGame()
             return
+        
+        while not self.players[self.current_index].active:
+            self.current_index = (self.current_index + 1) % len(self.players)
 
     def getCurrentPlayer(self):
         if len(self.players) == 0:
@@ -106,6 +109,7 @@ class Table:
             print(f'\t{i}')
     
     def play(self, player_id, bid):
+        
         if self.players[self.current_index].id != player_id:
             return False
 
@@ -147,6 +151,9 @@ class Table:
             self.bid_history.append(bid)
             self.recent_bid = bid
             self.current_index = (self.current_index + 1) % len(self.players)
+
+            while not self.players[self.current_index].active:
+                self.current_index = (self.current_index + 1) % len(self.players)
             self.looser=None
 
         return True

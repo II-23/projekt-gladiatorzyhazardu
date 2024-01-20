@@ -150,11 +150,8 @@ while True:
             Rozgrywka.ustaw(dane)
 
     # print(dane.player_cards)
-    if dane.my_index and dane.my_index < len(dane.players) and not dane.players[dane.my_index][2]:
-        text=font_looser.render("YOU DIED",True,(255,0,125))
-        text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
-        screen.blit(text,text_re)
-    elif dane.looser is not None:
+
+    if dane.looser is not None:
         if(dane.looser==dane.my_index): 
             text=font_looser.render("Przegrałeś Synu!!!",True,(255,0,255))
             text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
@@ -164,7 +161,10 @@ while True:
             text=font_looser.render(str("Przegrał "+dane.players[dane.looser][0]+"!!!"),True,(255,0,255))
             text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
             screen.blit(text,text_re)
-
+    elif dane.my_index and dane.my_index < len(dane.players) and not dane.players[dane.my_index][2]:
+        text=font_looser.render("YOU DIED",True,(255,0,125))
+        text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
+        screen.blit(text,text_re)
     # if dane.looser is not None: print("przzegrales synu")
     # print(Rozgrywka.played_bid)
     if Rozgrywka.played_bid != None:
