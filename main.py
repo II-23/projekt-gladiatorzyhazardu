@@ -128,6 +128,7 @@ while True:
 
     #print(client.get_all_tables())
 
+    cards_on_table = dane.player_cards
     komunikacja_z_serwerem(dane)
     if not dane.table_id == None:
         pass
@@ -144,7 +145,8 @@ while True:
             Rozgrywka.ustaw(dane)
 
     if Gra.stan_gry == Rozgrywka.stan:
-        Rozgrywka.ustaw(dane)
+        if dane.player_cards != cards_on_table:
+            Rozgrywka.ustaw(dane)
 
     # print(dane.player_cards)
 
