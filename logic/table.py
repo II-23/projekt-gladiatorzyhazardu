@@ -27,6 +27,7 @@ class Table:
         return False
 
     def startGame(self):
+        if len(self.players)<=1: return False
         deck = Deck()
 
         for i in range(len(self.players)):
@@ -36,6 +37,7 @@ class Table:
 
         self.started = True
         self.nextTurn()
+        return True
     
     def endGame(self):
         winner = max(self.players, key=lambda x: x.losses, default=None)
@@ -149,6 +151,7 @@ class Table:
                     return False
 
             self.bid_history.append(bid)
+
             self.recent_bid = bid
             self.current_index = (self.current_index + 1) % len(self.players)
 
