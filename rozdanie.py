@@ -14,12 +14,12 @@ class Rozdanie:
 
     scaleUP = 1.1
     scale_start = 0.22
-    width_DOWN = 630 * scale_start
-    height_DOWN = 880 * scale_start
+    width_DOWN = 630 * scale_start*SCALE
+    height_DOWN = 880 * scale_start*SCALE
 
     scaling_time = 200
-    widthUP = width_DOWN * scaleUP
-    heightUP = height_DOWN * scaleUP
+    widthUP = width_DOWN * scaleUP*SCALE
+    heightUP = height_DOWN * scaleUP*SCALE
     w = width_DOWN
     h = height_DOWN
     w_karty = widthUP
@@ -29,9 +29,9 @@ class Rozdanie:
 
     #karta lezaca
     imgB_DOWN = pygame.image.load("textures/b0.png")
-    imgB_DOWN = pygame.transform.scale_by(imgB_DOWN, scale_start)
+    imgB_DOWN = pygame.transform.scale_by(imgB_DOWN, scale_start*SCALE)
 
-    karta_przesuwana = pygame.transform.scale_by(imgB_DOWN, scaleUP)
+    karta_przesuwana = pygame.transform.scale_by(imgB_DOWN, scaleUP*SCALE)
     #x = SCREEN_WIDTH/2 - widthUP/2
     x = TABLE_CENTER[0] - widthUP/2
     moving_time = 400

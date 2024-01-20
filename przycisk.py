@@ -1,9 +1,9 @@
 import pygame
-
-BUTTON_X = 1600
-BUTTON_START_Y = 100
-BUTTON_WIDTH = 250
-BUTTON_HEIGHT = 50
+from zmienne import SCALE
+BUTTON_X = 1630*SCALE
+BUTTON_START_Y = 100 *SCALE
+BUTTON_WIDTH = 255*SCALE
+BUTTON_HEIGHT = 55*SCALE
 
 background_color = (48, 90, 74, 255)
 kolor_przycisku1 = (255, 255, 255)
@@ -35,9 +35,9 @@ class Przycisk:
             pygame.draw.rect(screen, self.color, self.rect, border_radius=10)
         pygame.draw.rect(screen, ramka_color, self.rect, 1, border_radius=6)                  #ramka
         if self.sub_buttons:
-            font = pygame.font.Font(None, 28)
+            font = pygame.font.Font(None, round(28*SCALE))
         else:
-            font = pygame.font.Font(None, 24)
+            font = pygame.font.Font(None, round(24*SCALE))
         text = font.render(self.text, True, (0, 0, 0))
         text_rect = text.get_rect(center=self.rect.center)
         screen.blit(text, text_rect)

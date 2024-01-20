@@ -6,12 +6,12 @@ class Menu:
 
     # menu
     # tytuł
-    font = pygame.font.SysFont("comicsansms", 120)
+    font = pygame.font.SysFont("comicsansms", round(120*SCALE))
     tytul = font.render("Poker tajski", True, DARK_RED)
 
     # Start
     start_texture = pygame.image.load("textures/button-start.png")
-    start_texture = pygame.transform.scale(start_texture, (start_texture.get_width() // 2, start_texture.get_height() // 1.8))  
+    start_texture = pygame.transform.scale(start_texture, (round(start_texture.get_width() // 2 *SCALE), round(start_texture.get_height() // 1.8 *SCALE)))  
     start_corner = (
         SCREEN_WIDTH // 2 - start_texture.get_width() // 2,
         1.75 * SCREEN_HEIGHT // 5 - start_texture.get_height() // 2,
@@ -24,7 +24,7 @@ class Menu:
     )
 
     # jak grac
-    font = pygame.font.SysFont("comicsansms", 80)
+    font = pygame.font.SysFont("comicsansms", round(80*SCALE))
     htp_napis = font.render("Jak grać", True, DARK_RED)
     htp_corner = (
         SCREEN_WIDTH // 2 - htp_napis.get_width() // 2,

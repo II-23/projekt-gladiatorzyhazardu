@@ -17,10 +17,10 @@ class Rozgrywka:
     cards_paths = []
 
     scale_start = 0.22
-    width_DOWN = 630 * scale_start
-    height_DOWN = 880 * scale_start
-    width_DOWN_front = 650 * scale_start
-    height_DOWN_front = 900 * scale_start
+    width_DOWN = 630 * scale_start*SCALE
+    height_DOWN = 880 * scale_start*SCALE
+    width_DOWN_front = 650 * scale_start*SCALE
+    height_DOWN_front = 900 * scale_start*SCALE
     liczba_kart = 0
     karty = []
 
@@ -53,7 +53,7 @@ class Rozgrywka:
     nicki_przeciwnikow = []
     wsp_kart_przeciwnikow = []
     back = pygame.image.load("textures/b0.png")
-    back = pygame.transform.scale_by(back, scale_start)
+    back = pygame.transform.scale_by(back, scale_start*SCALE)
 
     played_bid = None
 
@@ -82,7 +82,7 @@ class Rozgrywka:
         for i in range(len(karty)):
             path = Rozgrywka.name_to_path(karty[i])
             Rozgrywka.karty.append(pygame.image.load(path))
-            Rozgrywka.karty[i] = pygame.transform.scale_by(Rozgrywka.karty[i], Rozgrywka.scale_start)
+            Rozgrywka.karty[i] = pygame.transform.scale_by(Rozgrywka.karty[i], Rozgrywka.scale_start*SCALE)
         Rozgrywka.szerokosc_reki = (Rozgrywka.liczba_kart+1) * Rozgrywka.width_DOWN_front/2
         Rozgrywka.szerokosc_reki_wysunietej = Rozgrywka.szerokosc_reki + (Rozgrywka.liczba_kart-1) * Rozgrywka.width_DOWN_front/2 + (Rozgrywka.liczba_kart-1) * 5
         Rozgrywka.wsp_kart = []
@@ -99,9 +99,9 @@ class Rozgrywka:
 
         if Rozgrywka.check_img == None:
             Rozgrywka.check_img = pygame.image.load("textures/button-check.png")
-            Rozgrywka.check_img = pygame.transform.scale(Rozgrywka.check_img, (int(0.1*SCREEN_WIDTH), int(0.1*SCREEN_WIDTH)))
+            Rozgrywka.check_img = pygame.transform.scale(Rozgrywka.check_img, (int(0.15*SCREEN_WIDTH), int(0.15*SCREEN_WIDTH)))
             Rozgrywka.button_check = Rozgrywka.check_img.get_rect()
-            # Rozgrywka.button_check.move(20, SCREEN_HEIGHT - 20 - Rozgrywka.check_img.get_height())
+            Rozgrywka.button_check.bottomleft=(int(27*SCALE), SCREEN_HEIGHT - int(40*SCALE))
 
         Rozgrywka.liczba_przeciwnikow = len(dane.players) - 1
         Rozgrywka.liczba_kart_przeciwnikow = []
@@ -152,7 +152,7 @@ class Rozgrywka:
         for i in range(Rozgrywka.liczba_przeciwnikow):
             #nick nad karta
             nick = Rozgrywka.nicki_przeciwnikow[i]
-            font = pygame.font.SysFont("comicsansms",40)
+            font = pygame.font.SysFont("comicsansms",round(40*SCALE))
             text = font.render(nick, True, (0, 0, 0))
             text_rect = text.get_rect(center=(Rozgrywka.wsp_kart_przeciwnikow[i][0] + Rozgrywka.width_DOWN // 2, Rozgrywka.wsp_kart_przeciwnikow[i][1] - text.get_height() // 2 - 10))
             screen.blit(text, text_rect)
@@ -202,7 +202,7 @@ class Rozgrywka:
             if Rozgrywka.opacity > 255:
                 Rozgrywka.opacity = 255
         
-        display_new_bids(screen, Rozgrywka.bids, Rozgrywka.opacity)
+        display_new_bids(screen, Rozgrywka.bids, Rozgrywka.opacity,(16*SCALE,40*SCALE),SCALE)
 
         dostepne_bidy.draw_buttons(screen, None)
             

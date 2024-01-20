@@ -16,12 +16,12 @@ class preGame:
     glowny = pygame.rect.Rect(50, 50, SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100)
 
     # tytuł
-    font = pygame.font.SysFont("comicsansms", 120)
+    font = pygame.font.SysFont("comicsansms", round(120*SCALE))
     tytul = font.render("Wprowadź nick", True, DARK_RED)
     napis_nick = font.render("Nick: " + nick, True, DARK_RED)
 
     # Start
-    font = pygame.font.SysFont("comicsansms", 100)
+    font = pygame.font.SysFont("comicsansms", round(100*SCALE))
     start_napis = font.render("Start", True, DARK_RED)
     start_corner = (
         SCREEN_WIDTH // 2 - start_napis.get_width() // 2,
@@ -30,8 +30,8 @@ class preGame:
     start_button = pygame.rect.Rect(
         start_corner[0] - 25,
         start_corner[1] - 10,
-        start_napis.get_width() + 50,
-        start_napis.get_height() + 20,
+        start_napis.get_width() + round(50*SCALE),
+        start_napis.get_height() + round(20*SCALE),
     )
 
     towrzenie_button = pygame.rect.Rect(1*SCREEN_WIDTH//5, 3*SCREEN_HEIGHT//5, SCREEN_WIDTH//5, SCREEN_HEIGHT//4)
@@ -51,13 +51,13 @@ class preGame:
                 preGame.stoly.append(pygame.rect.Rect(SCREEN_WIDTH//2 - 200, 100 + 100*i, 400, 80))
                 pygame.draw.rect(screen, DARK_GREY, preGame.stoly[i])
                 pygame.draw.rect(screen, BLACK, preGame.stoly[i], 5)
-                font = pygame.font.SysFont("comicsansms", 50)
+                font = pygame.font.SysFont("comicsansms", round(50*SCALE))
                 napis = font.render(dane.tables[i][1], True, DARK_RED)
                 screen.blit(napis, (SCREEN_WIDTH//2 - napis.get_width()//2, 100 + 100*i + 40 - napis.get_height()//2))
 
     #liczba graczy przy stole
     def startowanie_rys(screen, liczba_graczy):
-        font = pygame.font.SysFont("comicsansms", 100)
+        font = pygame.font.SysFont("comicsansms", round(100*SCALE))
         liczba_graczy_napis = font.render("Liczba graczy: " + str(liczba_graczy), True, DARK_RED)
         screen.blit(liczba_graczy_napis, (SCREEN_WIDTH // 2 - liczba_graczy_napis.get_width() // 2, 3*SCREEN_HEIGHT // 5 - liczba_graczy_napis.get_height() // 2))
         

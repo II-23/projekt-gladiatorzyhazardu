@@ -13,31 +13,11 @@ TEXT_COLOR = (0, 0, 0)
 
 
 
-font = pygame.font.SysFont("comicsansms",26) #font to be set
+font = pygame.font.SysFont("comicsansms",round(30*SCALE)) #font to be set
 
-# use this function when no new bid was played(every time normal fps display)needs surface,list of bids, starting position and  scale is optional
-# def display_bids(screen,strings,start_pos=(16,40),scale=1.0):
 
-#     strings=strings[::-1]
-#     strings=strings[:min(len(strings),8)]
-#     shape_img=pygame.image.load("textures/shape.png")
-#     shape_img=pygame.transform.scale(shape_img,(RECTANGLE_WIDTH*scale,RECTANGLE_HEIGHT*scale))
-#     shape= shape_img.get_rect()
 
-  
-#     y_position = start_pos[1]
-#     for string in strings:
-#         text = font.render(string, True, TEXT_COLOR)
-#         shape.topleft=(start_pos[0],y_position)
-#         text_rect = text.get_rect(center=shape.center)
-
-#         screen.blit(shape_img,shape)
-#         screen.blit(text, text_rect)
-
-#         y_position += RECTANGLE_HEIGHT*scale + 2 * MARGIN*scale  # Add some spacing
-#     #pygame.display.flip()
-
-#use when new bid was played needs surface,list of bids, starting position and  scale is optional
+#use with different opacity to represent new bid apperance
 def display_new_bids(screen, strings, opacity, start_pos=(16,40), scale=1.0):
     if len(strings) == 0: 
         return

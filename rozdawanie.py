@@ -5,7 +5,7 @@ from pygame.locals import *
 
 pygame.init()
 #screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-screen = pygame.display.set_mode((1920, 1080), pygame.SCALED|pygame.FULLSCREEN)
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SCALED|pygame.FULLSCREEN)
 clock = pygame.time.Clock()
 
 liczba_kart = 3
@@ -35,9 +35,9 @@ dh = heightUP - height_DOWN
 
 #karta lezaca
 imgB_DOWN = pygame.image.load("textures/b0.png")
-imgB_DOWN = pygame.transform.scale_by(imgB_DOWN, scale_start)
+imgB_DOWN = pygame.transform.scale_by(imgB_DOWN, scale_start*SCALE)
 
-karta_przesuwana = pygame.transform.scale_by(imgB_DOWN, scaleUP)
+karta_przesuwana = pygame.transform.scale_by(imgB_DOWN, scaleUP*SCALE)
 x = SCREEN_WIDTH/2 - widthUP/2
 moving_time = 400
 ds = widthUP + 20
