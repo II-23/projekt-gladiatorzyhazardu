@@ -141,6 +141,7 @@ def get_table():
                 {
                     'players': players_in_table,
                     'admin': admin_index,
+                    'admin_id': TABLE_DB[table_id]['admin_id'],
                     'cards': cards_of_players,
                     'start_player': table.first_player,
                     'bids': table.bid_history,

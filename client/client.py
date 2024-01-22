@@ -16,6 +16,10 @@ base_url = f"http://{config.server['host']}:{config.server['port']}"
 def join_table(player_id, table_id):
     response = requests.post(f'{base_url}/join_table', json={'player_id': player_id, 'table_id': table_id})
     print(response.json())
+    
+def leave_table(player_id,table_id):
+    response = requests.post(f'{base_url}/leave_table', json={'player_id': player_id, 'table_id': table_id})
+    print(response.json())
 
 def get_all_players():
     response = requests.get(f'{base_url}/get_all_players', json={})

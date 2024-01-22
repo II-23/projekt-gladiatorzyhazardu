@@ -72,6 +72,9 @@ def komunikacja_z_serwerem(dane):
             if akt['players'][i][1] == dane.my_id:
                 dane.my_index = i
                 break
+        if akt['admin_id']==dane.my_id:
+            preGame.tworzenie_stolu=True
+            dane.admin_id=True
 
     #startowanie gry
     if preGame.wlaczenie_gry == True:
@@ -99,7 +102,18 @@ class Gra:
 
     def cofnij_stan():
         if Gra.stan_gry == preGame.stan:
-            Gra.stan_gry = Menu.stan
+            if preGame.dolaczyl:
+                client.leave_table(dane.my_id,dane.table_id)
+                preGame.dolaczyl=False
+                preGame.dolaczanie_do_stolu=True
+            elif preGame.tworzenie_stolu and dane.admin_id :
+                client.leave_table(dane.my_id,dane.table_id)
+                preGame.tworzenie_stolu=False
+                dane.admin_id=False
+            elif preGame.dolaczanie_do_stolu:
+                preGame.dolaczanie_do_stolu=False
+            else: 
+                Gra.stan_gry = Menu.stan
 
     def klikniecie(x, y, dane, event):
         if Gra.stan_gry == Menu.stan:
