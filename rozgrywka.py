@@ -57,8 +57,6 @@ class Rozgrywka:
 
     played_bid = None
 
-    #def puszczenie():
-
     def karty_graczy(dane):
         liczba_graczy = len(dane.player_cards) - 1
         liczba_kart = []
@@ -125,11 +123,8 @@ class Rozgrywka:
 
         if potential_bid != None:
             Rozgrywka.played_bid = potential_bid
-        
-        # print("$", Rozgrywka.button_check, x, y, Rozgrywka.button_check.collidepoint(x, y))
 
         if Rozgrywka.button_check.collidepoint(x, y):
-            # print("CHECK")
             Rozgrywka.played_bid = "check"
 
 
@@ -138,19 +133,14 @@ class Rozgrywka:
             Rozgrywka.wysuwanie = 1
         elif not Rozgrywka.strefa_wysuwania.collidepoint(x, y):
             Rozgrywka.wysuwanie = 0
-        
-        # print("ruch: ", x, y, event)
             
         potential_bid = dostepne_bidy.handle_button_event(event)
 
         if potential_bid != None:
             Rozgrywka.played_bid = potential_bid
-            # print("played bid: ", Rozgrywka.played_bid)
-
 
     def rysuj(screen, dt: float, dane: GameInfo):
         for i in range(Rozgrywka.liczba_przeciwnikow):
-            #nick nad karta
             nick = Rozgrywka.nicki_przeciwnikow[i]
             font = pygame.font.SysFont("comicsansms",round(40*SCALE))
             text = font.render(nick, True, (0, 0, 0))
@@ -163,7 +153,6 @@ class Rozgrywka:
 
         procent_wysuniecia = dt / Rozgrywka.czas_wysuwania
         for i in range(Rozgrywka.liczba_kart):
-            #droga_calkowita = (Rozgrywka.wsp_kart_wysunietych[i][0]**2 - Rozgrywka.wsp_kart[i][0]**2)**(1/2)
             dx = procent_wysuniecia * abs(Rozgrywka.wsp_kart_wysunietych[i][0] - Rozgrywka.wsp_kart[i][0])
             dy = procent_wysuniecia * abs(Rozgrywka.wsp_kart_wysunietych[i][1] - Rozgrywka.wsp_kart[i][1])
             if Rozgrywka.wysuwanie:
@@ -185,31 +174,22 @@ class Rozgrywka:
                     if pom[1] >= Rozgrywka.wsp_kart[i][1]:
                         pom = Rozgrywka.wsp_kart[i]
             Rozgrywka.wsp_kart_akt[i] = pom
-            #print(i)
             screen.blit(Rozgrywka.karty[i], Rozgrywka.wsp_kart_akt[i])
-            #screen.blit(Rozgrywka.karty[i], Rozgrywka.wsp_kart[i])
-            #screen.blit(Rozgrywka.karty[i], Rozgrywka.wsp_kart_wysunietych[i])
-            #Rozgrywka.bids.append("wawrzyn")
         
-
-        #Rozgrywka.bids = ["wawrzyn", "dwa", "XD"]
         if Rozgrywka.bids != dane.bid_history:
             Rozgrywka.bids = dane.bid_history
-            #dane.bid_history = Rozgrywka.bids
             Rozgrywka.opacity = 1
         elif Rozgrywka.opacity < 255:
-            Rozgrywka.opacity += 5
+            Rozgrywka.opacity += 8
             if Rozgrywka.opacity > 255:
                 Rozgrywka.opacity = 255
         
-        display_new_bids(screen, Rozgrywka.bids, Rozgrywka.opacity,(16*SCALE,40*SCALE),SCALE)
+        display_new_bids(screen, Rozgrywka.bids, dane.nickbid_history,Rozgrywka.opacity,(16*SCALE,40*SCALE),SCALE)
 
         recent_bid = None
         if len(dane.bid_history) > 0:
             recent_bid = dane.bid_history[-1]
-
-        # print("recent_bid: ", recent_bid)
-
+        
         dostepne_bidy.draw_buttons(screen, recent_bid)
             
         if dane.my_index == dane.current_player:

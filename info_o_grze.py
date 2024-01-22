@@ -14,4 +14,5 @@ class GameInfo:
         self.start_game = False
         self.my_index = None
         self.bid_history = []
+        self.nickbid_history=[]
         self.looser=None

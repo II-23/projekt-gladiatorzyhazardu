@@ -18,10 +18,13 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SCALED|py
 font_looser=pygame.font.SysFont("comicsansms",round(120*SCALE))
 
 def komunikacja_z_serwerem(dane):
+
     #rejestracja
     if not dane.nick == "" and dane.my_id == None:
         dane.my_id = client.register(dane.nick)
     
+    client.ping_server(dane.my_id)
+
     #tworzenie stolu
     if dane.admin_id == False and preGame.tworzenie_stolu == True:
         dane.table_id = client.create_table(dane.my_id)
@@ -42,6 +45,7 @@ def komunikacja_z_serwerem(dane):
         dane.start_game = akt['game_started']
         dane.bid_history = akt['bids']
         dane.looser=akt['looser']
+        dane.nickbid_history=akt['nickbid']
 
         # print(dane.player_cards)
 
@@ -152,29 +156,15 @@ while True:
     # print(dane.player_cards)
 
     if dane.looser is not None:
-        #wyswietlanie kto wygral jedna ture
-        if len(dane.players) > 1:
-            if(dane.looser==dane.my_index): 
-                text=font_looser.render("Przegrałeś Synu!!!",True,(255,0,255))
-                text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
-                screen.blit(text,text_re)
-                # print("przegrales synu")
-            else:
-                text=font_looser.render(str("Przegrał "+dane.players[dane.looser][0]+"!!!"),True,(255,0,255))
-                text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
-                screen.blit(text,text_re)
-        #wyswietlanie kto wygral cala gre
-        elif len(dane.players) == 1:
-            if akt['players'][0][1] == dane.my_id:
-                text=font_looser.render("Wygrałeś!!!",True,(255,0,255))
-                text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
-                screen.blit(text,text_re)
-            else:
-                text=font_looser.render(str("Wygrał "+dane.players[0][0]+"!!!"),True,(255,0,255))
-                text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
-                screen.blit(text,text_re)
-            
-
+        if(dane.looser==dane.my_index): 
+            text=font_looser.render("Przegrałeś Synu!!!",True,(255,0,255))
+            text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
+            screen.blit(text,text_re)
+            # print("przegrales synu")
+        else:
+            text=font_looser.render(str("Przegrał "+dane.players[dane.looser][0]+"!!!"),True,(255,0,255))
+            text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
+            screen.blit(text,text_re)
     elif dane.my_index and dane.my_index < len(dane.players) and not dane.players[dane.my_index][2]:
         text=font_looser.render("YOU DIED",True,(255,0,125))
         text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))

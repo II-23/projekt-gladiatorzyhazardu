@@ -88,3 +88,21 @@ bids = {
 }
 
 call_bids = { i:bids[j][i] for j in bids for i in bids[j] }
+
+# check whether bid1 is bigger than bid2
+def compare_bids(bid1, bid2) -> bool:
+    inside = False
+    for some_bid in call_bids.keys():
+        if some_bid == bid1:
+            inside = True
+    
+    if inside == False:
+        return False
+
+    for some_bid in call_bids.keys():
+        if some_bid == bid1:
+            return False
+        
+        if some_bid == bid2:
+            return True
+    return False

@@ -18,7 +18,7 @@ font = pygame.font.SysFont("comicsansms",round(30*SCALE)) #font to be set
 
 
 #use with different opacity to represent new bid apperance
-def display_new_bids(screen, strings, opacity, start_pos=(16,40), scale=1.0):
+def display_new_bids(screen, strings, nicks,opacity, start_pos=(16,40), scale=1.0):
     if len(strings) == 0: 
         return
     print(strings)
@@ -30,7 +30,7 @@ def display_new_bids(screen, strings, opacity, start_pos=(16,40), scale=1.0):
     shape = shape_img.get_rect()
 
     shape_img.set_alpha(opacity)
-    text = font.render(strings[0], True, TEXT_COLOR)
+    text = font.render(nicks[0]+" : " + strings[0], True, TEXT_COLOR)
     text.set_alpha(opacity)
 
     shape.topleft = (start_pos[0], start_pos[1])
@@ -43,8 +43,8 @@ def display_new_bids(screen, strings, opacity, start_pos=(16,40), scale=1.0):
     text.set_alpha(255)
     y_position = start_pos[1] + RECTANGLE_HEIGHT * scale + 2 * MARGIN * scale
 
-    for string in strings[1:]:
-        text = font.render(string, True, TEXT_COLOR)
+    for i in range(1,len(strings)):
+        text = font.render(nicks[i]+" : " + strings[i], True, TEXT_COLOR)
         shape.topleft = (start_pos[0], y_position)
         text_rect = text.get_rect(center=shape.center)
 
