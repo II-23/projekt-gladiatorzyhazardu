@@ -71,7 +71,7 @@ def draw_buttons(screen, last_bid):
             if button.expanded:
                 if sub_button.text == clicked_bid:
                     sub_button.draw(screen, True, is_legal)
-                elif 'on' in sub_button.text:
+                elif 'on ' in sub_button.text:
                     if clicked_bid == None or last_bid == None:
                         sub_button.draw(screen, sub_button.text == clicked_bid2, is_legal)
                     else:
