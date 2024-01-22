@@ -106,14 +106,19 @@ class Gra:
                 client.leave_table(dane.my_id,dane.table_id)
                 preGame.dolaczyl=False
                 preGame.dolaczanie_do_stolu=True
-            elif preGame.tworzenie_stolu and dane.admin_id :
+            if preGame.tworzenie_stolu and dane.admin_id :
                 client.leave_table(dane.my_id,dane.table_id)
                 preGame.tworzenie_stolu=False
+                preGame.dolaczanie_do_stolu=True
+                preGame.dolaczyl=False
                 dane.admin_id=False
-            elif preGame.dolaczanie_do_stolu:
+            if preGame.dolaczanie_do_stolu:
                 preGame.dolaczanie_do_stolu=False
             else: 
                 Gra.stan_gry = Menu.stan
+        if Gra.stan_gry==Menu.stan:
+            pygame.quit()
+            exit()
 
     def klikniecie(x, y, dane, event):
         if Gra.stan_gry == Menu.stan:
