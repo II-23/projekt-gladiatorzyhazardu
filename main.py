@@ -170,16 +170,28 @@ while True:
     # print(dane.player_cards)
 
     if dane.looser is not None:
-        if(dane.looser==dane.my_index): 
-            text=font_looser.render("Przegrałeś Synu!!!",True,(255,0,255))
-            text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
-            screen.blit(text,text_re)
-            # print("przegrales synu")
-        else:
-            text=font_looser.render(str("Przegrał "+dane.players[dane.looser][0]+"!!!"),True,(255,0,255))
-            text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
-            screen.blit(text,text_re)
-
+        #wyswietlanie kto wygral jedna ture
+        if len(dane.players) > 1:
+            if(dane.looser==dane.my_index): 
+                text=font_looser.render("Przegrałeś Synu!!!",True,(255,0,255))
+                text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
+                screen.blit(text,text_re)
+                # print("przegrales synu")
+            else:
+                text=font_looser.render(str("Przegrał "+dane.players[dane.looser][0]+"!!!"),True,(255,0,255))
+                text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
+                screen.blit(text,text_re)
+        #wyswietlanie kto wygral cala gre
+        elif len(dane.players) == 1:
+            if akt['players'][0][1] == dane.my_id:
+                text=font_looser.render("Wygrałeś!!!",True,(255,0,255))
+                text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
+                screen.blit(text,text_re)
+            else:
+                text=font_looser.render(str("Wygrał "+dane.players[0][0]+"!!!"),True,(255,0,255))
+                text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
+                screen.blit(text,text_re)
+                
     elif dane.my_index and dane.my_index < len(dane.players) and not dane.players[dane.my_index][2]:
         text=font_looser.render("YOU DIED",True,(255,0,125))
         text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
