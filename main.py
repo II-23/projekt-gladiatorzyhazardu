@@ -72,6 +72,9 @@ def komunikacja_z_serwerem(dane):
             if akt['players'][i][1] == dane.my_id:
                 dane.my_index = i
                 break
+        if akt['admin_id']==dane.my_id:
+            preGame.tworzenie_stolu=True
+            dane.admin_id=True
 
     #startowanie gry
     if preGame.wlaczenie_gry == True:
@@ -99,7 +102,18 @@ class Gra:
 
     def cofnij_stan():
         if Gra.stan_gry == preGame.stan:
-            Gra.stan_gry = Menu.stan
+            if preGame.dolaczyl:
+                client.leave_table(dane.my_id,dane.table_id)
+                preGame.dolaczyl=False
+                preGame.dolaczanie_do_stolu=True
+            elif preGame.tworzenie_stolu and dane.admin_id :
+                client.leave_table(dane.my_id,dane.table_id)
+                preGame.tworzenie_stolu=False
+                dane.admin_id=False
+            elif preGame.dolaczanie_do_stolu:
+                preGame.dolaczanie_do_stolu=False
+            else: 
+                Gra.stan_gry = Menu.stan
 
     def klikniecie(x, y, dane, event):
         if Gra.stan_gry == Menu.stan:
@@ -156,8 +170,14 @@ while True:
     # print(dane.player_cards)
 
     if dane.looser is not None:
+        active_players = 0
+        active_index = 0
+        for i in range (len(dane.players)):
+            if dane.players[i][2]:
+                active_players += 1
+                active_index = i
         #wyswietlanie kto wygral jedna ture
-        if len(dane.players) > 1:
+        if active_players > 1:
             if(dane.looser==dane.my_index): 
                 text=font_looser.render("Przegrałeś Synu!!!",True,(255,0,255))
                 text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
@@ -168,13 +188,13 @@ while True:
                 text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
                 screen.blit(text,text_re)
         #wyswietlanie kto wygral cala gre
-        elif len(dane.players) == 1:
-            if akt['players'][0][1] == dane.my_id:
+        elif active_players == 1:
+            if dane.players[active_index][1] == dane.my_id:
                 text=font_looser.render("Wygrałeś!!!",True,(255,0,255))
                 text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
                 screen.blit(text,text_re)
             else:
-                text=font_looser.render(str("Wygrał "+dane.players[0][0]+"!!!"),True,(255,0,255))
+                text=font_looser.render(str("Wygrał "+dane.players[active_index][0]+"!!!"),True,(255,0,255))
                 text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
                 screen.blit(text,text_re)
                 
