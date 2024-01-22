@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2023.11.12)  22 JAN 2024 19:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2023.11.12)  22 JAN 2024 20:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -203,20 +203,20 @@ File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 (./dokumentacja.aux)
 \openout1 = `dokumentacja.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -276,116 +276,116 @@ e
 
 ABD: EveryShipout initializing macros
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 32.
+(Font)              <12> on input line 30.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 32.
+(Font)              <8> on input line 30.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 32.
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 4
-1.
+(Font)              <6> on input line 30.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 3
+9.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-Underfull \hbox (badness 10000) in paragraph at lines 40--47
+Underfull \hbox (badness 10000) in paragraph at lines 38--45
 
  []
 
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 54.
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 57.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 53.
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-<images/start.png, id=22, 1371.1225pt x 770.88pt>
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 56.
+ [2] [3]
+<images/start.png, id=21, 1371.1225pt x 770.88pt>
 File: images/start.png Graphic file (type png)
 <use images/start.png>
-Package pdftex.def Info: images/start.png  used on input line 124.
+Package pdftex.def Info: images/start.png  used on input line 123.
 (pdftex.def)             Requested size: 216.81pt x 121.89651pt.
-<images/wprowadzanie.png, id=23, 1371.1225pt x 770.88pt>
+<images/wprowadzanie.png, id=22, 1371.1225pt x 770.88pt>
 File: images/wprowadzanie.png Graphic file (type png)
 <use images/wprowadzanie.png>
-Package pdftex.def Info: images/wprowadzanie.png  used on input line 132.
+Package pdftex.def Info: images/wprowadzanie.png  used on input line 131.
 (pdftex.def)             Requested size: 216.81pt x 121.89651pt.
  [4 <./images/start.png>]
-<images/oczekiwanie.png, id=27, 1371.1225pt x 770.88pt>
+<images/oczekiwanie.png, id=26, 1371.1225pt x 770.88pt>
 File: images/oczekiwanie.png Graphic file (type png)
 <use images/oczekiwanie.png>
-Package pdftex.def Info: images/oczekiwanie.png  used on input line 140.
+Package pdftex.def Info: images/oczekiwanie.png  used on input line 139.
 (pdftex.def)             Requested size: 216.81pt x 121.89651pt.
-<images/dostepnestoly.png, id=28, 1371.1225pt x 770.88pt>
+<images/dostepnestoly.png, id=27, 1371.1225pt x 770.88pt>
 File: images/dostepnestoly.png Graphic file (type png)
 <use images/dostepnestoly.png>
-Package pdftex.def Info: images/dostepnestoly.png  used on input line 148.
+Package pdftex.def Info: images/dostepnestoly.png  used on input line 147.
 (pdftex.def)             Requested size: 216.81pt x 121.89651pt.
-<images/stoloczekujacy.png, id=29, 1371.1225pt x 770.88pt>
+<images/stoloczekujacy.png, id=28, 1371.1225pt x 770.88pt>
 File: images/stoloczekujacy.png Graphic file (type png)
 <use images/stoloczekujacy.png>
-Package pdftex.def Info: images/stoloczekujacy.png  used on input line 156.
+Package pdftex.def Info: images/stoloczekujacy.png  used on input line 155.
 (pdftex.def)             Requested size: 303.53267pt x 170.65276pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 160--162
+Underfull \hbox (badness 10000) in paragraph at lines 159--161
 
  []
 
 [5 <./images/wprowadzanie.png> <./images/oczekiwanie.png> <./images/dostepnesto
 ly.png>]
-<images/basicwidok.png, id=33, 1371.1225pt x 770.88pt>
+<images/basicwidok.png, id=32, 1371.1225pt x 770.88pt>
 File: images/basicwidok.png Graphic file (type png)
 <use images/basicwidok.png>
-Package pdftex.def Info: images/basicwidok.png  used on input line 165.
+Package pdftex.def Info: images/basicwidok.png  used on input line 164.
 (pdftex.def)             Requested size: 433.62pt x 243.79303pt.
  [6 <./images/stoloczekujacy.png> <./images/basicwidok.png>]
-<images/przegralessynu.png, id=37, 1371.1225pt x 770.88pt>
+<images/przegralessynu.png, id=36, 1371.1225pt x 770.88pt>
 File: images/przegralessynu.png Graphic file (type png)
 <use images/przegralessynu.png>
-Package pdftex.def Info: images/przegralessynu.png  used on input line 177.
+Package pdftex.def Info: images/przegralessynu.png  used on input line 176.
 (pdftex.def)             Requested size: 208.13574pt x 117.015pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 179.
+(Font)              <7> on input line 178.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 179.
-<images/ktosprzegral.png, id=38, 1371.1225pt x 770.88pt>
+(Font)              <5> on input line 178.
+<images/ktosprzegral.png, id=37, 1371.1225pt x 770.88pt>
 File: images/ktosprzegral.png Graphic file (type png)
 <use images/ktosprzegral.png>
-Package pdftex.def Info: images/ktosprzegral.png  used on input line 182.
+Package pdftex.def Info: images/ktosprzegral.png  used on input line 181.
 (pdftex.def)             Requested size: 208.13574pt x 117.015pt.
-<images/youdied.png, id=39, 1371.1225pt x 770.88pt>
+<images/youdied.png, id=38, 1371.1225pt x 770.88pt>
 File: images/youdied.png Graphic file (type png)
 <use images/youdied.png>
-Package pdftex.def Info: images/youdied.png  used on input line 194.
+Package pdftex.def Info: images/youdied.png  used on input line 193.
 (pdftex.def)             Requested size: 173.44534pt x 97.5125pt.
  [7 <./images/przegralessynu.png> <./images/ktosprzegral.png> <./images/youdied
 .png>]
 (./dokumentacja.aux) ) 
 Here is how much of TeX's memory you used:
- 5325 strings out of 483148
- 94613 string characters out of 5965415
- 339728 words of memory out of 5000000
- 20258 multiletter control sequences out of 15000+600000
- 542460 words of font info for 44 fonts, out of 8000000 for 9000
+ 5323 strings out of 483148
+ 94591 string characters out of 5965415
+ 338708 words of memory out of 5000000
+ 20257 multiletter control sequences out of 15000+600000
+ 541776 words of font info for 43 fonts, out of 8000000 for 9000
  34 hyphenation exceptions out of 8191
  51i,7n,52p,820b,284s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/s-feles-/.texlive2019/texmf-var/fonts/pk/ljfour/j
 knappen/ec/ecti1000.600pk> </home/s-feles-/.texlive2019/texmf-var/fonts/pk/ljfo
-ur/jknappen/ec/ecbx1000.600pk> </home/s-feles-/.texlive2019/texmf-var/fonts/pk/
-ljfour/jknappen/ec/ectt1200.600pk> </home/s-feles-/.texlive2019/texmf-var/fonts
+ur/jknappen/ec/ectt1200.600pk> </home/s-feles-/.texlive2019/texmf-var/fonts/pk/
+ljfour/jknappen/ec/ecbx1000.600pk> </home/s-feles-/.texlive2019/texmf-var/fonts
 /pk/ljfour/jknappen/ec/ectt1000.600pk> </home/s-feles-/.texlive2019/texmf-var/f
 onts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/s-feles-/.texlive2019/texmf-v
 ar/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/s-feles-/.texlive2019/tex
 mf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/s-feles-/.texlive2019
-/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk> </home/s-feles-/.texlive
-2019/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/s-feles-/.tex
-live2019/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
-Output written on dokumentacja.pdf (7 pages, 385089 bytes).
+/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/s-feles-/.texlive
+2019/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
+Output written on dokumentacja.pdf (7 pages, 388333 bytes).
 PDF statistics:
- 357 PDF objects out of 1000 (max. 8388607)
- 58 compressed objects within 1 object stream
+ 366 PDF objects out of 1000 (max. 8388607)
+ 54 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
