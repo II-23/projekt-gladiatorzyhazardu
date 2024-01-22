@@ -102,18 +102,7 @@ class Gra:
 
     def cofnij_stan():
         if Gra.stan_gry == preGame.stan:
-            if preGame.dolaczyl:
-                client.leave_table(dane.my_id,dane.table_id)
-                preGame.dolaczyl=False
-                preGame.dolaczanie_do_stolu=True
-            elif preGame.tworzenie_stolu and dane.admin_id :
-                client.leave_table(dane.my_id,dane.table_id)
-                preGame.tworzenie_stolu=False
-                dane.admin_id=False
-            elif preGame.dolaczanie_do_stolu:
-                preGame.dolaczanie_do_stolu=False
-            else: 
-                Gra.stan_gry = Menu.stan
+            Gra.stan_gry = Menu.stan
 
     def klikniecie(x, y, dane, event):
         if Gra.stan_gry == Menu.stan:

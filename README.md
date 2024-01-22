@@ -10,12 +10,6 @@ sudo apt install python3
 pip install -r requirements.txt
 ```
 
-## Uruchamianie gry
-   
-   ```bash
-   python main.py
-   ```
-
 ## Uruchamianie serwera
 
 1. Zmień domyślne ustawienia serwera
@@ -26,4 +20,11 @@ pip install -r requirements.txt
    
    ```bash
    python3 server.py
+   ```
+**Upewnij się, że jakiś serwer jest już postawiony, bo inaczej klient nie uruchomi się przez brak połączenia!**
+
+## Uruchamianie gry
+   
+   ```bash
+   python3 main.py
    ```
