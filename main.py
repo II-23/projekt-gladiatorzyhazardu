@@ -45,6 +45,7 @@ def komunikacja_z_serwerem(dane):
         dane.start_game = akt['game_started']
         dane.bid_history = akt['bids']
         dane.looser=akt['looser']
+        dane.nickbid_history=akt['nickbid']
 
         # print(dane.player_cards)
 
@@ -164,6 +165,7 @@ while True:
             text=font_looser.render(str("Przegrał "+dane.players[dane.looser][0]+"!!!"),True,(255,0,255))
             text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
             screen.blit(text,text_re)
+
     elif dane.my_index and dane.my_index < len(dane.players) and not dane.players[dane.my_index][2]:
         text=font_looser.render("YOU DIED",True,(255,0,125))
         text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))

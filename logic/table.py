@@ -10,6 +10,7 @@ class Table:
         self.players = []
         self.recent_bid = ""
         self.bid_history = []
+        self.nickbid_history = []
         self.deck = Deck()
         self.current_index = 0
         self.started = False
@@ -98,6 +99,8 @@ class Table:
                 self.looser=self.current_index
             else:
                 previous_player = (self.current_index + len(self.players) - 1) % len(self.players)
+                while not self.players[previous_player].active:
+                    previous_player = (previous_player + len(self.players) - 1) % len(self.players)
                 self.players[previous_player].losses += 1
                
                 self.current_index = previous_player
@@ -112,6 +115,7 @@ class Table:
                 return False
 
             self.bid_history.append(bid)
+            self.nickbid_history.append(self.players[self.current_index].nickname)
 
             self.recent_bid = bid
             self.current_index = (self.current_index + 1) % len(self.players)

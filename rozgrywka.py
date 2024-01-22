@@ -180,11 +180,11 @@ class Rozgrywka:
             Rozgrywka.bids = dane.bid_history
             Rozgrywka.opacity = 1
         elif Rozgrywka.opacity < 255:
-            Rozgrywka.opacity += 5
+            Rozgrywka.opacity += 8
             if Rozgrywka.opacity > 255:
                 Rozgrywka.opacity = 255
         
-        display_new_bids(screen, Rozgrywka.bids, Rozgrywka.opacity,(16*SCALE,40*SCALE),SCALE)
+        display_new_bids(screen, Rozgrywka.bids, dane.nickbid_history,Rozgrywka.opacity,(16*SCALE,40*SCALE),SCALE)
 
         recent_bid = None
         if len(dane.bid_history) > 0:
