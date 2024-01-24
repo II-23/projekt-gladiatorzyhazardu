@@ -116,7 +116,7 @@ class Gra:
                 preGame.dolaczanie_do_stolu=False
             else: 
                 Gra.stan_gry = Menu.stan
-                
+
         if Gra.stan_gry==Menu.stan:
             pygame.quit()
             exit()
@@ -184,7 +184,7 @@ while True:
                 screen.blit(text,text_re)
                 # print("przegrales synu")
             else:
-                text=font_looser.render(str("Przegrał "+dane.players[dane.looser][0]+"!!!"),True,(255,0,255))
+                text=font_looser.render(str("Przegrał gracz "+dane.players[dane.looser][0]+"!!!"),True,(255,0,255))
                 text_re=text.get_rect(center=(SCREEN_WIDTH//2,SCREEN_HEIGHT//2))
                 screen.blit(text,text_re)
         #wyswietlanie kto wygral cala gre

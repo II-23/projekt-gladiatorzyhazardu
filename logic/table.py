@@ -58,6 +58,7 @@ class Table:
         self.deck = Deck()
         self.recent_bid = ""
         self.bid_history=[]
+        self.nickbid_history=[]
         max_number_of_cards = min(6, 23 / len(self.players))
         active_players=0
 

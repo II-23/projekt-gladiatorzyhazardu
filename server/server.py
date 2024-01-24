@@ -196,7 +196,7 @@ def ping():
             print("TIMEOUT: ", player_id, "FROM", player.table_id)
             if player.table_id != -1:
                 TABLE_DB[player.table_id]['table'].removePlayer(player_id)
-            
+                TABLE_DB[player.table_id]['looser'] = None
                 # table is now empty, remove it
                 if len(TABLE_DB[player.table_id]['table'].players) == 0:
                     TABLE_DB.pop(player.table_id)

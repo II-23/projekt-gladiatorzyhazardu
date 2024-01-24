@@ -24,6 +24,8 @@ def display_new_bids(screen, strings, nicks,opacity, start_pos=(16,40), scale=1.
     print(strings)
     strings=strings[::-1]
     strings = strings[:min(len(strings),8)]
+    nicks=nicks[::-1]
+    nicks =nicks[:min(len(nicks),8)]
 
     shape_img = pygame.image.load("textures/shape.png")
     shape_img = pygame.transform.scale(shape_img, (RECTANGLE_WIDTH * scale, RECTANGLE_HEIGHT * scale))
